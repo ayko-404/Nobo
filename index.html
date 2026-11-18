@@ -5,9 +5,11 @@
 <title>Nobo — десерты для событий</title>
 <script>window.NOBO_PRELOADER = false; /* прелоудер временно выключен (Никита 18.11) */ if (window.NOBO_PRELOADER) document.documentElement.classList.add("is-loading")</script>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wdth,wght@8..144,50..100,300..500&family=Roboto+Mono:wght@400..600&display=swap">
+<!-- шрифты свои (Roboto Serif 300/400 в узком начертании, Roboto Mono 400–600; только латиница и кириллица) — без запросов к Google, ~4× легче (18.11) -->
+<link rel="preload" href="assets/fonts/robotoserif-300-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/robotomono-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="preload" href="assets/img/tart-candles.webp" as="image">
 <style>
 /* Лейаут: плоскости цвета во всю ширину или пополам (Anna Bistro), поля 3rem, 12 колонок с зазором 2.5rem;
    названия разделов — разрядкой во всю ширину; фото клиента — главный материал; радиус 0, без теней.
@@ -1533,8 +1535,16 @@ html.is-loading, html.is-loading body { overflow: hidden; }
         setTimeout(function () { s.cur.style.transition = ''; s.cur.style.transform = 'none'; s.cur.style.opacity = '1'; }, 60 + k * STEP);
       });
     }
-    var loaded = 0;
-    srcs.forEach(function (src) { var im = new Image(); im.onload = im.onerror = function () { if (++loaded === srcs.length) { show(0, true); if (!reduce) setInterval(function () { if (!document.hidden && window.scrollY < window.innerHeight) { i = (i + 1) % srcs.length; show(i); } }, HOLD); } }; im.src = src; });
+    // первый кадр — сразу (он же в разметке), остальные догружаем после загрузки страницы; в смену идут только уже загруженные
+    var ready = [true];
+    show(0, true);
+    function rest() { srcs.slice(1).forEach(function (src, k) { var im = new Image(); im.onload = function () { ready[k + 1] = true; }; im.src = src; }); }
+    if (document.readyState === 'complete') setTimeout(rest, 300); else window.addEventListener('load', function () { setTimeout(rest, 300); });
+    if (!reduce) setInterval(function () {
+      if (document.hidden || window.scrollY >= window.innerHeight) return;
+      var n = (i + 1) % srcs.length; if (!ready[n]) return;
+      i = n; show(i);
+    }, HOLD);
   })();
 
 
