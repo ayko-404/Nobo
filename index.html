@@ -1115,6 +1115,9 @@ html { scroll-padding-top: 4.5rem; }
 html.is-loading, html.is-loading body { overflow: hidden; }
 .pl.is-out { transform: translateY(-100%); }
 .pl.is-gone { display: none; }
+/* Чем занимается компания — внизу прелоудера, видно всё время (Никита 18.11) */
+.pl-foot { position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem 2rem; padding: 0 max(var(--gut), env(safe-area-inset-right, 0px)) calc(1.5rem + env(safe-area-inset-bottom, 0px)) max(var(--gut), env(safe-area-inset-left, 0px)); font: 500 .8125rem/1.3 var(--f-t); letter-spacing: .03em; animation: pl-foot-in .8s .2s cubic-bezier(.22, 1, .36, 1) both; }
+@keyframes pl-foot-in { from { opacity: 0; transform: translateY(.5rem); } }
 .pl-box { width: 15rem; display: flex; flex-direction: column; gap: .6rem; }
 .pl-top { display: flex; justify-content: space-between; font: 500 .6875rem/1 var(--f-t); letter-spacing: .04em; font-variant-numeric: tabular-nums; transition: opacity .3s; }
 .pl-frame { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #E4D8D9; transition: clip-path .7s cubic-bezier(.76, 0, .24, 1); clip-path: inset(0); }
@@ -1146,6 +1149,8 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 /* Мобилка — правки Никиты 18.11 (2) */
 @media (max-width: 767px) {
   .pl { bottom: -20vh; padding-bottom: 20vh; }   /* прелоудер закрывает экран и под нижней панелью Safari */
+  .pl-foot { bottom: 20vh; flex-direction: column; font-size: .75rem; }
+  .pl-mark { top: calc(50% - 10vh); }   /* центр видимого экрана, без запаса под панель Safari */
   html.is-loading { background: #F4EEEE; }
   .pick--party::before { border-left: 0; }
   /* оглавление на обложке — видно, что пункты нажимаются */
@@ -1227,6 +1232,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   <div class="pl-mark">
     <svg class="pl-logo" viewBox="0 0 2784 714"><use href="#nobo-logo"/><use class="eye-lid" href="#nobo-o2"/><use class="pl-pupil" href="#nobo-o2"/></svg>
   </div>
+  <div class="pl-foot"><span>десерты на заказ для событий и брендов</span><span>москва и область</span></div>
 </div>
 <div class="fx" id="fx">
   <div class="fx-bar t-a">
