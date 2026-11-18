@@ -138,12 +138,12 @@ p { margin: 0; text-wrap: pretty; }
 .slot { position: relative; overflow: hidden; }
 .mosaic { position: absolute; inset: 0; overflow: hidden; background: var(--c-dark); }
 .mosaic .fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mosaic .whole { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 /* Слайдер «доли по кругу» (выбор Никиты 18.11 — «стекляшки по кругу»): кадр режется на 6 клиньев от центра, новые доли слетаются по часовой и складываются в целое.
    Разлёт почти как в первой версии (было 14 % / 7° / 1,06 → 11 % / 5° / 1,045), движение и проявление мягче */
 .slice { position: absolute; inset: 0; }
 .slice img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 50%; }
 .slice .cur { z-index: 2; will-change: transform, opacity; transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1), opacity .85s cubic-bezier(0.33, 0, 0.2, 1); }   /* чуть быстрее (Никита 18.11) */
-.slice .prev { z-index: 1; }
 
 /* Обложка — «оглавление» (реф stateofaidesign.com) */
 .hero-b { display: grid; grid-template-columns: 40.5fr 59.5fr; min-height: 56rem; }
@@ -1115,9 +1115,10 @@ html { scroll-padding-top: 4.5rem; }
 html.is-loading, html.is-loading body { overflow: hidden; }
 .pl.is-out { transform: translateY(-100%); }
 .pl.is-gone { display: none; }
-/* Чем занимается компания — внизу прелоудера, видно всё время (Никита 18.11) */
-.pl-foot { position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem 2rem; padding: 0 max(var(--gut), env(safe-area-inset-right, 0px)) calc(1.5rem + env(safe-area-inset-bottom, 0px)) max(var(--gut), env(safe-area-inset-left, 0px)); font: 500 .8125rem/1.3 var(--f-t); letter-spacing: .03em; animation: pl-foot-in .8s .2s cubic-bezier(.22, 1, .36, 1) both; }
-@keyframes pl-foot-in { from { opacity: 0; transform: translateY(.5rem); } }
+/* Чем занимается компания — под кадром и знаком, ближе к центру: по краям не замечали (Никита 18.11) */
+.pl-foot { position: absolute; left: 50%; top: calc(50% + 11.5rem); transform: translateX(-50%); width: max-content; max-width: calc(100% - 2 * var(--gut)); display: flex; justify-content: center; gap: 0 .6rem; text-align: center; font: 500 .8125rem/1.4 var(--f-t); letter-spacing: .03em; animation: pl-foot-in .8s .2s cubic-bezier(.22, 1, .36, 1) both; }
+.pl-foot span + span::before { content: '·'; margin-right: .6rem; }
+@keyframes pl-foot-in { from { opacity: 0; transform: translate(-50%, .5rem); } }
 .pl-box { width: 15rem; display: flex; flex-direction: column; gap: .6rem; }
 .pl-top { display: flex; justify-content: space-between; font: 500 .6875rem/1 var(--f-t); letter-spacing: .04em; font-variant-numeric: tabular-nums; transition: opacity .3s; }
 .pl-frame { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #E4D8D9; transition: clip-path .7s cubic-bezier(.76, 0, .24, 1); clip-path: inset(0); }
@@ -1149,7 +1150,8 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 /* Мобилка — правки Никиты 18.11 (2) */
 @media (max-width: 767px) {
   .pl { bottom: -20vh; padding-bottom: 20vh; }   /* прелоудер закрывает экран и под нижней панелью Safari */
-  .pl-foot { bottom: 20vh; flex-direction: column; font-size: .75rem; }
+  .pl-foot { top: calc(50% - 10vh + 8.75rem); flex-direction: column; font-size: .75rem; }
+  .pl-foot span + span::before { content: none; }
   .pl-mark { top: calc(50% - 10vh); }   /* центр видимого экрана, без запаса под панель Safari */
   html.is-loading { background: #F4EEEE; }
   .pick--party::before { border-left: 0; }
@@ -1607,19 +1609,20 @@ html.is-loading, html.is-loading body { overflow: hidden; }
       var a1 = -90 + k * 360 / N - 0.4, a2 = -90 + (k + 1) * 360 / N + 0.4, mid = (a1 + a2) / 2 * Math.PI / 180;
       var el = document.createElement('div'); el.className = 'slice';
       el.style.clipPath = 'polygon(50% 50%, ' + pt(a1) + ', ' + pt((a1 + a2) / 2) + ', ' + pt(a2) + ')';
-      el.innerHTML = '<img class="prev" alt=""><img class="cur" alt="">';
-      var cur = el.querySelector('.cur'), prev = el.querySelector('.prev');
-      cur.src = prev.src = srcs[0];
+      el.innerHTML = '<img class="cur" alt="">';
+      var cur = el.querySelector('.cur'), prev = null;
+      cur.src = srcs[0];
       // поза доли «до сборки»: отодвинута наружу по своей оси и чуть повёрнута
       var pose = 'translate(' + (Math.cos(mid) * 11).toFixed(2) + '%,' + (Math.sin(mid) * 11).toFixed(2) + '%) rotate(' + (k % 2 ? 5 : -5) + 'deg) scale(1.045)';
       slices.push({ cur: cur, prev: prev, pose: pose });
       mosaic.appendChild(el);
     }
-    var fb = mosaic.querySelector('.fallback'); if (fb) fb.remove();
+    // целое фото под долями: в субпиксельных щелях между клиньями видно тот же кадр, а не тёмный фон (тонкие линии — Никита 18.11)
+    var whole = mosaic.querySelector('.fallback'); whole.className = 'whole'; mosaic.insertBefore(whole, mosaic.firstChild);
+    var swap;
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function show(n, first) {
       slices.forEach(function (s, k) {
-        if (!first) s.prev.src = s.cur.getAttribute('src');
         s.cur.style.transition = 'none';
         s.cur.style.opacity = '0';
         s.cur.style.transform = reduce ? 'none' : s.pose;
@@ -1627,6 +1630,9 @@ html.is-loading, html.is-loading body { overflow: hidden; }
         void s.cur.offsetWidth;
         setTimeout(function () { s.cur.style.transition = ''; s.cur.style.transform = 'none'; s.cur.style.opacity = '1'; }, 60 + k * STEP);
       });
+      // когда доли собрались — подложка становится новым кадром (смена под полностью закрытыми долями не видна)
+      clearTimeout(swap);
+      swap = setTimeout(function () { whole.src = srcs[n]; }, first ? 0 : 60 + (N - 1) * STEP + 1750);
     }
     // первый кадр — сразу (он же в разметке), остальные догружаем после загрузки страницы; в смену идут только уже загруженные
     var ready = [true];
