@@ -1117,9 +1117,9 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 .pl-box { width: 15rem; display: flex; flex-direction: column; gap: .6rem; }
 .pl-top { display: flex; justify-content: space-between; font: 500 .6875rem/1 var(--f-t); letter-spacing: .04em; font-variant-numeric: tabular-nums; transition: opacity .3s; }
 .pl-frame { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #E4D8D9; transition: clip-path .7s cubic-bezier(.76, 0, .24, 1); clip-path: inset(0); }
-.pl-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; clip-path: inset(100% 0 0 0); }
-.pl-frame img.is-on { z-index: 2; clip-path: inset(0); transition: clip-path .32s cubic-bezier(.65, 0, .35, 1); }
-.pl-frame img.was-on { z-index: 1; clip-path: inset(0); }
+.pl-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; clip-path: inset(100% 0 0 0); transform: scale(1.12); }
+.pl-frame img.is-on { z-index: 2; clip-path: inset(0); transform: none; transition: clip-path .6s cubic-bezier(.77, 0, .18, 1), transform 1s cubic-bezier(.22, 1, .36, 1); }   /* мягче и медленнее (Никита 18.11) */
+.pl-frame img.was-on { z-index: 1; clip-path: inset(0); transform: none; }
 .pl.is-close .pl-frame { clip-path: inset(0 0 100% 0); }
 .pl.is-close .pl-top { opacity: 0; }
 .pl-mark { position: absolute; left: 50%; top: 50%; width: min(48rem, 84vw); transform: translate(-50%, -50%); overflow: hidden; pointer-events: none; }
@@ -1141,7 +1141,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 <div class="pl" id="pl" aria-hidden="true">
   <div class="pl-box">
     <div class="pl-top"><span>nobo pastry&amp;cafe</span><span><span id="pl-n">0</span></span></div>
-    <div class="pl-frame"><img src="assets/img/pl/tart-candles.webp" alt="" data-i="0"><img src="assets/img/pl/ducks-tray.webp" alt="" data-i="1"><img src="assets/img/pl/ym-364.webp" alt="" data-i="2"><img src="assets/img/pl/ym-204.webp" alt="" data-i="3"><img src="assets/img/pl/ym-385.webp" alt="" data-i="4"><img src="assets/img/pl/forbes-ducks.webp" alt="" data-i="5"><img src="assets/img/pl/ym-183.webp" alt="" data-i="6"><img src="assets/img/pl/chef.webp" alt="" data-i="7"></div>
+    <div class="pl-frame"><img src="assets/img/pl/tart-candles.webp" alt="" data-i="0"><img src="assets/img/pl/ducks-tray.webp" alt="" data-i="1"><img src="assets/img/pl/ym-364.webp" alt="" data-i="2"><img src="assets/img/pl/ym-204.webp" alt="" data-i="3"><img src="assets/img/pl/ym-385.webp" alt="" data-i="4"><img src="assets/img/pl/forbes-ducks.webp" alt="" data-i="5"></div>
   </div>
   <div class="pl-mark">
     <svg class="pl-logo" viewBox="0 0 2784 714"><use href="#nobo-logo"/><use class="eye-lid" href="#nobo-o2"/><use class="pl-pupil" href="#nobo-o2"/></svg>
@@ -1941,7 +1941,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     var pl = document.getElementById('pl'); if (!pl) return;
     if (!window.NOBO_PRELOADER) { pl.classList.add('is-gone'); return; }
     var imgs = [].slice.call(pl.querySelectorAll('.pl-frame img')), num = document.getElementById('pl-n');
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches, loaded = document.readyState === 'complete', k = -1, t0 = performance.now(), STEP = 260, MIN = imgs.length * STEP;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches, loaded = document.readyState === 'complete', k = -1, t0 = performance.now(), STEP = 520, MIN = imgs.length * STEP;
     if (window.noboLenis) window.noboLenis.stop();
     window.addEventListener('load', function () { loaded = true; });
     function next() {
@@ -1952,14 +1952,14 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     function finish() {
       pl.classList.add('is-close');
       setTimeout(function () { pl.classList.add('is-mark'); }, 450);
-      setTimeout(function () { pl.classList.add('is-look'); }, reduce ? 500 : 1250);
+      setTimeout(function () { pl.classList.add('is-look'); }, reduce ? 500 : 1150);
       setTimeout(function () {
         pl.classList.add('is-out'); document.documentElement.classList.remove('is-loading');
         if (window.noboLenis) window.noboLenis.start();
         setTimeout(function () { pl.classList.add('is-gone'); }, 1100);
-      }, reduce ? 900 : 2450);
+      }, reduce ? 900 : 2300);
     }
-    next();
+    imgs[0].style.transition = 'none'; next(); void imgs[0].offsetWidth; imgs[0].style.transition = '';
     var tm = setInterval(function () {
       var el = performance.now() - t0, p = Math.min(loaded ? 100 : 90, Math.round(el / MIN * 100));
       num.textContent = p;
