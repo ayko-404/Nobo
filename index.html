@@ -1269,6 +1269,7 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
 /* Ноутбуки (экран до 900 px по высоте): оглавление выше → фото ниже, под кнопками воздух; описание шире (Никита 19.11) */
 @media (min-width: 1024px) and (max-height: 900px) { .hb-plane { padding-bottom: 3.75rem; } }
 @media (min-width: 1024px) { .hb-desc { grid-column: 3 / -1; padding-right: 0; } }
+@media (min-width: 768px) { .fa-photo { position: sticky; top: 6rem; height: min(38rem, 100vh - 8rem); height: min(38rem, 100svh - 8rem); } }   /* фото форматов прилипает под шапкой, пока листается список (Никита 19.11) */
 /* Логотип на бордовом — персиковый, как на стакане (макет клиента 19.11: фон C0 M85 Y72 K71 → #651F1F, знак C0 M47 Y56 K9 → #E1946A) */
 :root { --c-logo: #E1946A; }
 .hb-brand, .hb-brand .hb-logo, .hb-brand .logo-sub, .brand, .brand .logo, .brand .logo-sub, .fx-logo, .fx-slot svg { color: var(--c-logo); }
