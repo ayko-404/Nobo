@@ -2139,26 +2139,31 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
       function measure() { half = tr.scrollWidth / 2; speed = half / (dir > 0 ? 70 : 80) / 1000; }
       function wrap() { if (half) x = ((x % half) + half) % half; }
       function paint() { tr.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)'; }
-      mq.addEventListener('pointerdown', function (e) { if (e.button > 0) return; drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, x0: x, on: false, lx: e.clientX, lt: performance.now() }; vel = 0; });
+      mq.addEventListener('pointerdown', function (e) { if (e.button > 0) return; drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, x0: x, on: false, pts: [] }; vel = 0; });
       mq.addEventListener('pointermove', function (e) {
         if (!drag || e.pointerId !== drag.id) return;
         var dx = e.clientX - drag.sx, dy = e.clientY - drag.sy;
         if (!drag.on) {
           if (Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx)) { drag = null; return; }   // вертикальный жест — прокрутка страницы
           if (Math.abs(dx) < 6) return;
-          drag.on = true; mq.classList.add('is-drag'); try { mq.setPointerCapture(e.pointerId); } catch (_) {}
+          drag.on = true; drag.x0 = x + dx; mq.classList.add('is-drag'); try { mq.setPointerCapture(e.pointerId); } catch (_) {}   // подхват без рывка назад
         }
-        var t = performance.now(); vel = -(e.clientX - drag.lx) / Math.max(1, t - drag.lt); drag.lx = e.clientX; drag.lt = t;
+        var t = performance.now(); drag.pts.push([t, e.clientX]); while (drag.pts.length > 2 && t - drag.pts[0][0] > 120) drag.pts.shift();
         x = drag.x0 - dx; wrap(); paint();
       });
-      function end(e) { if (!drag || (e && e.pointerId !== drag.id)) return; if (!drag.on) vel = 0; drag = null; mq.classList.remove('is-drag'); idle = performance.now(); }
+      function end(e) {
+        if (!drag || (e && e.pointerId !== drag.id)) return;
+        vel = 0;   // скорость броска — по последним ~120 мс движения, а не по одному кадру (Никита 19.11: «тяжело листается»)
+        if (drag.on && drag.pts.length > 1) { var a = drag.pts[0], b = drag.pts[drag.pts.length - 1], now = performance.now(); if (now - b[0] < 80) vel = Math.max(-4, Math.min(4, -(b[1] - a[1]) / Math.max(16, b[0] - a[0]))); }
+        drag = null; mq.classList.remove('is-drag'); idle = performance.now();
+      }
       mq.addEventListener('pointerup', end); mq.addEventListener('pointercancel', end); mq.addEventListener('lostpointercapture', end);
-      mq.addEventListener('mouseenter', function () { hover = true; });
-      mq.addEventListener('mouseleave', function () { hover = false; });
+      mq.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });   // на телефоне «наведение» не залипает
+      mq.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') hover = false; });
       function tick(t) {
         var dt = last ? Math.min(50, t - last) : 16; last = t;
         if (!(drag && drag.on) && half) {
-          if (Math.abs(vel) > 0.02) { x += vel * dt; vel *= Math.pow(0.94, dt / 16); idle = t; }   // инерция после свайпа
+          if (Math.abs(vel) > 0.02) { x += vel * dt; vel *= Math.pow(0.965, dt / 16); idle = t; }   // инерция после свайпа
           else if (!reduce && !hover && t - idle > 900) x += dir * speed * dt;
           wrap(); paint();
         }
