@@ -22,14 +22,14 @@
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --sec: 8rem;
-  /* Палитра «Малина» — выбор Никиты 18.11 (бордо #961B30 — реф Anna Bistro, цвет малины на фото тартов) */
+  /* Палитра «Малина» — выбор Никиты 18.11 (бордо #651F1F — реф Anna Bistro, цвет малины на фото тартов) */
   --c-dark: #0E0B0B;  --c-dark-ink: #FFFFFF; --c-dark-mute: #B9B1B2;
   --c-light: #FFFFFF; --c-light-ink: #1A1012; --c-light-mute: #6B5F61;
-  --c-a: #961B30;     --c-a-ink: #FFFFFF;    --c-a-mute: #F0C9CF;
+  --c-a: #651F1F;     --c-a-ink: #FFFFFF;    --c-a-mute: #F0C9CF;
   --c-b: #F4EEEE;     --c-b-ink: #1A1012;    --c-b-mute: #6B5F61;
-  --c-act: #961B30;   --c-act-ink: #FFFFFF;
-  --c-actl: #961B30;  --c-actl-ink: #FFFFFF;
-  --c-wait: #961B30;
+  --c-act: #651F1F;   --c-act-ink: #FFFFFF;
+  --c-actl: #651F1F;  --c-actl-ink: #FFFFFF;
+  --c-wait: #651F1F;
   /* Заголовки — вариант H, выбор Никиты 18.11: Roboto Serif сжатый (реф David / Instrument Serif) */
   --f-d: "Roboto Serif", Georgia, "Times New Roman", serif;
   --d-case: lowercase; --d-w: 300; --d-track: -0.02em; --d-lh: 0.96; --d-stretch: 50%; --d-fvs: "opsz" 144;
@@ -80,7 +80,7 @@ a { color: inherit; }
 .t-dark, .t-light, .t-a, .t-b { background: var(--bg); color: var(--ink); }
 .t-dark, .t-a { --line: color-mix(in srgb, var(--ink) 35%, transparent); --btn: var(--c-act); --btn-ink: var(--c-act-ink); }
 .t-light, .t-b { --line: color-mix(in srgb, var(--ink) 22%, transparent); --btn: var(--c-act); --btn-ink: var(--c-act-ink); }
-.t-a { --btn: #FFFFFF; --btn-ink: #961B30; }
+.t-a { --btn: #FFFFFF; --btn-ink: #651F1F; }
 
 .wrap { padding-left: max(var(--gut), env(safe-area-inset-left, 0px)); padding-right: max(var(--gut), env(safe-area-inset-right, 0px)); }
 .sec { padding-block: var(--sec); }
@@ -138,12 +138,11 @@ p { margin: 0; text-wrap: pretty; }
 .slot { position: relative; overflow: hidden; }
 .mosaic { position: absolute; inset: 0; overflow: hidden; background: var(--c-dark); }
 .mosaic .fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.mosaic .whole { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 /* Слайдер «доли по кругу» (выбор Никиты 18.11 — «стекляшки по кругу»): кадр режется на 6 клиньев от центра, новые доли слетаются по часовой и складываются в целое.
    Разлёт почти как в первой версии (было 14 % / 7° / 1,06 → 11 % / 5° / 1,045), движение и проявление мягче */
-.slice { position: absolute; inset: 0; }
-.slice img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 50%; }
-.slice .cur { z-index: 2; will-change: transform, opacity; transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1), opacity .85s cubic-bezier(0.33, 0, 0.2, 1); }   /* чуть быстрее (Никита 18.11) */
+.mosaic .mz { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.05); transition: opacity 1.1s cubic-bezier(.33, 0, .2, 1), transform 1.8s cubic-bezier(.22, 1, .36, 1); }
+.mosaic .mz.is-on { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .mosaic .mz { transition: opacity .4s; transform: none; } }
 
 /* Обложка — «оглавление» (реф stateofaidesign.com) */
 .hero-b { display: grid; grid-template-columns: 40.5fr 59.5fr; min-height: 56rem; }
@@ -184,7 +183,7 @@ html.lenis, html.lenis body { height: auto; }
 /* Знак крупно на обложке — во всю ширину плоскости (анимацию добавим позже) */
 .hb-logo { display: block; width: 100%; height: auto; color: var(--ink); }
 @media (min-width: 768px) { .hdr .brand { visibility: hidden; } }
-.hb-main { padding-top: 5.5rem; }
+.hb-main { padding-top: 5rem; }   /* фото выше (клиент 19.11) */
 .hero-b .hb-h1 { font-size: 4.5rem; }
 @media (hover: hover) { .toc a:hover span, .toc a:hover sup { transform: translateX(0.75rem); } }
 .hb-foot { margin-top: 1.25rem; }
@@ -370,7 +369,7 @@ fieldset.f { border: 0; margin: 0; padding: 0; }
   .seg.two button { border-top: 0; border-left: 1px solid var(--line); }
   .seg.two button:first-child { border-left: 0; }
   .mbar { display: grid; grid-template-columns: 1fr auto; position: fixed; z-index: 40; inset: auto 0 0; padding: 0.75rem max(1rem, env(safe-area-inset-right, 0px)) calc(0.75rem + env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px)); gap: 0.5rem; background: var(--c-dark); --ink: var(--c-dark-ink); --btn: var(--c-act); --btn-ink: var(--c-act-ink); border-top: 1px solid color-mix(in srgb, var(--c-dark-ink) 25%, transparent); }
-  .mbar { --btn: #961B30; --btn-ink: #FFFFFF; }
+  .mbar { --btn: #651F1F; --btn-ink: #FFFFFF; }
   .mbar .btn--line { color: var(--c-dark-ink); }
   .p-vsw { bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px)); gap: 0.4rem; padding: 0.4rem; }
   body { padding-bottom: 4.5rem; }
@@ -383,7 +382,7 @@ fieldset.f { border: 0; margin: 0; padding: 0; }
 .toc--b a { padding-right: 2.25rem; align-items: center; }
 .toc--b a > span, .toc--b a > sup { align-self: flex-start; }
 .toc--b a > span { white-space: nowrap; }
-.toc-ill { flex: none; margin-left: auto; width: 5.4rem; height: 4.3rem; overflow: visible; --m: var(--c-a-ink); --n: var(--c-a); --p: var(--c-a-mute); }
+.toc-ill { flex: none; margin-left: auto; width: 4.4rem; height: 3.5rem; overflow: visible; --m: var(--c-a-ink); --n: var(--c-a); --p: var(--c-a-mute); }
 .toc-ill * { transform-box: fill-box; }
 .toc-ill .m { fill: var(--m); } .toc-ill .n { fill: var(--n); } .toc-ill .p { fill: var(--p); }
 .toc-ill .ns { fill: none; stroke: var(--n); stroke-width: 2.4; stroke-linecap: round; }
@@ -431,7 +430,7 @@ fieldset.f { border: 0; margin: 0; padding: 0; }
 .hb-desc { grid-column: 3 / 4; justify-self: stretch; max-width: none; padding-left: 1.25rem; padding-right: 0.5rem; font-size: 0.9375rem; line-height: 1.5; }
 .hb-facts { grid-template-columns: repeat(3, minmax(0, 1fr)) 3.5rem; }
 .hero-b .hb-head .hb-h1 { font-size: 4.125rem; }
-.toc--b a { font-size: 3.25rem; }
+.toc--b a { font-size: 2.85rem; }   /* компактнее — фото обложки выше (клиент 19.11) */
 }
 
 /* Фиксированная шапка: появляется, когда второй блок доезжает до верха; большой знак с обложки уменьшается и садится в неё */
@@ -490,20 +489,20 @@ html { scroll-padding-top: 4.5rem; }
 /* курсор-бейдж «собрать заказ» — подсказывает, что карточка кликается */
 /* курсор-бейдж «собрать заказ» — один на блок, в фиксированном слое: при прокрутке стоит под курсором и не отстаёт */
 .pick-cur { position: fixed; left: 0; top: 0; z-index: 30; width: 0; height: 0; pointer-events: none; will-change: transform; }
-.pick-cur span { position: absolute; left: -3.5rem; top: -3.5rem; width: 7rem; height: 7rem; border-radius: 50%; display: grid; place-items: center; text-align: center; font: 500 0.8125rem/1.25 var(--f-t); background: #FFFFFF; color: #961B30; opacity: 0; transform: scale(.4); transition: opacity .25s, transform .3s var(--ease-out); }
+.pick-cur span { position: absolute; left: -3.5rem; top: -3.5rem; width: 7rem; height: 7rem; border-radius: 50%; display: grid; place-items: center; text-align: center; font: 500 0.8125rem/1.25 var(--f-t); background: #FFFFFF; color: #651F1F; opacity: 0; transform: scale(.4); transition: opacity .25s, transform .3s var(--ease-out); }
 .pick-cur.is-on span { opacity: 1; transform: scale(1); }
 @media (hover: hover) and (min-width: 768px) { .picks.is-cur .pick { cursor: none; } }
 /* A — фото на всю карточку, текст поверх на затемнении */
 .v-a .pick { color: #FFFFFF; --ink: #FFFFFF; background: #0E0B0B; }
 .v-a .pick-media { position: absolute; inset: 0; }
 .v-a .pick-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(14,11,11,.94) 0%, rgba(14,11,11,.8) 30%, rgba(14,11,11,.5) 55%, rgba(14,11,11,0) 85%), linear-gradient(to right, rgba(14,11,11,.45) 0%, rgba(14,11,11,0) 65%); }
-.v-a .pick-cta { --btn: #FFFFFF; --btn-ink: #961B30; --glaze: #961B30; }
+.v-a .pick-cta { --btn: #FFFFFF; --btn-ink: #651F1F; --glaze: #651F1F; }
 @media (max-width: 767px) {
   .picks { grid-template-columns: 1fr; }
   .pick, .pick--party { height: 36rem; }
 }
 /* Быстрый заказ — поп-ап */
-.qo { width: min(46rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); padding: 0; border: 0; background: #FFFFFF; color: #0E0B0B; --ink: #0E0B0B; --mute: #6B5F60; --line: #D9CFD0; --bg: #FFFFFF; --btn: #961B30; --btn-ink: #FFFFFF; }
+.qo { width: min(46rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); padding: 0; border: 0; background: #FFFFFF; color: #0E0B0B; --ink: #0E0B0B; --mute: #6B5F60; --line: #D9CFD0; --bg: #FFFFFF; --btn: #651F1F; --btn-ink: #FFFFFF; }
 .qo::backdrop { background: rgba(14, 11, 11, .62); }
 .qo[open] { animation: qo-in .45s var(--ease-out); }
 @keyframes qo-in { from { opacity: 0; transform: translateY(1.5rem); } }
@@ -517,11 +516,11 @@ html { scroll-padding-top: 4.5rem; }
 .qo-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .chip { font: 500 0.875rem/1 var(--f-t); padding: 0.7rem 0.95rem; border: 1px solid var(--line); background: transparent; color: inherit; cursor: pointer; transition: background-color .2s, color .2s, border-color .2s; }
 .chip[hidden] { display: none; }
-.chip[aria-pressed="true"] { background: #961B30; border-color: #961B30; color: #FFFFFF; }
-@media (hover: hover) { .chip:hover { border-color: #961B30; } }
+.chip[aria-pressed="true"] { background: #651F1F; border-color: #651F1F; color: #FFFFFF; }
+@media (hover: hover) { .chip:hover { border-color: #651F1F; } }
 .qo-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 .qo-fields .f[hidden] { display: none; }
-.qo-err { margin: 0; font-size: 0.875rem; color: #961B30; }
+.qo-err { margin: 0; font-size: 0.875rem; color: #651F1F; }
 .qo-foot { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: center; justify-content: space-between; }
 .qo-more { font-size: 0.875rem; color: var(--mute); }
 @media (max-width: 767px) { .qo-in, .qo-done { padding: 2.25rem 1.25rem 1.75rem; } .qo-fields { grid-template-columns: 1fr; } .qo-h { font-size: 2.25rem; } }
@@ -552,7 +551,7 @@ html { scroll-padding-top: 4.5rem; }
 .fa-t { font-size: 2.25rem; line-height: 1; transition: transform .45s var(--ease-out), color .3s; }
 .fa-tag { font-size: 0.8125rem; color: var(--mute); }
 .fa-ar { font-size: 1.25rem; transition: transform .45s var(--ease-out); }
-.fa-row.is-on .fa-t { transform: translateX(0.5rem); color: #961B30; }
+.fa-row.is-on .fa-t { transform: translateX(0.5rem); color: #651F1F; }
 .fa-row.is-on .fa-ar { transform: rotate(90deg); }
 .fa-more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--ease-out); }
 .fa-row.is-on .fa-more { grid-template-rows: 1fr; }
@@ -609,9 +608,9 @@ html { scroll-padding-top: 4.5rem; }
 .sz-txt .h2 { margin: 0; }
 .sz-go { align-self: flex-start; }
 .sv[hidden] { display: none; }
-#tart-top .tc { fill: #961B30; }
+#tart-top .tc { fill: #651F1F; }
 #tart-top .tm { fill: #F4EEEE; }
-#tart-top .tb { fill: #961B30; }
+#tart-top .tb { fill: #651F1F; }
 /* A — линейка */
 .sa-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; }
 .sa-item { flex: var(--d) 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-align: center; transition: opacity .5s ease; }
@@ -624,7 +623,7 @@ html { scroll-padding-top: 4.5rem; }
 .sa-n small { font: 400 0.8125rem var(--f-t); }
 .sa-meta { font-size: 0.8125rem; color: var(--mute); }
 .sa-pr { font-size: 0.9375rem; }
-.sa-chef { font-size: 0.75rem; color: #961B30; }
+.sa-chef { font-size: 0.75rem; color: #651F1F; }
 @media (hover: hover) {
   .sa-row:has(.sa-item:hover) .sa-item:not(:hover) { opacity: .35; }   /* только когда курсор на тарте, а не в пустоте ряда */
   .sa-item:hover .sa-tart { transform: rotate(24deg) scale(1.03); }
@@ -709,7 +708,7 @@ html { scroll-padding-top: 4.5rem; }
 .fd-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem var(--gap); padding-top: 1rem; }
 .fd { position: relative; aspect-ratio: 1 / 1.08; perspective: 1400px; outline-offset: 6px; cursor: default; }
 .fd--1 { --fb: #E2C3C8; --ff: #F4EEEE; --fi: #0E0B0B; }
-.fd--2 { --fb: #6E1222; --ff: #961B30; --fi: #FFFFFF; }
+.fd--2 { --fb: #4C1616; --ff: #651F1F; --fi: #FFFFFF; }
 .fd--3 { --fb: #2B2525; --ff: #0E0B0B; --fi: #FFFFFF; }
 .fd-back { position: absolute; inset: 2.4rem 0 0; background: var(--fb); border-radius: 0 12px 12px 12px; }
 .fd-tab { position: absolute; left: 0; bottom: 100%; height: 2.4rem; display: flex; align-items: center; padding: 0 1.1rem; background: var(--fb); color: var(--fi); border-radius: 12px 12px 0 0; font-size: .8125rem; }
@@ -740,14 +739,14 @@ html { scroll-padding-top: 4.5rem; }
 .ot-go { align-self: flex-start; margin-top: .5rem; }
 .ot-list { position: relative; list-style: none; margin: 0; padding: 0 0 0 3rem; }
 .ot-line { position: absolute; left: .45rem; top: .9rem; bottom: .9rem; width: 1px; background: var(--line); }
-.ot-line span { display: block; width: 100%; height: var(--ot, 0%); background: #961B30; }
+.ot-line span { display: block; width: 100%; height: var(--ot, 0%); background: #651F1F; }
 .ot-step { position: relative; display: grid; grid-template-columns: 7rem 1fr; gap: 1.5rem; padding: 0 0 4.5rem; opacity: .3; transition: opacity .6s ease; }
 .ot-step:last-child { padding-bottom: 0; }
 .ot-step.is-on { opacity: 1; }
 .ot-dot { position: absolute; left: -3rem; top: .55rem; width: .9rem; height: .9rem; border-radius: 50%; background: var(--bg); border: 1px solid var(--line); transition: background-color .4s, border-color .4s; }
-.ot-step.is-on .ot-dot { background: #961B30; border-color: #961B30; }
+.ot-step.is-on .ot-dot { background: #651F1F; border-color: #651F1F; }
 .ot-n { font-size: 5rem; line-height: .85; color: transparent; -webkit-text-stroke: 1px currentColor; transition: color .5s; }
-.ot-step.is-on .ot-n { color: #961B30; -webkit-text-stroke: 0; }
+.ot-step.is-on .ot-n { color: #651F1F; -webkit-text-stroke: 0; }
 .ot-when { margin: 0 0 .5rem; font-size: .8125rem; color: var(--mute); }
 .ot-h { margin: 0 0 .75rem; font-size: 2.5rem; line-height: 1; }
 .ot-step p:last-child { margin: 0; max-width: 30rem; }
@@ -777,11 +776,11 @@ html { scroll-padding-top: 4.5rem; }
 }
 
 /* 09 Отзывы — 3 варианта (Никита 18.11). Прямые углы, тонкие чёрные линии — как папки кейсов */
-.rv-star { width: 1rem; height: 1rem; fill: #961B30; }
+.rv-star { width: 1rem; height: 1rem; fill: #651F1F; }
 .rv-stars { display: flex; gap: .15rem; }
 .rv-stars--big .rv-star { width: 1.4rem; height: 1.4rem; }
 .rv-rate { display: flex; align-items: center; gap: 1rem; }
-.rv-big { font-size: 5.5rem; line-height: .8; color: #961B30; }
+.rv-big { font-size: 5.5rem; line-height: .8; color: #651F1F; }
 .rv-rate p { margin: .4rem 0 0; font-size: .8125rem; color: var(--mute); }
 .rv-head { display: grid; grid-template-columns: calc(40.5% + var(--gut) * 0.81 - var(--pl-gap)) minmax(0, 1fr) auto; column-gap: var(--pl-gap); align-items: end; margin-bottom: 3.5rem; }
 .rv-head .h2 { margin: 0; }
@@ -797,7 +796,7 @@ html { scroll-padding-top: 4.5rem; }
 .rv-card { flex: none; width: 24rem; margin: 0; display: flex; flex-direction: column; gap: 1rem; padding: 1.5rem; background: #FFFFFF; border: 1px solid #0E0B0B; transition: background-color .3s, color .3s; }
 .rv-card blockquote { margin: 0; font-family: var(--f-d); font-stretch: var(--d-stretch); font-variation-settings: var(--d-fvs, normal); font-size: 1.5rem; line-height: 1.2; }
 .rv-card figcaption { margin-top: auto; display: flex; justify-content: space-between; gap: 1rem; font-size: .75rem; color: var(--mute); }
-@media (hover: hover) { .rv-card:hover { background: #961B30; color: #FFFFFF; --mute: rgba(255,255,255,.75); } .rv-card:hover .rv-star { fill: #FFFFFF; } }
+@media (hover: hover) { .rv-card:hover { background: #651F1F; color: #FFFFFF; --mute: rgba(255,255,255,.75); } .rv-card:hover .rv-star { fill: #FFFFFF; } }
 @media (max-width: 767px) {
   .rv-head { grid-template-columns: 1fr; row-gap: 1.5rem; }
   .rv-card { width: 18rem; }
@@ -902,7 +901,7 @@ html { scroll-padding-top: 4.5rem; }
 .ot-l { padding-right: 2rem; }
 
 /* Поп-апы пунктов оглавления: фото слева, описание и параметры справа; прямые углы, как весь сайт */
-.fp { width: min(60rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); padding: 0; border: 0; background: #FFFFFF; color: #0E0B0B; --ink: #0E0B0B; --mute: #6B5F60; --bg: #FFFFFF; --btn: #961B30; --btn-ink: #FFFFFF; }
+.fp { width: min(60rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); padding: 0; border: 0; background: #FFFFFF; color: #0E0B0B; --ink: #0E0B0B; --mute: #6B5F60; --bg: #FFFFFF; --btn: #651F1F; --btn-ink: #FFFFFF; }
 .fp::backdrop { background: rgba(14, 11, 11, .62); }
 .fp[open] { animation: qo-in .45s var(--ease-out); }
 .fp-in { position: relative; display: grid; grid-template-columns: 22rem minmax(0, 1fr); min-height: 30rem; }
@@ -923,7 +922,7 @@ html { scroll-padding-top: 4.5rem; }
 .fp-b li::before { content: "— "; }
 .fp-foot { margin-top: auto; padding-top: 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
 .fp-next { background: none; border: 0; padding: 0; font: inherit; font-size: .875rem; color: var(--mute); cursor: pointer; }
-@media (hover: hover) { .fp-next:hover { color: #961B30; } }
+@media (hover: hover) { .fp-next:hover { color: #651F1F; } }
 .fp-body > * { animation: fp-up .6s cubic-bezier(.22, 1, .36, 1) both; }
 .fp-body > :nth-child(2) { animation-delay: .05s; } .fp-body > :nth-child(3) { animation-delay: .1s; } .fp-body > :nth-child(4) { animation-delay: .15s; } .fp-body > :nth-child(n+5) { animation-delay: .2s; }
 @keyframes fp-up { from { opacity: 0; transform: translateY(12px); } }
@@ -941,7 +940,7 @@ html { scroll-padding-top: 4.5rem; }
 .dd-list { position: absolute; left: 0; top: calc(100% + .4rem); z-index: 20; min-width: 100%; margin: 0; padding: .4rem 0; list-style: none; background: #F4EEEE; color: #0E0B0B; border: 1px solid #0E0B0B; font: 400 1rem/1.3 var(--f-t); text-transform: lowercase; white-space: nowrap; animation: dd-in .25s var(--ease-out); }
 @keyframes dd-in { from { opacity: 0; transform: translateY(-6px); } }
 .dd-list li { padding: .65rem 1.1rem; cursor: pointer; display: flex; justify-content: space-between; gap: 1.5rem; }
-.dd-list li:hover, .dd-list li:focus { background: #961B30; color: #FFFFFF; outline: none; }
+.dd-list li:hover, .dd-list li:focus { background: #651F1F; color: #FFFFFF; outline: none; }
 .dd-list li[aria-selected="true"]::after { content: "✓"; }
 
 /* Быстрый заказ — проще и живее (Никита 18.11): та же «заявка одной фразой», слева фото выбранного формата — меняется из-под маски */
@@ -960,8 +959,8 @@ html { scroll-padding-top: 4.5rem; }
 .qo2 .qo-err { color: #F0C9CF; }
 .qo2-dh { margin: 0; font-size: 3.5rem; line-height: 1; }
 .qo2-done p { margin: 0; }
-.qo2 .btn { --btn: #961B30; --btn-ink: #FFFFFF; --glaze: #FFFFFF; }
-@media (hover: hover) { html body .qo2 .btn:hover { color: #961B30; } }
+.qo2 .btn { --btn: #651F1F; --btn-ink: #FFFFFF; --glaze: #FFFFFF; }
+@media (hover: hover) { html body .qo2 .btn:hover { color: #651F1F; } }
 @media (max-width: 767px) { .qo2-in { grid-template-columns: 1fr; } .qo2-ph { height: 11rem; } .qo2-r { padding: 2.25rem 1.25rem 1.75rem; } }
 
 
@@ -981,7 +980,7 @@ html { scroll-padding-top: 4.5rem; }
   .fx-burger span { display: block; width: 1rem; height: 1.5px; background: #FFFFFF; transition: transform .35s var(--ease-out); }
   .fx-burger[aria-expanded="true"] span:first-child { transform: translateY(3.25px) rotate(45deg); }
   .fx-burger[aria-expanded="true"] span:last-child { transform: translateY(-3.25px) rotate(-45deg); }
-  .fx-menu { position: absolute; left: 0; right: 0; top: 100%; display: flex; flex-direction: column; gap: 1.5rem; padding: 1.5rem var(--gut) 2rem; background: #961B30; color: #FFFFFF; pointer-events: auto; border-top: 1px solid rgba(255,255,255,.25); }
+  .fx-menu { position: absolute; left: 0; right: 0; top: 100%; display: flex; flex-direction: column; gap: 1.5rem; padding: 1.5rem var(--gut) 2rem; background: #651F1F; color: #FFFFFF; pointer-events: auto; border-top: 1px solid rgba(255,255,255,.25); }
   .fx-menu[hidden] { display: none; }
   .fx-menu nav { display: flex; flex-direction: column; }
   .fx-menu nav a { font: 300 2.5rem/1.15 var(--f-d); font-stretch: var(--d-stretch); font-variation-settings: var(--d-fvs, normal); color: #FFFFFF; text-decoration: none; padding: .35rem 0; border-bottom: 1px solid rgba(255,255,255,.2); }
@@ -1072,7 +1071,7 @@ html { scroll-padding-top: 4.5rem; }
   .ot-list::-webkit-scrollbar { display: none; }
   .ot-step { flex: 0 0 78%; scroll-snap-align: start; opacity: 1; padding: 1.5rem; border: 1px solid #0E0B0B; }
   .ot-step:last-child { padding-bottom: 1.5rem; }
-  .ot-n { color: #961B30; -webkit-text-stroke: 0; font-size: 3rem; }
+  .ot-n { color: #651F1F; -webkit-text-stroke: 0; font-size: 3rem; }
   .ot-h { font-size: 1.9rem; }
   .ot-terms { order: 3; }
   /* отзывы */
@@ -1195,20 +1194,20 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   .hb-brand { gap: .4rem; }
   .hb-logo { width: auto; height: 13.5vh; max-width: 100%; }
   .hb-brand .logo-sub { font-size: .8125rem; }
-  .toc--b a { font-size: clamp(1.9rem, 5vh, 3.25rem); padding: .55rem 0 .4rem; }
-  .toc--b .toc-ill { width: 4.2rem; height: 6.2vh; }
+  .toc--b a { font-size: clamp(1.75rem, 4.5vh, 2.85rem); padding: .55rem 0 .4rem; }
+  .toc--b .toc-ill { width: 6.3vh; height: 5vh; }   /* ниже пункты — выше фото обложки (клиент 19.11) */
   .toc--b sup { font-size: .75rem; }
-  .hero-b .hb-head .hb-h1 { font-size: clamp(2.6rem, 6.6vh, 4.125rem); }
+  .hero-b .hb-head .hb-h1 { font-size: clamp(2.5rem, 6.1vh, 4.125rem); }
   .hb-head { margin-top: 1.1rem; }
   .hb-desc { font-size: .875rem; }
-  .hb-cta { margin-top: 1rem; }
+  .hb-cta { margin-top: .75rem; }
   .hb-cta .btn { min-height: 2.6rem; padding: .6rem 1.2rem; }
   .hb-facts { padding-bottom: 1rem; }
   .hb-fact { padding-top: .7rem; gap: .2rem; }
   .hb-fact .num { font-size: 1.5rem; }
   .hb-fact .fi { width: 1.1rem; height: 1.1rem; }
   .hb-fact > span:last-child { font-size: .6875rem; }
-  .hb-main { padding-top: 4.75rem; }
+  .hb-main { padding-top: 4.25rem; }
   .hdr { padding-block: 1rem; }
 }
 
@@ -1219,6 +1218,11 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   .hdr-r .phone, .fx .phone { font-size: .8125rem; }
 }
 @media (min-width: 1024px) and (max-width: 1300px) { .hdr-r .phone, .fx .phone { display: none; } }
+@media (min-width: 768px) and (max-width: 1199px) and (max-height: 900px) { .toc--b a { font-size: clamp(1.9rem, 5vh, 3.25rem); } .toc--b .toc-ill { width: 4.2rem; height: 6.2vh; } }   /* 1024×768: размеры оглавления как были — фото здесь и так высокое */
+/* Логотип на бордовом — персиковый, как на стакане (макет клиента 19.11: фон C0 M85 Y72 K71 → #651F1F, знак C0 M47 Y56 K9 → #E1946A) */
+:root { --c-logo: #E1946A; }
+.hb-brand, .hb-brand .hb-logo, .hb-brand .logo-sub, .brand, .brand .logo, .brand .logo-sub, .fx-logo, .fx-slot svg { color: var(--c-logo); }
+.hb-brand .logo-eye .eye-lid, .fx-logo .eye-lid { color: var(--c-logo); }
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="nobo-logo" viewBox="0 0 2784 714"><path fill="currentColor" fill-rule="evenodd" d="M1859.0 688.0C1855.4 687.5 1847.6 685.7 1841.6 684.0C1835.5 682.3 1827.2 680.5 1823.0 679.9C1811.4 678.5 1794.6 673.0 1784.9 667.6C1782.4 666.2 1778.4 664.4 1776.0 663.5C1773.5 662.6 1770.6 661.1 1769.5 660.0C1768.4 659.0 1765.0 656.6 1761.9 654.8C1754.3 650.3 1746.1 644.1 1736.5 635.3C1732.1 631.3 1725.7 625.4 1722.2 622.2C1718.8 619.1 1713.9 614.6 1711.4 612.2C1700.8 602.0 1692.8 607.2 1689.4 626.3C1688.7 630.8 1686.7 638.5 1685.0 643.5C1683.4 648.4 1681.6 655.4 1681.0 659.0C1680.0 665.9 1677.8 669.7 1673.9 671.7C1672.0 672.7 1647.3 672.9 1559.0 672.7C1453.9 672.5 1446.2 672.4 1443.8 670.8C1439.9 668.2 1439.6 664.9 1441.4 642.4C1443.7 613.4 1445.0 569.1 1445.0 520.3C1445.0 479.3 1443.6 399.6 1442.5 378.5C1442.2 373.0 1441.5 358.6 1441.0 346.5C1440.4 334.4 1439.3 311.7 1438.4 296.0C1437.6 280.3 1436.5 255.1 1436.0 240.0C1435.1 210.2 1433.6 183.9 1432.0 172.0C1430.3 159.1 1429.0 138.5 1428.0 108.1C1427.4 92.0 1426.5 78.0 1426.0 77.0C1424.7 74.5 1422.8 45.5 1423.6 39.2C1424.9 28.5 1424.9 28.5 1482.0 28.3C1507.6 28.2 1549.2 27.8 1574.5 27.5C1616.3 26.9 1621.1 27.0 1626.5 28.6C1632.2 30.2 1637.0 33.3 1637.0 35.2C1637.0 35.7 1638.6 38.5 1640.5 41.5C1644.0 47.0 1647.8 57.4 1650.4 68.7C1651.1 72.0 1652.5 76.1 1653.3 77.7C1654.1 79.2 1655.3 84.5 1655.8 89.5C1656.4 94.5 1657.8 100.6 1659.0 103.2C1660.1 105.8 1661.5 111.9 1662.1 116.7C1662.7 121.5 1663.6 126.2 1664.0 127.0C1664.4 127.8 1665.1 131.9 1665.5 136.1C1665.8 140.3 1667.5 147.5 1669.1 152.1C1671.3 158.5 1672.3 163.6 1673.1 173.0C1673.7 181.6 1674.8 187.8 1676.5 192.7C1678.2 197.5 1679.3 203.9 1680.0 212.2C1682.0 236.2 1683.2 242.2 1687.5 249.0C1690.4 253.6 1692.7 255.6 1697.3 257.5C1703.7 260.2 1707.7 258.2 1722.1 245.6C1724.7 243.3 1728.1 240.6 1729.8 239.5C1737.1 234.8 1745.7 228.5 1748.5 226.0C1751.5 223.3 1760.2 218.4 1767.2 215.6C1769.3 214.8 1771.0 213.7 1771.0 213.1C1771.0 212.6 1772.7 211.6 1774.8 210.9C1776.8 210.3 1781.0 208.5 1784.0 207.0C1801.3 198.4 1831.5 192.0 1871.0 188.3C1879.5 187.5 1908.4 189.8 1913.5 191.6C1915.8 192.4 1918.3 193.0 1919.2 193.0C1924.1 193.0 1951.1 203.1 1958.7 207.8C1964.5 211.4 1971.7 216.7 1972.8 218.2C1973.5 219.2 1975.9 220.9 1978.1 222.0C1980.2 223.1 1982.7 225.3 1983.7 226.8C1984.7 228.3 1987.7 232.2 1990.6 235.5C1999.2 245.5 2009.0 260.6 2015.1 273.0C2024.6 292.7 2027.7 300.0 2033.0 315.0C2035.5 322.4 2035.9 323.7 2037.5 331.5C2038.5 335.9 2040.5 343.6 2042.1 348.5C2044.1 355.0 2045.2 361.3 2046.0 371.0C2047.0 383.6 2048.8 398.0 2051.1 411.0C2051.7 414.0 2052.4 431.1 2052.7 449.0C2053.3 483.6 2052.0 514.1 2049.5 524.5C2048.7 527.8 2047.6 536.1 2046.9 543.0C2045.7 555.8 2045.3 557.3 2033.9 588.5C2032.7 591.8 2031.0 596.6 2030.1 599.1C2028.1 604.8 2019.4 620.1 2009.6 635.2C2008.0 637.7 2005.2 640.5 2003.3 641.5C2001.4 642.6 1998.6 645.2 1997.2 647.4C1995.6 649.7 1992.6 652.4 1990.4 653.5C1988.1 654.6 1984.1 657.1 1981.4 659.1C1978.7 661.1 1973.8 663.7 1970.5 664.9C1967.2 666.2 1963.6 668.0 1962.4 669.1C1961.3 670.1 1958.4 671.4 1955.9 671.9C1953.5 672.4 1949.4 673.7 1946.9 674.8C1943.0 676.5 1931.8 679.3 1913.5 683.0C1910.8 683.5 1904.5 685.0 1899.5 686.1C1889.4 688.5 1869.6 689.4 1859.0 688.0ZM1031.0 683.5C1025.8 682.7 1016.1 681.6 1009.5 681.0C991.8 679.5 983.7 678.1 973.2 674.9C968.0 673.3 962.3 672.0 960.6 672.0C956.1 672.0 948.3 669.7 942.3 666.7C939.5 665.2 933.7 663.1 929.4 662.0C925.2 660.8 919.8 658.8 917.5 657.5C915.2 656.1 912.5 655.0 911.4 655.0C910.4 655.0 907.7 653.9 905.5 652.7C903.3 651.4 897.7 648.9 893.0 647.0C888.3 645.2 881.8 641.8 878.5 639.4C875.2 637.1 869.8 633.8 866.5 631.9C863.2 630.1 859.4 627.8 858.0 626.8C856.6 625.7 850.8 621.8 845.0 618.0C839.3 614.1 834.2 610.3 833.7 609.5C833.3 608.7 830.8 606.9 828.2 605.6C825.6 604.3 822.7 601.8 821.7 600.2C820.8 598.5 818.0 596.0 815.5 594.6C813.0 593.1 811.0 591.5 811.0 591.0C811.0 590.5 807.1 586.1 802.2 581.3C792.5 571.5 780.2 557.1 777.6 552.5C776.0 549.6 772.4 544.2 766.2 535.5C764.7 533.3 762.8 529.9 762.0 528.0C761.3 526.1 759.4 522.7 757.8 520.6C756.3 518.4 755.0 516.1 755.0 515.5C755.0 515.0 754.1 512.8 753.0 510.8C751.9 508.7 750.6 505.3 750.1 503.3C749.5 501.2 747.2 494.1 745.0 487.5C737.8 466.7 737.0 461.2 737.0 431.6C737.0 401.9 737.9 392.2 741.6 379.5C748.2 357.0 755.5 336.2 758.1 332.5C759.7 330.3 761.6 326.3 762.4 323.6C763.2 321.0 764.8 318.1 766.0 317.3C767.1 316.5 769.6 312.8 771.4 309.1C773.3 305.4 776.8 299.9 779.2 296.9C781.6 294.0 784.5 290.1 785.7 288.5C787.6 285.8 793.8 278.9 800.8 271.7C806.9 265.4 823.3 251.0 829.5 246.5C831.7 244.9 834.0 243.1 834.5 242.4C835.0 241.8 840.0 238.3 845.5 234.5C851.0 230.8 856.6 226.7 858.0 225.4C859.4 224.1 862.1 222.7 864.0 222.4C865.9 222.0 870.0 220.2 873.0 218.4C876.0 216.6 881.4 213.9 885.0 212.4C888.6 210.9 892.7 208.8 894.1 207.9C895.5 206.9 897.9 205.8 899.6 205.4C901.2 205.0 904.5 203.6 906.9 202.3C909.3 201.1 912.3 200.0 913.5 200.0C914.7 200.0 920.6 198.3 926.6 196.1C932.6 194.0 940.2 191.7 943.5 191.0C946.8 190.4 951.3 189.0 953.5 188.0C955.7 187.0 962.7 185.4 969.0 184.5C975.3 183.6 985.0 181.8 990.5 180.5C1006.7 176.6 1021.8 175.7 1058.7 176.3C1083.3 176.8 1093.7 177.3 1098.7 178.5C1102.4 179.3 1110.3 181.1 1116.1 182.5C1121.9 183.8 1130.4 185.2 1135.1 185.6C1140.5 186.0 1144.6 186.9 1146.6 188.1C1148.3 189.2 1150.7 190.0 1151.9 190.0C1154.8 190.0 1186.5 200.4 1195.5 204.3C1199.3 205.9 1206.6 209.3 1211.7 211.6C1216.7 214.0 1221.2 216.0 1221.7 216.0C1222.2 216.0 1224.2 217.1 1226.0 218.5C1227.9 219.9 1231.7 221.7 1234.3 222.5C1237.0 223.3 1240.6 225.1 1242.3 226.5C1247.9 231.1 1260.3 240.0 1261.0 240.0C1262.2 240.0 1282.9 256.3 1289.9 262.7C1300.5 272.4 1318.0 290.1 1324.2 297.5C1335.9 311.4 1337.0 312.9 1337.0 313.9C1337.0 314.5 1338.3 316.4 1339.9 318.2C1341.4 320.0 1343.2 323.1 1343.9 325.1C1344.5 327.0 1347.3 332.2 1350.0 336.5C1352.8 340.9 1355.0 344.8 1355.0 345.3C1355.0 345.8 1357.5 351.2 1360.5 357.4C1363.5 363.5 1366.0 369.4 1366.0 370.3C1366.0 371.2 1367.3 375.9 1369.0 380.7C1372.1 389.8 1375.5 408.6 1377.1 425.0C1378.2 436.4 1377.4 455.8 1375.5 462.0C1374.8 464.5 1373.9 469.4 1373.5 473.0C1372.7 481.3 1364.3 506.7 1358.5 518.5C1350.1 535.3 1345.2 544.2 1342.7 546.8C1341.3 548.3 1339.4 551.4 1338.5 553.8C1337.5 556.1 1336.0 558.6 1335.0 559.3C1334.1 559.9 1331.3 563.2 1328.8 566.5C1323.7 573.2 1290.7 605.9 1284.5 610.5C1282.3 612.1 1278.5 615.2 1276.1 617.2C1273.7 619.3 1269.2 622.5 1266.1 624.2C1263.0 625.9 1258.4 628.8 1255.8 630.6C1253.3 632.4 1249.3 634.8 1247.0 636.0C1244.8 637.1 1242.0 639.0 1241.0 640.0C1239.9 641.1 1237.8 642.2 1236.3 642.6C1232.9 643.4 1224.6 647.5 1220.8 650.2C1219.3 651.2 1215.7 652.9 1212.8 654.0C1209.9 655.0 1203.9 657.3 1199.5 659.0C1195.1 660.7 1189.2 662.7 1186.5 663.4C1183.8 664.1 1179.2 665.8 1176.5 667.2C1169.3 670.8 1165.1 672.0 1156.1 672.9C1150.4 673.5 1147.4 674.3 1145.4 675.9C1143.7 677.2 1141.3 678.0 1138.6 678.0C1136.4 678.0 1130.0 678.7 1124.5 679.5C1119.0 680.3 1111.7 681.0 1108.4 681.0C1105.0 681.0 1100.3 681.7 1097.9 682.6C1091.5 684.9 1044.4 685.5 1031.0 683.5ZM2413.0 682.8C2406.1 682.4 2397.6 681.5 2394.0 681.0C2390.4 680.5 2382.8 679.6 2377.0 679.0C2367.5 678.1 2362.6 677.0 2346.4 672.4C2343.6 671.6 2340.2 671.0 2338.9 671.0C2337.6 671.0 2331.3 669.1 2325.0 666.9C2318.7 664.6 2310.4 661.9 2306.6 660.9C2302.7 659.8 2298.7 658.1 2297.5 657.0C2296.3 655.9 2293.0 654.6 2290.0 654.0C2287.0 653.4 2281.6 651.2 2277.9 649.0C2274.3 646.9 2266.4 642.6 2260.4 639.5C2242.8 630.4 2233.1 624.6 2227.1 619.8C2224.0 617.4 2219.6 614.1 2217.2 612.5C2214.9 611.0 2213.0 609.4 2213.0 609.0C2213.0 608.6 2211.0 607.3 2208.5 606.1C2205.9 604.9 2203.4 602.8 2202.5 601.1C2201.7 599.4 2199.1 596.7 2196.7 595.1C2194.4 593.5 2188.2 587.6 2183.0 582.2C2160.7 558.8 2150.9 545.7 2138.8 523.0C2135.5 516.7 2131.9 510.4 2131.0 509.0C2129.4 506.6 2128.5 504.0 2122.4 483.5C2117.7 467.4 2115.5 444.1 2116.5 418.0C2117.1 400.0 2117.9 392.6 2120.5 380.5C2121.4 376.6 2122.8 370.1 2123.6 366.0C2125.2 358.6 2125.7 357.2 2131.1 347.5C2132.6 344.8 2134.6 340.3 2135.5 337.7C2136.4 335.1 2138.1 331.4 2139.4 329.5C2140.7 327.7 2142.0 324.4 2142.3 322.3C2142.7 320.1 2144.0 317.5 2145.2 316.3C2146.5 315.2 2149.0 312.1 2150.8 309.4C2163.5 290.7 2166.8 286.3 2171.4 282.0C2173.8 279.7 2176.4 276.5 2177.0 275.0C2177.7 273.4 2180.7 270.2 2183.7 267.9C2186.7 265.6 2189.7 262.9 2190.3 262.1C2191.0 261.2 2193.5 258.9 2196.0 257.0C2198.5 255.1 2201.3 252.5 2202.3 251.2C2204.2 248.9 2205.7 247.9 2224.1 235.6C2229.8 231.8 2236.1 227.4 2238.1 225.9C2240.0 224.4 2242.9 222.8 2244.6 222.4C2246.2 222.0 2248.7 220.7 2250.2 219.4C2251.7 218.2 2254.4 216.9 2256.2 216.5C2258.0 216.1 2261.5 214.5 2264.0 213.0C2269.7 209.4 2287.2 202.0 2297.0 199.0C2301.1 197.8 2308.3 195.5 2313.0 194.0C2317.7 192.5 2325.8 190.2 2331.0 189.0C2336.2 187.7 2342.5 186.2 2345.0 185.5C2347.5 184.8 2352.2 183.9 2355.5 183.6C2358.8 183.2 2366.0 181.8 2371.5 180.4C2379.8 178.4 2385.6 177.7 2405.5 176.9C2418.7 176.3 2435.3 176.1 2442.5 176.5C2449.7 176.9 2459.6 177.3 2464.5 177.4C2469.4 177.5 2477.8 178.6 2483.0 179.8C2488.2 181.0 2497.9 182.9 2504.5 184.0C2511.1 185.1 2519.9 187.1 2524.0 188.4C2528.1 189.7 2538.0 192.7 2546.0 194.9C2554.0 197.2 2564.4 200.6 2569.2 202.5C2574.0 204.4 2578.8 206.0 2579.8 206.0C2580.8 206.0 2583.7 207.5 2586.1 209.3C2588.5 211.2 2592.5 213.3 2594.9 214.0C2597.3 214.8 2601.1 216.6 2603.4 218.1C2605.7 219.5 2609.9 221.5 2612.6 222.4C2615.4 223.3 2618.9 225.4 2620.5 227.0C2622.1 228.6 2624.9 230.5 2626.9 231.1C2628.9 231.7 2632.3 233.9 2634.5 236.0C2636.7 238.1 2640.2 240.5 2642.2 241.5C2644.2 242.4 2649.0 245.9 2652.7 249.2C2656.4 252.5 2662.2 257.3 2665.5 259.8C2668.8 262.4 2672.9 265.8 2674.7 267.5C2676.4 269.1 2678.6 271.2 2679.5 272.0C2683.2 275.6 2705.6 301.0 2709.3 306.0C2711.6 309.0 2714.8 313.1 2716.4 314.9C2718.0 316.8 2720.1 320.3 2721.2 322.7C2722.2 325.0 2724.1 328.2 2725.4 329.7C2728.0 332.8 2737.0 349.8 2737.0 351.6C2737.0 353.3 2741.7 363.7 2743.9 366.8C2745.0 368.3 2746.1 371.9 2746.5 374.8C2746.8 377.8 2748.2 383.8 2749.6 388.2C2752.1 396.2 2753.0 401.7 2755.0 424.0C2756.9 444.3 2754.6 466.2 2748.4 487.6C2746.0 495.8 2744.0 503.4 2744.0 504.4C2744.0 505.4 2742.4 508.0 2740.5 510.1C2738.2 512.7 2737.0 515.0 2737.0 517.0C2737.0 520.4 2729.5 535.0 2724.0 542.4C2721.9 545.2 2719.4 549.1 2718.5 551.0C2717.5 552.9 2714.8 556.7 2712.4 559.5C2694.2 580.9 2686.6 589.0 2685.0 589.0C2684.6 589.0 2683.2 590.5 2682.1 592.2C2680.3 595.1 2677.2 598.0 2663.2 609.6C2661.2 611.3 2657.2 614.2 2654.5 616.0C2651.8 617.8 2648.0 620.7 2646.1 622.3C2644.3 623.8 2641.6 625.7 2640.1 626.3C2638.7 626.9 2635.9 628.8 2634.0 630.5C2632.1 632.3 2628.9 634.3 2627.0 635.1C2625.1 635.8 2621.0 637.9 2618.0 639.7C2615.0 641.5 2609.7 644.1 2606.3 645.4C2602.9 646.8 2598.5 649.1 2596.4 650.5C2594.4 651.9 2592.2 653.0 2591.5 653.0C2590.8 653.0 2588.2 654.1 2585.7 655.5C2583.1 656.8 2575.8 659.6 2569.3 661.6C2562.8 663.6 2554.6 666.5 2551.0 668.0C2547.4 669.6 2540.9 671.4 2536.5 672.0C2532.1 672.7 2524.8 674.3 2520.2 675.6C2515.7 676.9 2508.9 678.2 2505.2 678.5C2501.5 678.8 2494.9 679.5 2490.5 680.0C2456.8 684.1 2440.4 684.7 2413.0 682.8ZM451.5 671.1C440.7 670.6 438.9 670.2 434.0 667.5C429.9 665.3 428.0 663.5 426.5 660.4C425.4 658.1 423.8 655.5 423.0 654.5C421.7 653.0 421.3 644.3 420.3 601.1C419.7 572.7 418.7 545.0 418.0 539.5C415.5 518.2 415.0 511.5 413.5 481.0C412.7 463.7 411.4 444.9 410.5 439.2C409.7 433.6 409.0 427.1 409.0 424.9C409.0 422.7 408.3 418.1 407.5 414.7C406.7 411.3 404.7 399.8 403.0 389.1C398.6 361.9 398.0 359.4 386.2 326.0C385.4 323.5 383.4 320.1 382.0 318.4C380.5 316.6 379.0 313.7 378.6 311.7C378.2 309.8 377.2 307.6 376.4 306.9C375.5 306.2 373.1 303.1 371.0 300.0C367.4 294.7 356.6 285.0 351.4 282.2C347.8 280.3 336.4 278.0 330.3 278.0C327.4 278.0 322.6 278.9 319.5 280.1C311.7 283.0 310.9 285.0 309.8 303.5C309.3 311.8 309.0 395.7 309.2 490.0C309.5 654.8 309.4 661.7 307.7 664.4C303.6 670.6 310.9 670.3 171.2 670.4L43.8 670.5L41.0 667.3C39.4 665.5 37.8 662.4 37.4 660.3C36.7 656.7 37.9 635.3 40.1 610.0C40.8 602.3 41.3 567.9 41.4 521.0C41.5 443.8 41.4 438.6 37.0 363.0C35.9 343.8 34.5 328.1 33.0 318.0C32.5 314.4 31.5 298.4 30.9 282.5C30.3 266.0 28.9 246.6 27.8 237.5C25.6 220.8 24.5 200.3 25.5 196.3C25.8 195.1 27.5 193.3 29.3 192.3C32.1 190.8 37.1 190.5 66.5 189.8C115.8 188.8 252.2 189.0 260.5 190.1C268.1 191.1 276.2 195.1 279.3 199.1C280.3 200.5 282.3 206.4 283.9 212.2C286.9 223.7 291.6 232.9 296.2 236.1C300.1 238.9 306.6 241.0 311.4 241.0C317.3 241.0 326.0 238.3 329.0 235.5C330.4 234.3 333.0 232.5 334.7 231.6C336.5 230.7 339.5 228.6 341.4 227.0C343.2 225.3 346.7 223.3 349.1 222.5C351.5 221.6 354.1 220.3 355.0 219.6C355.8 218.8 361.6 215.6 367.7 212.5C373.9 209.4 379.2 206.5 379.5 206.0C379.8 205.6 381.9 204.9 384.3 204.5C386.6 204.1 390.1 202.9 392.1 201.9C394.0 201.0 399.0 199.2 403.1 198.2C407.2 197.1 413.1 195.2 416.2 194.1C419.4 192.9 423.9 192.0 426.2 191.9C428.6 191.9 432.8 191.5 435.5 190.9C456.0 187.1 479.8 186.3 495.1 189.0C498.0 189.6 505.7 190.6 512.0 191.4C526.8 193.3 553.2 201.4 560.5 206.4C563.2 208.3 566.9 210.5 568.7 211.4C570.4 212.3 573.9 214.8 576.5 217.0C579.1 219.2 582.4 221.7 584.0 222.5C585.5 223.3 587.7 225.4 588.9 227.2C590.0 229.0 593.9 233.9 597.5 238.0C601.1 242.1 605.2 247.7 606.8 250.3C608.3 253.0 610.8 257.0 612.4 259.3C619.3 269.1 635.0 305.3 635.0 311.5C635.0 312.9 636.3 315.4 637.8 317.2C640.2 320.0 640.8 321.9 641.8 330.5C642.5 336.0 644.1 344.3 645.5 349.0C648.1 358.1 650.2 367.9 652.1 380.0C652.7 384.1 654.3 390.4 655.7 394.0C657.4 398.7 658.4 404.1 659.1 413.5C659.7 420.6 661.0 431.4 662.1 437.5C663.2 443.6 665.0 457.7 666.1 469.0C667.2 480.3 668.5 491.1 669.0 493.0C670.5 498.3 675.9 550.2 677.0 570.0C677.6 579.6 678.5 591.8 679.1 597.0C682.1 624.3 682.7 650.2 680.5 658.7C678.2 667.7 676.5 669.4 668.9 670.1C659.9 671.0 466.1 671.9 451.5 671.1ZM1068.0 646.6C1070.1 644.7 1073.0 642.4 1074.5 641.4C1078.5 638.8 1091.3 611.5 1093.9 600.0C1094.5 597.5 1096.3 590.8 1098.1 585.0C1102.6 569.6 1102.8 568.9 1104.0 554.6C1104.7 547.4 1106.0 537.9 1107.0 533.5C1109.8 521.3 1110.8 509.4 1112.1 474.0C1113.9 422.7 1111.9 348.7 1108.2 335.5C1106.4 329.2 1105.2 320.2 1103.5 302.2C1103.2 298.8 1102.2 293.8 1101.4 291.2C1100.6 288.6 1099.5 283.2 1099.0 279.2C1098.4 274.5 1097.3 270.9 1096.0 269.3C1094.9 267.8 1094.0 265.2 1094.0 263.2C1094.0 261.1 1092.8 257.5 1091.0 254.4C1089.4 251.5 1087.4 246.3 1086.6 242.7C1085.8 239.1 1083.9 234.5 1082.5 232.5C1081.1 230.4 1080.0 227.9 1080.0 226.9C1080.0 224.1 1066.7 211.4 1063.0 210.6C1057.6 209.6 1052.7 210.0 1049.4 211.8C1043.5 215.0 1035.0 223.7 1033.5 228.1C1032.7 230.4 1031.0 233.8 1029.9 235.7C1028.7 237.5 1026.9 242.5 1025.9 246.7C1024.9 250.9 1023.2 255.7 1022.1 257.4C1019.3 262.0 1016.3 272.6 1015.6 279.9C1015.3 283.4 1013.9 291.2 1012.6 297.4C1009.0 313.9 1008.0 320.0 1008.0 326.6C1008.0 329.8 1007.1 339.9 1005.9 349.0C1002.4 377.7 1001.8 389.5 1002.0 431.0C1002.0 461.2 1002.4 474.0 1003.5 481.5C1005.2 492.6 1006.4 506.0 1008.0 528.8C1008.6 538.5 1010.1 549.2 1011.9 557.8C1013.6 565.3 1015.6 575.3 1016.5 580.0C1017.4 584.7 1019.4 591.4 1021.0 595.0C1022.5 598.6 1024.3 604.0 1024.9 607.0C1026.4 614.0 1032.2 626.9 1037.1 634.0C1041.8 641.0 1046.2 645.1 1052.5 648.4C1058.9 651.7 1062.8 651.3 1068.0 646.6ZM2440.5 649.5C2445.8 648.8 2446.7 648.3 2452.1 642.9C2456.7 638.3 2459.2 634.5 2463.4 625.8C2470.1 611.9 2474.4 599.3 2476.5 587.5C2477.4 582.5 2479.3 575.0 2480.6 570.7C2482.2 565.9 2483.4 558.7 2484.0 551.7C2484.8 541.1 2486.7 527.0 2489.3 511.5C2490.2 506.5 2490.5 482.5 2490.5 429.0C2490.4 361.0 2490.3 352.5 2488.6 343.0C2486.4 330.0 2485.3 322.2 2484.1 309.7C2483.5 304.4 2482.0 296.5 2480.7 292.2C2479.3 288.0 2477.9 282.0 2477.6 279.0C2477.2 276.0 2476.3 271.9 2475.6 270.0C2474.9 268.1 2473.6 263.8 2472.7 260.5C2470.5 251.6 2464.6 236.6 2462.2 233.6C2461.1 232.1 2459.9 229.6 2459.5 228.0C2459.1 226.4 2457.4 223.8 2455.7 222.3C2453.9 220.7 2451.5 218.1 2450.3 216.4C2446.5 211.1 2438.0 208.8 2428.9 210.7C2426.5 211.1 2423.6 213.4 2418.8 218.4C2415.1 222.3 2412.0 225.9 2412.0 226.5C2412.0 227.1 2410.0 230.8 2407.5 234.9C2404.9 239.3 2402.5 244.9 2401.6 248.9C2400.8 252.5 2398.8 259.1 2397.2 263.5C2395.6 267.9 2394.0 274.7 2393.7 278.5C2393.3 282.4 2391.9 289.3 2390.5 293.9C2388.9 299.4 2387.7 307.0 2387.0 315.9C2386.4 323.4 2385.0 335.4 2383.9 342.5C2382.9 349.6 2381.5 363.8 2381.0 374.0C2378.8 414.4 2380.4 502.1 2383.5 512.0C2384.3 514.5 2385.4 522.8 2386.0 530.5C2387.5 550.0 2388.5 557.0 2391.3 568.5C2392.7 574.0 2394.1 580.8 2394.5 583.5C2394.9 586.2 2396.0 591.0 2397.0 594.0C2398.0 597.0 2399.8 602.9 2400.9 607.0C2402.1 611.1 2403.8 615.9 2404.7 617.5C2405.6 619.1 2408.2 624.3 2410.6 629.0C2416.7 641.3 2428.3 652.1 2433.6 650.5C2434.2 650.3 2437.3 649.9 2440.5 649.5ZM1772.1 579.3C1779.5 575.8 1782.3 573.7 1790.4 565.5C1795.7 560.1 1800.0 555.2 1800.0 554.5C1800.0 553.8 1801.4 550.6 1803.1 547.4C1804.8 544.1 1808.7 534.3 1811.7 525.5L1817.1 509.5L1819.1 484.5C1822.0 448.8 1822.2 441.1 1821.0 426.5C1820.5 419.4 1819.5 403.8 1819.0 392.0C1818.3 377.2 1817.5 369.2 1816.4 366.5C1815.5 364.3 1813.8 357.3 1812.4 351.0C1811.1 344.7 1808.4 335.6 1806.5 330.9C1804.6 326.1 1803.0 321.9 1803.0 321.5C1803.0 319.7 1790.8 303.8 1785.0 298.2C1778.2 291.4 1768.3 284.5 1760.6 281.1C1753.6 278.0 1737.7 276.6 1730.0 278.4C1722.4 280.2 1719.0 282.4 1713.8 288.6C1705.5 298.6 1705.5 298.7 1705.7 331.5C1705.8 347.7 1706.4 363.6 1707.1 367.6C1708.5 376.2 1707.6 465.3 1705.9 493.5C1705.2 503.4 1704.7 521.9 1704.6 534.5L1704.5 557.5L1709.3 565.1C1714.5 573.6 1723.3 581.8 1728.3 583.1C1730.1 583.5 1738.7 583.8 1747.5 583.7L1763.5 583.5L1772.1 579.3Z"/></symbol><symbol id="nobo-o2" viewBox="0 0 2784 714"><path d="M2440.5 649.5C2445.8 648.8 2446.7 648.3 2452.1 642.9C2456.7 638.3 2459.2 634.5 2463.4 625.8C2470.1 611.9 2474.4 599.3 2476.5 587.5C2477.4 582.5 2479.3 575.0 2480.6 570.7C2482.2 565.9 2483.4 558.7 2484.0 551.7C2484.8 541.1 2486.7 527.0 2489.3 511.5C2490.2 506.5 2490.5 482.5 2490.5 429.0C2490.4 361.0 2490.3 352.5 2488.6 343.0C2486.4 330.0 2485.3 322.2 2484.1 309.7C2483.5 304.4 2482.0 296.5 2480.7 292.2C2479.3 288.0 2477.9 282.0 2477.6 279.0C2477.2 276.0 2476.3 271.9 2475.6 270.0C2474.9 268.1 2473.6 263.8 2472.7 260.5C2470.5 251.6 2464.6 236.6 2462.2 233.6C2461.1 232.1 2459.9 229.6 2459.5 228.0C2459.1 226.4 2457.4 223.8 2455.7 222.3C2453.9 220.7 2451.5 218.1 2450.3 216.4C2446.5 211.1 2438.0 208.8 2428.9 210.7C2426.5 211.1 2423.6 213.4 2418.8 218.4C2415.1 222.3 2412.0 225.9 2412.0 226.5C2412.0 227.1 2410.0 230.8 2407.5 234.9C2404.9 239.3 2402.5 244.9 2401.6 248.9C2400.8 252.5 2398.8 259.1 2397.2 263.5C2395.6 267.9 2394.0 274.7 2393.7 278.5C2393.3 282.4 2391.9 289.3 2390.5 293.9C2388.9 299.4 2387.7 307.0 2387.0 315.9C2386.4 323.4 2385.0 335.4 2383.9 342.5C2382.9 349.6 2381.5 363.8 2381.0 374.0C2378.8 414.4 2380.4 502.1 2383.5 512.0C2384.3 514.5 2385.4 522.8 2386.0 530.5C2387.5 550.0 2388.5 557.0 2391.3 568.5C2392.7 574.0 2394.1 580.8 2394.5 583.5C2394.9 586.2 2396.0 591.0 2397.0 594.0C2398.0 597.0 2399.8 602.9 2400.9 607.0C2402.1 611.1 2403.8 615.9 2404.7 617.5C2405.6 619.1 2408.2 624.3 2410.6 629.0C2416.7 641.3 2428.3 652.1 2433.6 650.5C2434.2 650.3 2437.3 649.9 2440.5 649.5Z"/></symbol></svg>
@@ -1229,7 +1233,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 <div class="pl" id="pl" aria-hidden="true">
   <div class="pl-box">
     <div class="pl-top"><span>nobo pastry&amp;cafe</span><span><span id="pl-n">0</span></span></div>
-    <div class="pl-frame"><img src="assets/img/pl/tart-candles.webp" alt="" data-i="0"><img src="assets/img/pl/ducks-tray.webp" alt="" data-i="1"><img src="assets/img/pl/ym-364.webp" alt="" data-i="2"><img src="assets/img/pl/ym-204.webp" alt="" data-i="3"><img src="assets/img/pl/ym-385.webp" alt="" data-i="4"><img src="assets/img/pl/forbes-ducks.webp" alt="" data-i="5"></div>
+    <div class="pl-frame"><img src="assets/img/pl/tart-candles.webp" alt="" data-i="0"><img src="assets/img/pl/ducks-tray.webp" alt="" data-i="1"><img src="assets/img/pl/ym-364.webp" alt="" data-i="2"><img src="assets/img/pl/tart-hide.webp" alt="" data-i="3"><img src="assets/img/pl/flowers-nobo.webp" alt="" data-i="4"><img src="assets/img/pl/forbes-ducks.webp" alt="" data-i="5"></div>
   </div>
   <div class="pl-mark">
     <svg class="pl-logo" viewBox="0 0 2784 714"><use href="#nobo-logo"/><use class="eye-lid" href="#nobo-o2"/><use class="pl-pupil" href="#nobo-o2"/></svg>
@@ -1280,14 +1284,14 @@ html.is-loading, html.is-loading body { overflow: hidden; }
           <li><a href="#formats"><span>Десерты под бренд</span><sup>01</sup><svg class="toc-ill ill-duck" viewBox="0 0 100 80" aria-hidden="true"><g class="duck-body"><path class="m" d="M6 40 C14 44 22 44 30 42 C36 40 42 40 46 38 C44 30 50 16 62 16 C74 16 76 30 70 36 C80 40 84 50 80 58 C76 68 62 70 44 70 C26 70 12 64 8 54 C6 50 4 44 6 40 Z"/><path class="p" d="M72 24 C80 21 87 25 85 30 C81 32 75 31 72 29 Z"/><circle class="n" cx="64" cy="24" r="2.4"/><path class="n" d="M32 52 C41 46 54 48 59 56 C50 59 40 59 32 52 Z"/></g><g class="duck-tag"><path class="ps" d="M30 60 C26 66 22 68 19 68"/><g transform="rotate(-14 14 70)"><rect class="p" x="4" y="64" width="17" height="11" rx="3"/><circle class="n" cx="18" cy="69.5" r="1.6"/></g></g></svg></a></li>
           <li><a href="#sizes"><span>Тарты от&nbsp;40&nbsp;см</span><sup>02</sup><svg class="toc-ill ill-tart" viewBox="0 0 100 80" aria-hidden="true"><g class="tart-g"><path class="m" d="M81.4 38.0 L80.1 40.1 L77.5 41.9 L76.1 43.6 L76.8 45.7 L78.5 48.4 L78.9 50.8 L76.9 52.2 L73.8 52.9 L71.8 53.9 L71.6 56.1 L72.2 59.2 L71.6 61.6 L69.2 62.2 L66.1 61.6 L63.9 61.8 L62.9 63.8 L62.2 66.9 L60.8 68.9 L58.4 68.5 L55.7 66.8 L53.6 66.1 L51.9 67.5 L50.1 70.1 L48.0 71.4 L45.9 70.1 L44.1 67.5 L42.4 66.1 L40.3 66.8 L37.6 68.5 L35.2 68.9 L33.8 66.9 L33.1 63.8 L32.1 61.8 L29.9 61.6 L26.8 62.2 L24.4 61.6 L23.8 59.2 L24.4 56.1 L24.2 53.9 L22.2 52.9 L19.1 52.2 L17.1 50.8 L17.5 48.4 L19.2 45.7 L19.9 43.6 L18.5 41.9 L15.9 40.1 L14.6 38.0 L15.9 35.9 L18.5 34.1 L19.9 32.4 L19.2 30.3 L17.5 27.6 L17.1 25.2 L19.1 23.8 L22.2 23.1 L24.2 22.1 L24.4 19.9 L23.8 16.8 L24.4 14.4 L26.8 13.8 L29.9 14.4 L32.1 14.2 L33.1 12.2 L33.8 9.1 L35.2 7.1 L37.6 7.5 L40.3 9.2 L42.4 9.9 L44.1 8.5 L45.9 5.9 L48.0 4.6 L50.1 5.9 L51.9 8.5 L53.6 9.9 L55.7 9.2 L58.4 7.5 L60.8 7.1 L62.2 9.1 L62.9 12.2 L63.9 14.2 L66.1 14.4 L69.2 13.8 L71.6 14.4 L72.2 16.8 L71.6 19.9 L71.8 22.1 L73.8 23.1 L76.9 23.8 L78.9 25.2 L78.5 27.6 L76.8 30.3 L76.1 32.4 L77.5 34.1 L80.1 35.9Z"/><circle class="n" cx="48" cy="38" r="24"/><circle class="berry m" style="--i:0" cx="48.0" cy="38.0" r="4"/><circle class="berry m" style="--i:1" cx="48.0" cy="27.0" r="3.6"/><circle class="berry p" style="--i:2" cx="58.5" cy="34.6" r="3.6"/><circle class="berry m" style="--i:3" cx="54.5" cy="46.9" r="3.6"/><circle class="berry m" style="--i:4" cx="41.5" cy="46.9" r="3.6"/><circle class="berry p" style="--i:5" cx="37.5" cy="34.6" r="3.6"/><circle class="berry m" style="--i:6" cx="58.9" cy="23.0" r="3"/><circle class="berry m" style="--i:7" cx="65.6" cy="43.7" r="3"/><circle class="berry p" style="--i:8" cx="48.0" cy="56.5" r="3"/><circle class="berry m" style="--i:9" cx="30.4" cy="43.7" r="3"/><circle class="berry m" style="--i:10" cx="37.1" cy="23.0" r="3"/></g><text class="lbl lbl40" x="74" y="78">40 см</text><text class="lbl lbl80" x="74" y="78">80 см</text></svg></a></li>
           <li><a href="#show"><span>Кондитер на&nbsp;площадке</span><sup>03</sup><svg class="toc-ill ill-bag" viewBox="0 0 100 80" aria-hidden="true"><g class="swirl"><ellipse class="m" cx="27" cy="70" rx="16" ry="5.5"/><ellipse class="m" cx="27" cy="62.5" rx="12" ry="5"/><ellipse class="m" cx="27" cy="56" rx="8" ry="4.2"/><path class="m" d="M23 53 C24 46 30 44 33 47 C30 48 28 50 29 54 Z"/></g><g class="bag"><path class="m" d="M54 8 C64 4 82 12 86 22 L50 50 C47 53 43 50 45 47 Z"/><path class="m" d="M52 9 C58 0 78 2 86 14 C76 8 62 6 52 9 Z"/><path class="ns" d="M60 14 C66 17 72 18 78 17"/><path class="ns" d="M56 23 C62 27 66 28 72 27"/><path class="ns" d="M52 32 C56 35 59 36 63 35"/><path class="p" d="M46 47 L37 56 L49 51 Z"/></g></svg></a></li>
-          <li><a href="#formats"><span>Десертный стол</span><sup>04</sup><svg class="toc-ill ill-table" viewBox="0 0 100 80" aria-hidden="true"><g class="stand"><path class="m" d="M8 52 H92 C92 56 88 58 84 58 H16 C12 58 8 56 8 52 Z"/><path class="m" d="M44 58 H56 L60 72 H40 Z"/><path class="m" d="M30 72 H70 C70 76 66 78 62 78 H38 C34 78 30 76 30 72 Z"/></g><g class="d d1"><path class="m" d="M13 52 C13 36 39 36 39 52 Z"/><path class="ns" d="M18 47 C21 41 31 41 34 47"/><circle class="p" cx="26" cy="38" r="3.2"/></g><g class="d d2"><circle class="m" cx="52" cy="44" r="8"/><path class="ns" d="M47 42 C50 39 54 39 57 42"/><circle class="p" cx="52" cy="34.5" r="2.8"/></g><g class="d d3"><path class="m" d="M64 52 L67 43 H86 L89 52 Z"/><circle class="p" cx="71" cy="40.5" r="3"/><circle class="p" cx="77.5" cy="39.5" r="3"/><circle class="p" cx="84" cy="40.5" r="3"/></g></svg></a></li>
+          <li><a href="#formats"><span>Кондитерский кейтеринг</span><sup>04</sup><svg class="toc-ill ill-table" viewBox="0 0 100 80" aria-hidden="true"><g class="stand"><path class="m" d="M8 52 H92 C92 56 88 58 84 58 H16 C12 58 8 56 8 52 Z"/><path class="m" d="M44 58 H56 L60 72 H40 Z"/><path class="m" d="M30 72 H70 C70 76 66 78 62 78 H38 C34 78 30 76 30 72 Z"/></g><g class="d d1"><path class="m" d="M13 52 C13 36 39 36 39 52 Z"/><path class="ns" d="M18 47 C21 41 31 41 34 47"/><circle class="p" cx="26" cy="38" r="3.2"/></g><g class="d d2"><circle class="m" cx="52" cy="44" r="8"/><path class="ns" d="M47 42 C50 39 54 39 57 42"/><circle class="p" cx="52" cy="34.5" r="2.8"/></g><g class="d d3"><path class="m" d="M64 52 L67 43 H86 L89 52 Z"/><circle class="p" cx="71" cy="40.5" r="3"/><circle class="p" cx="77.5" cy="39.5" r="3"/><circle class="p" cx="84" cy="40.5" r="3"/></g></svg></a></li>
         </ul>
       </div>
     </div>
     <div class="hb-main t-light">
       
       <div class="slot hb-slot">
-        <div class="mosaic" role="img" aria-label="Десерты Nobo: малиновый тарт со свечами, десерты-утки, малиновый тарт, наполеон, праздничный стол">
+        <div class="mosaic" role="img" aria-label="Десерты Nobo: малиновый тарт со свечами, десерт-мишка, десерты-утки, малиновый тарт, наполеон, праздничный стол">
         <img class="fallback" src="assets/img/tart-candles.webp" alt="">
       </div>
       </div>
@@ -1321,7 +1325,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
       <div class="pick-media"><img src="assets/img/tart-table.webp" alt="Ягодный тарт на праздничном столе с драпировкой и свечами" loading="lazy"></div>
       <div class="pick-body">
         <h2 class="d h2">Для праздника</h2>
-        <p class="pick-t">Большой тарт или&nbsp;десертный стол на&nbsp;свадьбу, день рождения или&nbsp;вечеринку.</p>
+        <p class="pick-t">Большой тарт или&nbsp;кондитерский кейтеринг на&nbsp;свадьбу, день рождения или&nbsp;вечеринку.</p>
         <span class="btn pick-cta">Собрать заказ</span>
       </div>
     </article>
@@ -1333,43 +1337,43 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 
     <div class="fv fv-a" data-fv="a">
       <div class="fa-grid">
-        <div class="fa-photo"><img class="is-on" src="assets/img/ym-042.webp" alt="Шоколадный десерт с биркой nobo на белой тарелке" loading="lazy" data-i="0"><img class="" src="assets/img/ym-020.webp" alt="Ягодный тарт с клубникой" loading="lazy" data-i="1"><img class="" src="assets/img/tiramisu.webp" alt="Тирамису в большом противне, кондитер раскладывает порции" loading="lazy" data-i="2"><img class="" src="assets/img/ym-237.webp" alt="Торт со свечами на празднике" loading="lazy" data-i="3"><img class="" src="assets/img/ym-385.webp" alt="Мини-десерты: тарталетки с ягодами и лимонные муссы" loading="lazy" data-i="4"></div>
+        <div class="fa-photo"><img class="is-on" src="assets/img/ducks-forks.webp" alt="Брендированные десерты в форме чёрных уток на тарелках" loading="lazy" data-i="0"><img class="" src="assets/img/tart-hall.webp" alt="Малиновый тарт в зале ресторана" loading="lazy" data-i="1"><img class="" src="assets/img/napoleon-columns.webp" alt="Большой наполеон на фуршете у колоннады" loading="lazy" data-i="2"><img class="" src="assets/img/xmas-tree.webp" alt="Торт-ёлка в подарочной коробке nobo" loading="lazy" data-i="3"><img class="" src="assets/img/flowers-nobo.webp" alt="Мини-десерты в форме цветов на подложках nobo" loading="lazy" data-i="4"></div>
         <div class="fa-side">
           <div class="fa-head"><h2 class="d h2">Что можно заказать</h2><div class="tabs" role="group" aria-label="Фильтр форматов"><button class="tab" type="button" data-f="all" aria-pressed="true">Все</button><button class="tab" type="button" data-f="brand" aria-pressed="false">Для бренда</button><button class="tab" type="button" data-f="party" aria-pressed="false">Для праздника</button></div></div>
           <ol class="fa-list">
           <li class="fa-row is-on" data-for="brand" data-i="0">
             <button class="fa-btn" type="button" aria-expanded="true"><span class="fa-n">[01]</span><span class="d fa-t">Брендированные десерты</span><span class="fa-tag">для бренда</span><span class="fa-ar" aria-hidden="true">→</span></button>
             <div class="fa-more"><div class="fa-more-in">
-              <img class="fa-thumb" src="assets/img/ym-042.webp" alt="" loading="lazy">
-              <p>Десерт в&nbsp;форме, цвете или с&nbsp;логотипом бренда. Рецепт и&nbsp;подачу придумываем под событие.</p><div class="params"><span>от&nbsp;450&nbsp;₽ за&nbsp;шт</span><span>от&nbsp;30&nbsp;шт</span><span>заказ за&nbsp;7&nbsp;дней</span></div><button class="btn fo-btn" type="button" data-order="брендированные десерты" data-for="brand">Рассчитать</button>
+              <img class="fa-thumb" src="assets/img/ducks-forks.webp" alt="" loading="lazy">
+              <p>Десерт в&nbsp;форме, цвете или с&nbsp;логотипом бренда. Рецепт и&nbsp;подачу придумываем под событие.</p><div class="params"><span>от&nbsp;600&nbsp;₽ за&nbsp;шт</span><span>от&nbsp;30&nbsp;шт</span><span>заказ от&nbsp;7&nbsp;дней</span></div><button class="btn fo-btn" type="button" data-order="брендированные десерты" data-for="brand">Рассчитать</button>
             </div></div>
           </li>
           <li class="fa-row" data-for="brand party" data-i="1">
             <button class="fa-btn" type="button" aria-expanded="false"><span class="fa-n">[02]</span><span class="d fa-t">Ягодный тарт</span><span class="fa-tag">для бренда и&nbsp;праздника</span><span class="fa-ar" aria-hidden="true">→</span></button>
             <div class="fa-more"><div class="fa-more-in">
-              <img class="fa-thumb" src="assets/img/ym-020.webp" alt="" loading="lazy">
-              <p>Крем чиз или&nbsp;ванильный, свежие ягоды на&nbsp;выбор. От&nbsp;40&nbsp;см&nbsp;— на&nbsp;такой уходит 2,5&nbsp;кг ягод.</p><div class="params"><span>от&nbsp;12&nbsp;000&nbsp;₽ за&nbsp;40&nbsp;см</span><span>заказ за&nbsp;3&nbsp;дня</span></div><button class="btn fo-btn" type="button" data-order="ягодный тарт от 40 см" data-for="brand party">Рассчитать</button>
+              <img class="fa-thumb" src="assets/img/tart-hall.webp" alt="" loading="lazy">
+              <p>Крем&nbsp;— крем-чиз, ванильный или шоколадный. Основа&nbsp;— ванильный или шоколадный бисквит, медовик или песочная. Размеры 40, 60 и&nbsp;100&nbsp;см.</p><div class="params"><span>от&nbsp;22&nbsp;000&nbsp;₽ за&nbsp;40&nbsp;см</span><span>заказ от&nbsp;5&nbsp;дней</span></div><button class="btn fo-btn" type="button" data-order="ягодный тарт от 40 см" data-for="brand party">Рассчитать</button>
             </div></div>
           </li>
           <li class="fa-row" data-for="brand party" data-i="2">
             <button class="fa-btn" type="button" aria-expanded="false"><span class="fa-n">[03]</span><span class="d fa-t">Большие форматы</span><span class="fa-tag">для бренда и&nbsp;праздника</span><span class="fa-ar" aria-hidden="true">→</span></button>
             <div class="fa-more"><div class="fa-more-in">
-              <img class="fa-thumb" src="assets/img/tiramisu.webp" alt="" loading="lazy">
-              <p>Тирамису в&nbsp;противне, башня профитролей&nbsp;— десерт, который раздают при гостях.</p><div class="params"><span>от&nbsp;9&nbsp;000&nbsp;₽</span><span>от&nbsp;40&nbsp;порций</span></div><button class="btn fo-btn" type="button" data-order="большие форматы" data-for="brand party">Рассчитать</button>
+              <img class="fa-thumb" src="assets/img/napoleon-columns.webp" alt="" loading="lazy">
+              <p>Наполеон, тирамису в&nbsp;противне, гора из&nbsp;профитролей.</p><div class="params"><span>от&nbsp;9&nbsp;000&nbsp;₽</span><span>от&nbsp;40&nbsp;порций</span></div><button class="btn fo-btn" type="button" data-order="большие форматы" data-for="brand party">Рассчитать</button>
             </div></div>
           </li>
           <li class="fa-row" data-for="party" data-i="3">
             <button class="fa-btn" type="button" aria-expanded="false"><span class="fa-n">[04]</span><span class="d fa-t">Торты на&nbsp;заказ</span><span class="fa-tag">для праздника</span><span class="fa-ar" aria-hidden="true">→</span></button>
             <div class="fa-more"><div class="fa-more-in">
-              <img class="fa-thumb" src="assets/img/ym-237.webp" alt="" loading="lazy">
-              <p>Наполеон и&nbsp;другие торты целиком.</p><div class="params"><span>от&nbsp;3&nbsp;500&nbsp;₽ за&nbsp;кг</span><span>заказ за&nbsp;3&nbsp;дня</span></div><button class="btn fo-btn" type="button" data-order="торт на заказ" data-for="party">Рассчитать</button>
+              <img class="fa-thumb" src="assets/img/xmas-tree.webp" alt="" loading="lazy">
+              <p>Наполеон, медовик, чизкейк, торт с&nbsp;меренгой.</p><div class="params"><span>от&nbsp;4&nbsp;500&nbsp;₽ за&nbsp;кг</span><span>заказ от&nbsp;3&nbsp;дней</span></div><button class="btn fo-btn" type="button" data-order="торт на заказ" data-for="party">Рассчитать</button>
             </div></div>
           </li>
           <li class="fa-row" data-for="brand party" data-i="4">
-            <button class="fa-btn" type="button" aria-expanded="false"><span class="fa-n">[05]</span><span class="d fa-t">Десертный стол</span><span class="fa-tag">для бренда и&nbsp;праздника</span><span class="fa-ar" aria-hidden="true">→</span></button>
+            <button class="fa-btn" type="button" aria-expanded="false"><span class="fa-n">[05]</span><span class="d fa-t">Кондитерский кейтеринг</span><span class="fa-tag">для бренда и&nbsp;праздника</span><span class="fa-ar" aria-hidden="true">→</span></button>
             <div class="fa-more"><div class="fa-more-in">
-              <img class="fa-thumb" src="assets/img/ym-385.webp" alt="" loading="lazy">
-              <p>Набор мини-десертов с&nbsp;подачей на&nbsp;площадке.</p><div class="params"><span>от&nbsp;900&nbsp;₽ за&nbsp;гостя</span><span>от&nbsp;20&nbsp;гостей</span></div><button class="btn fo-btn" type="button" data-order="десертный стол" data-for="brand party">Рассчитать</button>
+              <img class="fa-thumb" src="assets/img/flowers-nobo.webp" alt="" loading="lazy">
+              <p>Набор мини-десертов с&nbsp;подачей на&nbsp;площадке.</p><div class="params"><span>от&nbsp;750&nbsp;₽ за&nbsp;гостя</span><span>от&nbsp;20&nbsp;гостей</span></div><button class="btn fo-btn" type="button" data-order="кондитерский кейтеринг" data-for="brand party">Рассчитать</button>
             </div></div>
           </li>
           </ol>
@@ -1380,34 +1384,31 @@ html.is-loading, html.is-loading body { overflow: hidden; }
       <div id="sizes" class="sizes">
         <div class="sz-txt">
           <h3 class="d h2">Сколько гостей&nbsp;— такой диаметр</h3>
-          <p class="mute">Крем&nbsp;— крем чиз или&nbsp;ванильный. Ягоды&nbsp;— малина, клубника, голубика или&nbsp;сезонные.</p>
+          <p class="mute">Крем&nbsp;— крем-чиз, ванильный или шоколадный. Основа&nbsp;— ванильный или шоколадный бисквит, медовик или песочная. Заказ от&nbsp;5&nbsp;дней.</p>
           <button class="btn sz-go" type="button">Рассчитать тарт</button>
         </div>
         <div class="sz-vis"><svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="tart-top" viewBox="-50 -50 100 100"><path class="tc" d="M49.20 0.00 L46.94 2.46 L44.55 4.68 L46.42 7.35 L48.12 10.23 L45.40 12.16 L42.61 13.84 L43.88 16.84 L44.95 20.01 L41.88 21.34 L38.80 22.40 L39.42 25.60 L39.80 28.92 L36.53 29.58 L33.29 29.98 L33.23 33.23 L32.92 36.56 L29.58 36.53 L26.33 36.24 L25.60 39.42 L24.60 42.61 L21.34 41.88 L18.22 40.93 L16.84 43.88 L15.20 46.79 L12.16 45.40 L9.31 43.82 L7.35 46.42 L5.14 48.93 L2.46 46.94 L0.00 44.80 L-2.46 46.94 L-5.14 48.93 L-7.35 46.42 L-9.31 43.82 L-12.16 45.40 L-15.20 46.79 L-16.84 43.88 L-18.22 40.93 L-21.34 41.88 L-24.60 42.61 L-25.60 39.42 L-26.33 36.24 L-29.58 36.53 L-32.92 36.56 L-33.23 33.23 L-33.29 29.98 L-36.53 29.58 L-39.80 28.92 L-39.42 25.60 L-38.80 22.40 L-41.88 21.34 L-44.95 20.01 L-43.88 16.84 L-42.61 13.84 L-45.40 12.16 L-48.12 10.23 L-46.42 7.35 L-44.55 4.68 L-46.94 2.46 L-49.20 0.00 L-46.94 -2.46 L-44.55 -4.68 L-46.42 -7.35 L-48.12 -10.23 L-45.40 -12.16 L-42.61 -13.84 L-43.88 -16.84 L-44.95 -20.01 L-41.88 -21.34 L-38.80 -22.40 L-39.42 -25.60 L-39.80 -28.92 L-36.53 -29.58 L-33.29 -29.98 L-33.23 -33.23 L-32.92 -36.56 L-29.58 -36.53 L-26.33 -36.24 L-25.60 -39.42 L-24.60 -42.61 L-21.34 -41.88 L-18.22 -40.93 L-16.84 -43.88 L-15.20 -46.79 L-12.16 -45.40 L-9.31 -43.82 L-7.35 -46.42 L-5.14 -48.93 L-2.46 -46.94 L-0.00 -44.80 L2.46 -46.94 L5.14 -48.93 L7.35 -46.42 L9.31 -43.82 L12.16 -45.40 L15.20 -46.79 L16.84 -43.88 L18.22 -40.93 L21.34 -41.88 L24.60 -42.61 L25.60 -39.42 L26.33 -36.24 L29.58 -36.53 L32.92 -36.56 L33.23 -33.23 L33.29 -29.98 L36.53 -29.58 L39.80 -28.92 L39.42 -25.60 L38.80 -22.40 L41.88 -21.34 L44.95 -20.01 L43.88 -16.84 L42.61 -13.84 L45.40 -12.16 L48.12 -10.23 L46.42 -7.35 L44.55 -4.68 L46.94 -2.46Z"/><circle class="tm" r="40"/><circle class="tb" style="--k:0" cx="-0.6" cy="0.0" r="4.2"/><circle class="tb" style="--k:1" cx="8.5" cy="3.8" r="3.9"/><circle class="tb" style="--k:2" cx="2.6" cy="9.4" r="3.9"/><circle class="tb" style="--k:3" cx="-5.3" cy="8.5" r="3.9"/><circle class="tb" style="--k:4" cx="-9.8" cy="1.2" r="3.9"/><circle class="tb" style="--k:5" cx="-6.6" cy="-6.6" r="3.9"/><circle class="tb" style="--k:6" cx="1.7" cy="-10.4" r="3.9"/><circle class="tb" style="--k:7" cx="8.1" cy="-5.1" r="3.9"/><circle class="tb" style="--k:8" cx="14.1" cy="15.2" r="3.8"/><circle class="tb" style="--k:9" cx="5.4" cy="19.1" r="3.8"/><circle class="tb" style="--k:10" cx="-5.2" cy="18.6" r="3.8"/><circle class="tb" style="--k:11" cx="-13.2" cy="14.6" r="3.8"/><circle class="tb" style="--k:12" cx="-17.3" cy="8.7" r="3.8"/><circle class="tb" style="--k:13" cx="-20.5" cy="-0.9" r="3.8"/><circle class="tb" style="--k:14" cx="-17.6" cy="-9.8" r="3.8"/><circle class="tb" style="--k:15" cx="-9.6" cy="-17.3" r="3.8"/><circle class="tb" style="--k:16" cx="-0.7" cy="-19.3" r="3.8"/><circle class="tb" style="--k:17" cx="7.0" cy="-18.2" r="3.8"/><circle class="tb" style="--k:18" cx="16.2" cy="-11.6" r="3.8"/><circle class="tb" style="--k:19" cx="19.7" cy="-3.9" r="3.8"/><circle class="tb" style="--k:20" cx="18.7" cy="6.0" r="3.8"/><circle class="tb" style="--k:21" cx="9.6" cy="28.7" r="3.6"/><circle class="tb" style="--k:22" cx="2.4" cy="30.0" r="3.6"/><circle class="tb" style="--k:23" cx="-8.9" cy="29.3" r="3.6"/><circle class="tb" style="--k:24" cx="-18.1" cy="23.5" r="3.6"/><circle class="tb" style="--k:25" cx="-25.2" cy="15.2" r="3.6"/><circle class="tb" style="--k:26" cx="-29.0" cy="9.0" r="3.6"/><circle class="tb" style="--k:27" cx="-30.0" cy="0.4" r="3.6"/><circle class="tb" style="--k:28" cx="-28.9" cy="-8.9" r="3.6"/><circle class="tb" style="--k:29" cx="-22.1" cy="-20.4" r="3.6"/><circle class="tb" style="--k:30" cx="-13.6" cy="-26.4" r="3.6"/><circle class="tb" style="--k:31" cx="-5.2" cy="-29.7" r="3.6"/><circle class="tb" style="--k:32" cx="4.1" cy="-29.6" r="3.6"/><circle class="tb" style="--k:33" cx="15.0" cy="-26.8" r="3.6"/><circle class="tb" style="--k:34" cx="21.3" cy="-21.5" r="3.6"/><circle class="tb" style="--k:35" cx="26.3" cy="-15.2" r="3.6"/><circle class="tb" style="--k:36" cx="30.6" cy="-3.1" r="3.6"/><circle class="tb" style="--k:37" cx="28.7" cy="7.6" r="3.6"/><circle class="tb" style="--k:38" cx="26.3" cy="15.0" r="3.6"/><circle class="tb" style="--k:39" cx="21.0" cy="21.3" r="3.6"/></symbol></svg>
         <div class="sv sv-a" data-sv="a">
           <div class="sa-row">
-          <button class="sa-item" type="button" style="--d:40" data-d="40" data-guests="20">
+          <button class="sa-item" type="button" style="--d:40" data-d="40" data-guests="25">
             <span class="sa-dim"><span>40&nbsp;см</span></span>
             <svg class="sa-tart" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#tart-top" x="-50" y="-50" width="100" height="100"/></svg>
-            <span class="sa-n d">20&nbsp;<small>порций</small></span>
-            <span class="sa-meta">4&nbsp;кг · ягод 2,5&nbsp;кг</span>
-            <span class="sa-pr">от&nbsp;12&nbsp;000&nbsp;₽</span>
+            <span class="sa-n d">25&nbsp;<small>порций</small></span>
+            <span class="sa-pr">от&nbsp;22&nbsp;000&nbsp;₽</span>
             
           </button>
-          <button class="sa-item" type="button" style="--d:60" data-d="60" data-guests="45">
+          <button class="sa-item" type="button" style="--d:60" data-d="60" data-guests="50">
             <span class="sa-dim"><span>60&nbsp;см</span></span>
             <svg class="sa-tart" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#tart-top" x="-50" y="-50" width="100" height="100"/></svg>
-            <span class="sa-n d">45&nbsp;<small>порций</small></span>
-            <span class="sa-meta">8&nbsp;кг · ягод 5,6&nbsp;кг</span>
-            <span class="sa-pr">от&nbsp;24&nbsp;000&nbsp;₽</span>
+            <span class="sa-n d">50&nbsp;<small>порций</small></span>
+            <span class="sa-pr">от&nbsp;44&nbsp;000&nbsp;₽</span>
             
           </button>
-          <button class="sa-item" type="button" style="--d:80" data-d="80" data-guests="80">
-            <span class="sa-dim"><span>80&nbsp;см</span></span>
+          <button class="sa-item" type="button" style="--d:100" data-d="100" data-guests="150">
+            <span class="sa-dim"><span>100&nbsp;см</span></span>
             <svg class="sa-tart" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#tart-top" x="-50" y="-50" width="100" height="100"/></svg>
-            <span class="sa-n d">80&nbsp;<small>порций</small></span>
-            <span class="sa-meta">14&nbsp;кг · ягод 10&nbsp;кг</span>
-            <span class="sa-pr">от&nbsp;42&nbsp;000&nbsp;₽</span>
+            <span class="sa-n d">150&nbsp;<small>порций</small></span>
+            <span class="sa-pr">от&nbsp;120&nbsp;000&nbsp;₽</span>
             <span class="sa-chef">кондитер соберёт на&nbsp;месте</span>
           </button>
           </div>
@@ -1427,10 +1428,10 @@ html.is-loading, html.is-loading body { overflow: hidden; }
               <div class="el-cap"><span class="el-k">кондитер на&nbsp;площадке</span><h2 class="d el-title">Соберём тарт при&nbsp;гостях</h2></div>
               <div class="el-lift el-lift--l"><div class="el-it is-on" data-i="0"><span class="el-n">[01]</span><h3 class="d el-h">Приезжаем заранее</h3></div><div class="el-it" data-i="1"><span class="el-n">[02]</span><h3 class="d el-h">Выкладываем ягоды</h3></div><div class="el-it" data-i="2"><span class="el-n">[03]</span><h3 class="d el-h">Последний штрих</h3></div><div class="el-it" data-i="3"><span class="el-n">[04]</span><h3 class="d el-h">Выход к&nbsp;гостям</h3></div></div>
             </div>
-            <div class="el-c el-m"><div class="el-ph"><div class="el-track"><img data-i="0" src="assets/img/chefs-event.webp" alt="Кондитеры nobo на площадке события" loading="lazy"><img data-i="1" src="assets/img/ym-204.webp" alt="Огромный малиновый тарт" loading="lazy"><img data-i="2" src="assets/img/chef.webp" alt="Кондитер посыпает десерт сахарной пудрой" loading="lazy"><img data-i="3" src="assets/img/tart-candles.webp" alt="Малиновый тарт со свечами" loading="lazy"></div></div></div>
+            <div class="el-c el-m"><div class="el-ph"><div class="el-track"><img data-i="0" src="assets/img/chefs-event.webp" alt="Кондитеры nobo на площадке события" loading="lazy"><img data-i="1" src="assets/img/tart-hide.webp" alt="Огромный малиновый тарт выносят к гостям" loading="lazy"><img data-i="2" src="assets/img/chef.webp" alt="Кондитер посыпает десерт сахарной пудрой" loading="lazy"><img data-i="3" src="assets/img/tart-candles.webp" alt="Малиновый тарт со свечами" loading="lazy"></div></div></div>
             <div class="el-c el-r">
               <div class="el-lift el-lift--r"><div class="el-it is-on" data-i="0"><p class="el-t">Ставим основу тарта и&nbsp;подставку, пока гости собираются. Нужен только устойчивый стол&nbsp;— размеры подскажем.</p></div><div class="el-it" data-i="1"><p class="el-t">Малина, клубника, голубика&nbsp;— на&nbsp;тарт 40&nbsp;см уходит 2,5&nbsp;кг свежих ягод, на&nbsp;80&nbsp;см вчетверо больше.</p></div><div class="el-it" data-i="2"><p class="el-t">Сахарная пудра, надпись, детали под&nbsp;бренд&nbsp;— финал собираем на&nbsp;глазах у&nbsp;гостей.</p></div><div class="el-it" data-i="3"><p class="el-t">Зажигаем свечи и&nbsp;выносим тарт&nbsp;— это отдельный момент программы, все достают телефоны.</p></div></div>
-              <div class="el-foot"><div class="el-prog" aria-hidden="true"><span></span></div><p>выезд кондитера&nbsp;— от&nbsp;5&nbsp;000&nbsp;₽ · Москва и&nbsp;область</p><a class="btn" href="#lead">Рассчитать тарт</a></div>
+              <div class="el-foot"><div class="el-prog" aria-hidden="true"><span></span></div><p>выезд кондитера&nbsp;— от&nbsp;5&nbsp;000&nbsp;₽ · сборка около часа · Москва и&nbsp;область</p><a class="btn" href="#lead">Рассчитать тарт</a></div>
             </div>
           </div>
         </div>
@@ -1445,17 +1446,17 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     <div class="vv" data-v="a"><div class="wrap fd-row">
           <article class="fd fd--1" tabindex="0">
             <div class="fd-back"><span class="fd-tab">[01] премия</span></div>
-            <div class="fd-pics"><img src="assets/img/ym-243.webp" alt="Десерт-утка на столе церемонии Forbes Woman Mercury Awards" loading="lazy"><img src="assets/img/ducks-tray.webp" alt="" loading="lazy"><img src="assets/img/forbes-ducks.webp" alt="" loading="lazy"></div>
+            <div class="fd-pics"><img src="assets/img/forbes-ducks.webp" alt="Десерт-утка на столе церемонии Forbes Woman Mercury Awards" loading="lazy"><img src="assets/img/ducks-tray.webp" alt="" loading="lazy"><img src="assets/img/ducks-forks.webp" alt="" loading="lazy"></div>
             <div class="fd-front"><p class="fd-meta">Премия · десерт в&nbsp;форме утки · 300 гостей</p><h3 class="d fd-h">Forbes Woman Mercury Awards</h3><div class="fd-more"><p>Чёрные глянцевые утки с&nbsp;красным клювом на&nbsp;белом фарфоре&nbsp;— подавали гостям церемонии на&nbsp;подносах.</p></div></div>
           </article>
           <article class="fd fd--2" tabindex="0">
             <div class="fd-back"><span class="fd-tab">[02] свадьба</span></div>
             <div class="fd-pics"><img src="assets/img/tart-candles.webp" alt="Ягодный тарт на вечернем празднике" loading="lazy"><img src="assets/img/ym-095.webp" alt="" loading="lazy"><img src="assets/img/tart-table.webp" alt="" loading="lazy"></div>
-            <div class="fd-front"><p class="fd-meta">Свадьба · торт и&nbsp;десертный стол · 80 гостей</p><h3 class="d fd-h">Свадьба, сентябрь 2026</h3><div class="fd-more"><p>Свадебный торт и&nbsp;десертный стол на&nbsp;фуршет. Из&nbsp;отзыва пары: «Подача торта превосходная!»</p></div></div>
+            <div class="fd-front"><p class="fd-meta">Свадьба · торт и&nbsp;кондитерский кейтеринг · 80 гостей</p><h3 class="d fd-h">Свадьба, сентябрь 2026</h3><div class="fd-more"><p>Свадебный торт и&nbsp;кондитерский кейтеринг на&nbsp;фуршет. Из&nbsp;отзыва пары: «Подача торта превосходная!»</p></div></div>
           </article>
           <article class="fd fd--3" tabindex="0">
             <div class="fd-back"><span class="fd-tab">[03] коллаборация</span></div>
-            <div class="fd-pics"><img src="assets/img/ducks-dark.webp" alt="Десерт-утка на белой тарелке" loading="lazy"><img src="assets/img/ym-042.webp" alt="" loading="lazy"><img src="assets/img/ducks-plates.webp" alt="" loading="lazy"></div>
+            <div class="fd-pics"><img src="assets/img/darling-tart.webp" alt="Малиновый тарт с логотипом бренда" loading="lazy"><img src="assets/img/darling-dome.webp" alt="" loading="lazy"><img src="assets/img/darling-bag.webp" alt="" loading="lazy"></div>
             <div class="fd-front"><p class="fd-meta">Коллаборация · брендированные десерты · 150 гостей</p><h3 class="d fd-h">Запуск коллекции бренда</h3><div class="fd-more"><p>Десерт в&nbsp;цветах новой коллекции: форму и&nbsp;вкус придумали вместе с&nbsp;командой бренда, подавали на&nbsp;презентации.</p></div></div>
           </article>
     </div></div>
@@ -1467,8 +1468,8 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   <section id="order" class="t-light sec" aria-label="Как заказать">
     <div class="seam" aria-hidden="true">Как заказать</div>
     <div class="vv" data-v="a"><div class="wrap ot">
-      <div class="ot-l"><h2 class="d h2">Пять шагов до&nbsp;десерта</h2><ul class="ot-terms"><li>Минимальный заказ&nbsp;— от&nbsp;10&nbsp;000&nbsp;₽</li><li>Заказ за&nbsp;3–7&nbsp;дней</li><li>Предоплата 50&nbsp;%</li><li>Договор, счёт и&nbsp;закрывающие&nbsp;— для компаний</li></ul><button class="btn ot-go" type="button" data-qo-open>Оставить заявку</button></div>
-      <ol class="ot-list"><span class="ot-line"><span></span></span><li class="ot-step" data-i="0"><span class="ot-dot"></span><div><div class="ot-head"><span class="d ot-n">01</span><p class="ot-when">сегодня</p></div><h3 class="d ot-h">Заявка</h3><p>Дата, число гостей и&nbsp;формат или&nbsp;референс&nbsp;— в&nbsp;форме или в&nbsp;Telegram.</p></div></li><li class="ot-step" data-i="1"><span class="ot-dot"></span><div><div class="ot-head"><span class="d ot-n">02</span><p class="ot-when">через 2&nbsp;часа</p></div><h3 class="d ot-h">Варианты и&nbsp;цена</h3><p>Ответим с&nbsp;вариантами десертов и&nbsp;расчётом.</p></div></li><li class="ot-step" data-i="2"><span class="ot-dot"></span><div><div class="ot-head"><span class="d ot-n">03</span><p class="ot-when">1–2 дня</p></div><h3 class="d ot-h">Эскиз и&nbsp;дегустация</h3><p>Покажем эскиз, для заказов от&nbsp;50 гостей&nbsp;— дегустация в&nbsp;зале.</p></div></li><li class="ot-step" data-i="3"><span class="ot-dot"></span><div><div class="ot-head"><span class="d ot-n">04</span><p class="ot-when">1 день</p></div><h3 class="d ot-h">Договор</h3><p>Фиксируем состав и&nbsp;дату, предоплата 50&nbsp;%.</p></div></li><li class="ot-step" data-i="4"><span class="ot-dot"></span><div><div class="ot-head"><span class="d ot-n">05</span><p class="ot-when">в&nbsp;день события</p></div><h3 class="d ot-h">Привозим и&nbsp;собираем</h3><p>Готовим к&nbsp;дате, привозим и&nbsp;собираем на&nbsp;площадке.</p></div></li></ol>
+      <div class="ot-l"><h2 class="d h2">Пять шагов до&nbsp;десерта</h2><ul class="ot-terms"><li>Минимальный заказ&nbsp;— от&nbsp;10&nbsp;000&nbsp;₽</li><li>Заказ за&nbsp;3–7&nbsp;дней</li><li>Полная предоплата</li><li>Договор, счёт и&nbsp;закрывающие&nbsp;— для компаний</li></ul><button class="btn ot-go" type="button" data-qo-open>Оставить заявку</button></div>
+      <ol class="ot-list"><span class="ot-line"><span></span></span><li class="ot-step" data-i="0"><span class="ot-dot"></span><div><div class="ot-head"><span class="d ot-n">01</span><p class="ot-when">сегодня</p></div><h3 class="d ot-h">Заявка</h3><p>Дата, число гостей и&nbsp;формат или&nbsp;референс&nbsp;— в&nbsp;форме или в&nbsp;Telegram.</p></div></li><li class="ot-step" data-i="1"><span class="ot-dot"></span><div><div class="ot-head"><span class="d ot-n">02</span><p class="ot-when">через 2&nbsp;часа</p></div><h3 class="d ot-h">Варианты и&nbsp;цена</h3><p>Ответим с&nbsp;вариантами десертов и&nbsp;расчётом.</p></div></li><li class="ot-step" data-i="2"><span class="ot-dot"></span><div><div class="ot-head"><span class="d ot-n">03</span><p class="ot-when">1–2 дня</p></div><h3 class="d ot-h">Эскиз и&nbsp;дегустация</h3><p>Покажем эскиз, для заказов от&nbsp;50 гостей&nbsp;— дегустация в&nbsp;зале.</p></div></li><li class="ot-step" data-i="3"><span class="ot-dot"></span><div><div class="ot-head"><span class="d ot-n">04</span><p class="ot-when">1 день</p></div><h3 class="d ot-h">Договор</h3><p>Фиксируем состав и&nbsp;дату, полная предоплата.</p></div></li><li class="ot-step" data-i="4"><span class="ot-dot"></span><div><div class="ot-head"><span class="d ot-n">05</span><p class="ot-when">в&nbsp;день события</p></div><h3 class="d ot-h">Привозим и&nbsp;собираем</h3><p>Готовим к&nbsp;дате, привозим и&nbsp;собираем на&nbsp;площадке.</p></div></li></ol>
     </div></div>
   </section>
 
@@ -1498,15 +1499,15 @@ html.is-loading, html.is-loading body { overflow: hidden; }
         </svg>
       </div>
       <div>
-        <details open><summary>Какого размера бывает тарт?</summary><p>От&nbsp;40&nbsp;см. На&nbsp;тарт от&nbsp;80&nbsp;см кондитер приезжает собрать его на&nbsp;месте.</p></details>
+        <details open><summary>Какого размера бывает тарт?</summary><p>От&nbsp;40 до&nbsp;120&nbsp;см. Тарт от&nbsp;80&nbsp;см кондитер собирает на&nbsp;месте&nbsp;— сборка занимает около часа.</p></details>
         <details><summary>Какой минимальный заказ?</summary><p>От&nbsp;10&nbsp;000&nbsp;₽. Брендированные десерты&nbsp;— от&nbsp;30&nbsp;штук.</p></details>
-        <details><summary>За сколько дней нужно заказать?</summary><p>Тарт и&nbsp;торт&nbsp;— за&nbsp;3&nbsp;дня, брендированные десерты&nbsp;— за&nbsp;7&nbsp;дней. Срочно&nbsp;— напишите, проверим.</p></details>
+        <details><summary>За сколько дней нужно заказать?</summary><p>Торт&nbsp;— от&nbsp;3&nbsp;дней, тарт&nbsp;— от&nbsp;5&nbsp;дней, брендированные десерты&nbsp;— от&nbsp;7&nbsp;дней. Срочно&nbsp;— напишите, проверим.</p></details>
         <details><summary>Что можно сделать под бренд?</summary><p>Цвет, форму десерта, логотип на&nbsp;шоколаде или бирке и&nbsp;упаковку. Тираж&nbsp;— от&nbsp;30&nbsp;штук.</p></details>
-        <details><summary>Доставляете ли по&nbsp;Москве и&nbsp;области?</summary><p>Да, своей курьерской службой. Большие тарты привозим и&nbsp;собираем на&nbsp;месте.</p></details>
+        <details><summary>Доставляете ли по&nbsp;Москве и&nbsp;области?</summary><p>Да, курьерской службой. Большие тарты привозим и&nbsp;собираем на&nbsp;месте.</p></details>
         <details><summary>Нужен ли стол под большой тарт?</summary><p>Да, устойчивый и&nbsp;чуть шире тарта. Размеры пришлём после заявки.</p></details>
         <details><summary>Можно ли узнать состав и&nbsp;аллергены?</summary><p>Да, пришлём состав каждого десерта вместе с&nbsp;расчётом.</p></details>
         <details><summary>Работаете с&nbsp;компаниями по&nbsp;договору и&nbsp;счёту?</summary><p>Да, работаем по&nbsp;договору, выставляем счёт и&nbsp;закрывающие документы.</p></details>
-        <details><summary>Можно попробовать до&nbsp;заказа?</summary><p>Десерты из&nbsp;витрины можно попробовать в&nbsp;зале ресторана на&nbsp;Новослободской. Перед большим заказом проведём дегустацию.</p></details>
+        <details><summary>Можно попробовать до&nbsp;заказа?</summary><p>Да, можно заказать дегустационную порцию: попробовать в&nbsp;ресторане на&nbsp;Новослободской или получить курьером.</p></details>
       </div>
     </div>
   </section>
@@ -1516,7 +1517,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     <div class="vv" data-v="a"><div class="wrap ld-a">
             <h2 class="d h2">Рассчитаем десерт для&nbsp;вашего события</h2>
       <form class="ld-form ld-sent" novalidate>
-        <div class="d ld-sentence">Нам нужен <span class="dd"><button type="button" class="dd-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Формат"><span class="dd-val">ягодный тарт</span><svg class="dd-ar" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 1.5 8 8l6.5-6.5"/></svg></button><ul class="dd-list" role="listbox" hidden><li role="option" tabindex="-1" aria-selected="true">ягодный тарт</li><li role="option" tabindex="-1" aria-selected="false">брендированные десерты</li><li role="option" tabindex="-1" aria-selected="false">большие форматы</li><li role="option" tabindex="-1" aria-selected="false">торт</li><li role="option" tabindex="-1" aria-selected="false">десертный стол</li><li role="option" tabindex="-1" aria-selected="false">пока не знаю</li></ul><input type="hidden" name="format" value="ягодный тарт"></span> на&nbsp;<input class="ld-in" aria-label="Дата события" placeholder="дату"> для&nbsp;<input class="ld-in" inputmode="numeric" aria-label="Число гостей" placeholder="120">&nbsp;гостей.<br>Меня зовут <input class="ld-in" aria-label="Имя" autocomplete="name" placeholder="имя">, мой телефон <input class="ld-in ld-phone" type="tel" aria-label="Телефон" autocomplete="tel" placeholder="+7">.</div>
+        <div class="d ld-sentence">Нам нужен <span class="dd"><button type="button" class="dd-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Формат"><span class="dd-val">ягодный тарт</span><svg class="dd-ar" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 1.5 8 8l6.5-6.5"/></svg></button><ul class="dd-list" role="listbox" hidden><li role="option" tabindex="-1" aria-selected="true">ягодный тарт</li><li role="option" tabindex="-1" aria-selected="false">брендированные десерты</li><li role="option" tabindex="-1" aria-selected="false">большие форматы</li><li role="option" tabindex="-1" aria-selected="false">торт</li><li role="option" tabindex="-1" aria-selected="false">кондитерский кейтеринг</li><li role="option" tabindex="-1" aria-selected="false">пока не знаю</li></ul><input type="hidden" name="format" value="ягодный тарт"></span> <span class="tart-opt">с&nbsp;<span class="dd dd-sub"><button type="button" class="dd-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Крем"><span class="dd-val">крем-чизом</span><svg class="dd-ar" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 1.5 8 8l6.5-6.5"/></svg></button><ul class="dd-list" role="listbox" hidden><li role="option" tabindex="-1" aria-selected="true">крем-чизом</li><li role="option" tabindex="-1" aria-selected="false">ванильным кремом</li><li role="option" tabindex="-1" aria-selected="false">шоколадным кремом</li></ul><input type="hidden" name="cream" value="крем-чизом"></span> и&nbsp;<span class="dd dd-sub"><button type="button" class="dd-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Основа"><span class="dd-val">ванильным бисквитом</span><svg class="dd-ar" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 1.5 8 8l6.5-6.5"/></svg></button><ul class="dd-list" role="listbox" hidden><li role="option" tabindex="-1" aria-selected="true">ванильным бисквитом</li><li role="option" tabindex="-1" aria-selected="false">шоколадным бисквитом</li><li role="option" tabindex="-1" aria-selected="false">медовиком</li><li role="option" tabindex="-1" aria-selected="false">песочной основой</li></ul><input type="hidden" name="base" value="ванильным бисквитом"></span></span> на&nbsp;<input class="ld-in" aria-label="Дата события" placeholder="дату"> для&nbsp;<input class="ld-in" inputmode="numeric" aria-label="Число гостей" placeholder="120">&nbsp;гостей.<br>Меня зовут <input class="ld-in" aria-label="Имя" autocomplete="name" placeholder="имя">, мой телефон <input class="ld-in ld-phone" type="tel" aria-label="Телефон" autocomplete="tel" placeholder="+7">.</div>
         <div class="ld-foot"><label class="consent ld-consent" for="ld-c-a"><input id="ld-c-a" type="checkbox"><span>Я&nbsp;даю согласие на&nbsp;обработку персональных данных (<a href="#lead">текст согласия</a>)</span></label><button class="btn" type="submit">Отправить заявку</button></div>
         <p class="ld-err" role="alert" hidden>Укажите телефон и&nbsp;отметьте согласие&nbsp;— без него заявку не&nbsp;отправить.</p>
       </form><div class="ld-done" hidden><h3 class="d ld-done-h">Заявка у&nbsp;нас</h3><p>Ответим с&nbsp;вариантами и&nbsp;ценой за&nbsp;2&nbsp;часа.</p></div>
@@ -1546,16 +1547,16 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     </div>
   </div>
 </dialog>
-<script type="application/json" id="fp-data">[{"k": "brand", "seg": "brand", "chip": "брендированные десерты", "img": "ducks-tray", "alt": "Брендированные десерты в форме уток на подносе", "n": "01", "t": "Десерты под&nbsp;бренд", "d": "Десерт в&nbsp;форме, цвете или с&nbsp;логотипом бренда. Рецепт и&nbsp;подачу придумываем под событие: запуск, презентацию, корпоратив, подарок партнёрам.", "p": [["цена", "от 450&nbsp;₽ за&nbsp;шт"], ["тираж", "от 30&nbsp;шт"], ["срок", "заказ за&nbsp;7&nbsp;дней"]], "b": ["цвет и&nbsp;форма под бренд", "логотип на&nbsp;шоколаде или бирке", "упаковка с&nbsp;логотипом"]}, {"k": "tart", "seg": "party", "chip": "ягодный тарт от 40 см", "img": "ym-204", "alt": "Огромный малиновый тарт", "n": "02", "t": "Тарты от&nbsp;40&nbsp;см", "d": "Крем чиз или ванильный крем, свежие ягоды на&nbsp;выбор: малина, клубника, голубика или сезонные. На&nbsp;тарт 40&nbsp;см уходит 2,5&nbsp;кг ягод.", "p": [["40 см", "20 порций · от 12&nbsp;000&nbsp;₽"], ["60 см", "45 порций · от 24&nbsp;000&nbsp;₽"], ["80 см", "80 порций · от 42&nbsp;000&nbsp;₽"]], "b": ["заказ за&nbsp;3&nbsp;дня", "от&nbsp;80&nbsp;см собираем на&nbsp;месте"]}, {"k": "chef", "seg": "party", "chip": "ягодный тарт от 40 см", "img": "chefs-event", "alt": "Кондитеры nobo на площадке события", "n": "03", "t": "Кондитер на&nbsp;площадке", "d": "Кондитер приезжает и&nbsp;собирает тарт при&nbsp;гостях&nbsp;— это отдельный момент программы, а&nbsp;не&nbsp;просто подача.", "p": [["с какого размера", "тарт от&nbsp;80&nbsp;см"], ["выезд", "от 5&nbsp;000&nbsp;₽"], ["где", "Москва и&nbsp;область"]], "b": ["нужен устойчивый стол&nbsp;— размеры подскажем", "сборка занимает около 30&nbsp;минут"]}, {"k": "table", "seg": "party", "chip": "десертный стол", "img": "ym-385", "alt": "Мини-десерты: тарталетки с ягодами и муссы", "n": "04", "t": "Десертный стол", "d": "Набор мини-десертов с&nbsp;подачей на&nbsp;площадке: тарталетки, муссы, наполеон порционно. Собираем под цвет и&nbsp;тему события.", "p": [["цена", "от 900&nbsp;₽ за&nbsp;гостя"], ["гостей", "от 20"], ["срок", "заказ за&nbsp;5&nbsp;дней"]], "b": ["подставки и&nbsp;оформление&nbsp;— наши", "можно добавить большой тарт в&nbsp;центр"]}]</script>
+<script type="application/json" id="fp-data">[{"k": "brand", "seg": "brand", "chip": "брендированные десерты", "img": "ducks-tray", "alt": "Брендированные десерты в форме уток на подносе", "n": "01", "t": "Десерты под&nbsp;бренд", "d": "Десерт в&nbsp;форме, цвете или с&nbsp;логотипом бренда. Рецепт и&nbsp;подачу придумываем под событие: запуск, презентацию, корпоратив, подарок партнёрам.", "p": [["цена", "от 600&nbsp;₽ за&nbsp;шт"], ["тираж", "от 30&nbsp;шт"], ["срок", "заказ от&nbsp;7&nbsp;дней"]], "b": ["цвет и&nbsp;форма под бренд", "логотип на&nbsp;шоколаде или бирке", "упаковка с&nbsp;логотипом"]}, {"k": "tart", "seg": "party", "chip": "ягодный тарт от 40 см", "img": "tart-hide", "alt": "Огромный малиновый тарт выносят к гостям", "n": "02", "t": "Тарты от&nbsp;40&nbsp;см", "d": "Крем на&nbsp;выбор: крем-чиз, ванильный или шоколадный. Основа: ванильный или шоколадный бисквит, медовик или песочная. Сверху&nbsp;— свежие ягоды.", "p": [["40 см", "25 порций · от 22&nbsp;000&nbsp;₽"], ["60 см", "50 порций · от 44&nbsp;000&nbsp;₽"], ["100 см", "150 порций · от 120&nbsp;000&nbsp;₽"]], "b": ["заказ от&nbsp;5&nbsp;дней", "от&nbsp;80&nbsp;см собираем на&nbsp;месте"]}, {"k": "chef", "seg": "party", "chip": "ягодный тарт от 40 см", "img": "chefs-event", "alt": "Кондитеры nobo на площадке события", "n": "03", "t": "Кондитер на&nbsp;площадке", "d": "Кондитер приезжает и&nbsp;собирает тарт при&nbsp;гостях&nbsp;— это отдельный момент программы, а&nbsp;не&nbsp;просто подача.", "p": [["с какого размера", "тарт от&nbsp;80&nbsp;см"], ["выезд", "от 5&nbsp;000&nbsp;₽"], ["где", "Москва и&nbsp;область"]], "b": ["нужен устойчивый стол&nbsp;— размеры подскажем", "сборка занимает около часа"]}, {"k": "table", "seg": "party", "chip": "кондитерский кейтеринг", "img": "flowers-nobo", "alt": "Мини-десерты в форме цветов на подложках nobo", "n": "04", "t": "Кондитерский кейтеринг", "d": "Набор мини-десертов с&nbsp;подачей на&nbsp;площадке: тарталетки, муссы, наполеон порционно. Собираем под цвет и&nbsp;тему события.", "p": [["цена", "от 750&nbsp;₽ за&nbsp;гостя"], ["гостей", "от 20"], ["срок", "заказ за&nbsp;5&nbsp;дней"]], "b": ["подставки и&nbsp;оформление&nbsp;— наши", "можно добавить большой тарт в&nbsp;центр"]}]</script>
 <!-- Быстрый заказ (поп-ап из карточек «Для кого») -->
 <dialog class="qo qo2 t-dark" id="qo" aria-labelledby="qo-h">
   <div class="qo2-in">
-    <div class="qo2-ph" aria-hidden="true"><img src="assets/img/ym-204.webp" alt="" data-f="ягодный тарт" class="is-on" loading="lazy"><img src="assets/img/ducks-tray.webp" alt="" data-f="брендированные десерты" loading="lazy"><img src="assets/img/tiramisu.webp" alt="" data-f="большие форматы" loading="lazy"><img src="assets/img/ym-237.webp" alt="" data-f="торт" loading="lazy"><img src="assets/img/ym-385.webp" alt="" data-f="десертный стол" loading="lazy"><img src="assets/img/tart-candles.webp" alt="" data-f="пока не знаю" loading="lazy"></div>
+    <div class="qo2-ph" aria-hidden="true"><img src="assets/img/tart-hide.webp" alt="" data-f="ягодный тарт" class="is-on" loading="lazy"><img src="assets/img/ducks-tray.webp" alt="" data-f="брендированные десерты" loading="lazy"><img src="assets/img/profiteroles-mountain.webp" alt="" data-f="большие форматы" loading="lazy"><img src="assets/img/xmas-tree.webp" alt="" data-f="торт" loading="lazy"><img src="assets/img/flowers-nobo.webp" alt="" data-f="кондитерский кейтеринг" loading="lazy"><img src="assets/img/tart-candles.webp" alt="" data-f="пока не знаю" loading="lazy"></div>
     <div class="qo2-r">
       <button class="qo-x" type="button" data-qo-close aria-label="Закрыть">×</button>
       <form class="qo2-form" id="qo-form" novalidate>
         <p class="qo-k" id="qo-h">быстрый заказ · ответим с&nbsp;вариантами и&nbsp;ценой за&nbsp;2&nbsp;часа</p>
-        <div class="d ld-sentence qo2-s">Нам нужен <span class="dd"><button type="button" class="dd-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Формат"><span class="dd-val">ягодный тарт</span><svg class="dd-ar" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 1.5 8 8l6.5-6.5"/></svg></button><ul class="dd-list" role="listbox" hidden><li role="option" tabindex="-1" aria-selected="true" data-img="ym-204">ягодный тарт</li><li role="option" tabindex="-1" aria-selected="false" data-img="ducks-tray">брендированные десерты</li><li role="option" tabindex="-1" aria-selected="false" data-img="tiramisu">большие форматы</li><li role="option" tabindex="-1" aria-selected="false" data-img="ym-237">торт</li><li role="option" tabindex="-1" aria-selected="false" data-img="ym-385">десертный стол</li><li role="option" tabindex="-1" aria-selected="false" data-img="tart-candles">пока не знаю</li></ul><input type="hidden" name="format" value="ягодный тарт"></span> на&nbsp;<input class="ld-in" id="q-date" aria-label="Дата события" placeholder="дату"> для&nbsp;<input class="ld-in" id="q-guests" inputmode="numeric" aria-label="Число гостей" placeholder="120">&nbsp;гостей.<br>Меня зовут <input class="ld-in" id="q-name" aria-label="Имя" autocomplete="name" placeholder="имя">, мой телефон <input class="ld-in ld-phone" id="q-phone" type="tel" aria-label="Телефон" autocomplete="tel" placeholder="+7">.</div>
+        <div class="d ld-sentence qo2-s">Нам нужен <span class="dd"><button type="button" class="dd-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Формат"><span class="dd-val">ягодный тарт</span><svg class="dd-ar" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 1.5 8 8l6.5-6.5"/></svg></button><ul class="dd-list" role="listbox" hidden><li role="option" tabindex="-1" aria-selected="true" data-img="tart-hide">ягодный тарт</li><li role="option" tabindex="-1" aria-selected="false" data-img="ducks-tray">брендированные десерты</li><li role="option" tabindex="-1" aria-selected="false" data-img="profiteroles-mountain">большие форматы</li><li role="option" tabindex="-1" aria-selected="false" data-img="xmas-tree">торт</li><li role="option" tabindex="-1" aria-selected="false" data-img="flowers-nobo">кондитерский кейтеринг</li><li role="option" tabindex="-1" aria-selected="false" data-img="tart-candles">пока не знаю</li></ul><input type="hidden" name="format" value="ягодный тарт"></span> <span class="tart-opt">с&nbsp;<span class="dd dd-sub"><button type="button" class="dd-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Крем"><span class="dd-val">крем-чизом</span><svg class="dd-ar" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 1.5 8 8l6.5-6.5"/></svg></button><ul class="dd-list" role="listbox" hidden><li role="option" tabindex="-1" aria-selected="true">крем-чизом</li><li role="option" tabindex="-1" aria-selected="false">ванильным кремом</li><li role="option" tabindex="-1" aria-selected="false">шоколадным кремом</li></ul><input type="hidden" name="cream" value="крем-чизом"></span> и&nbsp;<span class="dd dd-sub"><button type="button" class="dd-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Основа"><span class="dd-val">ванильным бисквитом</span><svg class="dd-ar" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 1.5 8 8l6.5-6.5"/></svg></button><ul class="dd-list" role="listbox" hidden><li role="option" tabindex="-1" aria-selected="true">ванильным бисквитом</li><li role="option" tabindex="-1" aria-selected="false">шоколадным бисквитом</li><li role="option" tabindex="-1" aria-selected="false">медовиком</li><li role="option" tabindex="-1" aria-selected="false">песочной основой</li></ul><input type="hidden" name="base" value="ванильным бисквитом"></span></span> на&nbsp;<input class="ld-in" id="q-date" aria-label="Дата события" placeholder="дату"> для&nbsp;<input class="ld-in" id="q-guests" inputmode="numeric" aria-label="Число гостей" placeholder="120">&nbsp;гостей.<br>Меня зовут <input class="ld-in" id="q-name" aria-label="Имя" autocomplete="name" placeholder="имя">, мой телефон <input class="ld-in ld-phone" id="q-phone" type="tel" aria-label="Телефон" autocomplete="tel" placeholder="+7">.</div>
         <div class="qo2-foot">
           <label class="consent ld-consent" for="q-consent"><input id="q-consent" type="checkbox"><span>Я&nbsp;даю согласие на&nbsp;обработку персональных данных (<a href="#lead">текст согласия</a>)</span></label>
           <button class="btn" type="submit">Отправить</button>
@@ -1598,45 +1599,22 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   var root = document.documentElement;
 
 
-  // Слайдер первого экрана — «тарт из долей»: 6 клиньев от центра, новые доли слетаются по часовой стрелке и складываются в целое фото
+  // Слайдер первого экрана — обычная смена кадров (клиент 19.11: «не сегментами»): новый кадр проявляется поверх старого с лёгким наездом
   var mosaic = document.querySelector('.mosaic');
   (function () {
     if (!mosaic) return;
-    var srcs = ['tart-candles', 'ym-243', 'ym-095', 'ym-364', 'ym-183'].map(function (n) { return 'assets/img/' + n + '.webp'; });
-    var N = 6, R = 160, HOLD = 6000, STEP = 80, i = 0, slices = [];
-    function pt(a) { var r = a * Math.PI / 180; return (50 + R * Math.cos(r)).toFixed(2) + '% ' + (50 + R * Math.sin(r)).toFixed(2) + '%'; }
-    for (var k = 0; k < N; k++) {
-      var a1 = -90 + k * 360 / N - 0.4, a2 = -90 + (k + 1) * 360 / N + 0.4, mid = (a1 + a2) / 2 * Math.PI / 180;
-      var el = document.createElement('div'); el.className = 'slice';
-      el.style.clipPath = 'polygon(50% 50%, ' + pt(a1) + ', ' + pt((a1 + a2) / 2) + ', ' + pt(a2) + ')';
-      el.innerHTML = '<img class="cur" alt="">';
-      var cur = el.querySelector('.cur'), prev = null;
-      cur.src = srcs[0];
-      // поза доли «до сборки»: отодвинута наружу по своей оси и чуть повёрнута
-      var pose = 'translate(' + (Math.cos(mid) * 11).toFixed(2) + '%,' + (Math.sin(mid) * 11).toFixed(2) + '%) rotate(' + (k % 2 ? 5 : -5) + 'deg) scale(1.045)';
-      slices.push({ cur: cur, prev: prev, pose: pose });
-      mosaic.appendChild(el);
-    }
-    // целое фото под долями: в субпиксельных щелях между клиньями видно тот же кадр, а не тёмный фон (тонкие линии — Никита 18.11)
-    var whole = mosaic.querySelector('.fallback'); whole.className = 'whole'; mosaic.insertBefore(whole, mosaic.firstChild);
-    var swap;
+    var srcs = ['tart-candles', 'bear', 'ducks-forks', 'ym-095', 'ym-364', 'ym-183'].map(function (n) { return 'assets/img/' + n + '.webp'; });
+    var HOLD = 6000, i = 0, cur = mosaic.querySelector('.fallback');
+    if (!cur) return;
+    cur.style.transition = 'none'; cur.className = 'mz is-on'; void cur.offsetWidth; cur.style.transition = '';
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    function show(n, first) {
-      slices.forEach(function (s, k) {
-        s.cur.style.transition = 'none';
-        s.cur.style.opacity = '0';
-        s.cur.style.transform = reduce ? 'none' : s.pose;
-        s.cur.src = srcs[n];
-        void s.cur.offsetWidth;
-        setTimeout(function () { s.cur.style.transition = ''; s.cur.style.transform = 'none'; s.cur.style.opacity = '1'; }, 60 + k * STEP);
-      });
-      // когда доли собрались — подложка становится новым кадром (смена под полностью закрытыми долями не видна)
-      clearTimeout(swap);
-      swap = setTimeout(function () { whole.src = srcs[n]; }, first ? 0 : 60 + (N - 1) * STEP + 1750);
+    function show(n) {
+      var im = document.createElement('img'); im.className = 'mz'; im.alt = ''; im.src = srcs[n];
+      mosaic.appendChild(im); void im.offsetWidth; im.classList.add('is-on');
+      var old = cur; cur = im; setTimeout(function () { old.remove(); }, 1900);
     }
     // первый кадр — сразу (он же в разметке), остальные догружаем после загрузки страницы; в смену идут только уже загруженные
     var ready = [true];
-    show(0, true);
     function rest() { srcs.slice(1).forEach(function (src, k) { var im = new Image(); im.onload = function () { ready[k + 1] = true; }; im.src = src; }); }
     if (document.readyState === 'complete') setTimeout(rest, 300); else window.addEventListener('load', function () { setTimeout(rest, 300); });
     if (!reduce) setInterval(function () {
@@ -1777,7 +1755,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
       if (sub) sub.style.opacity = Math.max(0, 1 - e * 2.5).toFixed(3);
       // «зрачок» закрашен цветом фона: пока обложка темнеет, фон за знаком темнее — подстраиваем
       var dark = on ? 0 : Math.min(1, y / h) * 65;
-      brand.style.setProperty('--bg', 'color-mix(in srgb, #961B30, #0E0B0B ' + dark.toFixed(1) + '%)');
+      brand.style.setProperty('--bg', 'color-mix(in srgb, #651F1F, #0E0B0B ' + dark.toFixed(1) + '%)');
     }
     function req() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
     function all() { mount(); size(); update(); }
@@ -1816,7 +1794,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     function setFmt(f) {
       var li = [].slice.call(dd.querySelectorAll('li')).filter(function (x) { return x.textContent === f; })[0]; if (!li) return;
       dd.querySelectorAll('li').forEach(function (x) { x.setAttribute('aria-selected', String(x === li)); });
-      dd.querySelector('.dd-val').textContent = f; dd.querySelector('input').value = f; photo(f);
+      dd.querySelector('.dd-val').textContent = f; dd.querySelector('input').value = f; photo(f); if (dd.noboUpd) dd.noboUpd();
     }
     dd.addEventListener('dd-change', function (e) { photo(e.detail); });
     var MAP = { 'ягодный тарт от 40 см': 'ягодный тарт', 'торт на заказ': 'торт' };
@@ -1989,6 +1967,12 @@ html.is-loading, html.is-loading body { overflow: hidden; }
         });
       });
       document.addEventListener('click', function (e) { if (!dd.contains(e.target)) open(false); });
+    });
+    // крем и основа — только для ягодного тарта (клиент 19.11)
+    document.querySelectorAll('.ld-sentence').forEach(function (snt) {
+      var f = snt.querySelector('.dd'), o = snt.querySelector('.tart-opt'); if (!f || !o) return;
+      function upd() { o.hidden = f.querySelector('input').value !== 'ягодный тарт'; }
+      f.addEventListener('dd-change', upd); upd(); f.noboUpd = upd;
     });
   })();
 
