@@ -570,7 +570,7 @@ html { scroll-padding-top: 4.5rem; }
   .fa-btn { grid-template-columns: 2rem minmax(0, 1fr) 1.25rem; }
   .fa-tag { display: none; }
   .fa-more-in { padding-left: 0; }
-  .fa-thumb { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .fa-thumb { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
 }
 
 /* «Форматы», вариант A — доработка (правка Никиты 18.11): больше воздуха, фильтр под заголовком, мягче анимация, меньше линий */
@@ -795,9 +795,10 @@ html { scroll-padding-top: 4.5rem; }
 .rv-mq:hover .rv-tr { animation-play-state: paused; }
 @keyframes rv-mq { to { transform: translateX(-50%); } }
 /* ленты листаются свайпом (Никита 19.11): JS двигает прокрутку сам, палец её перехватывает; без JS — прежняя CSS-анимация */
-.rv-mq.is-js { overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
-.rv-mq.is-js::-webkit-scrollbar { display: none; }
-.rv-mq.is-js .rv-tr { animation: none; }
+.rv-mq.is-js { overflow: hidden; touch-action: pan-y; -webkit-user-select: none; user-select: none; cursor: grab; }
+.rv-mq.is-js.is-drag { cursor: grabbing; }
+.rv-mq.is-js .rv-tr { animation: none; will-change: transform; }
+.rv-mq.is-js img { pointer-events: none; -webkit-user-drag: none; }
 @media (prefers-reduced-motion: reduce) { .rv-tr { animation: none; } }
 .rv-card { flex: none; width: 24rem; margin: 0; display: flex; flex-direction: column; gap: 1rem; padding: 1.5rem; background: #FFFFFF; border: 1px solid #0E0B0B; transition: background-color .3s, color .3s; }
 .rv-card blockquote { margin: 0; font-family: var(--f-d); font-stretch: var(--d-stretch); font-variation-settings: var(--d-fvs, normal); font-size: 1.5rem; line-height: 1.2; }
@@ -936,7 +937,7 @@ html { scroll-padding-top: 4.5rem; }
 
 /* Фраза заявки — аккуратнее (Никита 18.11): поля по ширине текста, одинаковое подчёркивание, своя выпадашка с тонкой стрелкой */
 .ld-sentence { line-height: 1.6; }
-.ld-in { width: auto; padding: 0; margin: 0 .05em; border-bottom: 1px solid color-mix(in srgb, var(--ink) 35%, transparent); }
+.ld-in { width: auto; max-width: 100%; min-width: 0; text-overflow: ellipsis; padding: 0; margin: 0 .05em; border-bottom: 1px solid color-mix(in srgb, var(--ink) 35%, transparent); }
 .ld-in::placeholder { color: color-mix(in srgb, var(--ink) 32%, transparent); }
 .dd { position: relative; display: inline-block; }
 .dd-btn { display: inline-flex; align-items: baseline; gap: .3em; padding: 0; margin: 0 .05em; font: inherit; color: var(--ink); background: none; border: 0; border-bottom: 1px solid color-mix(in srgb, var(--ink) 35%, transparent); cursor: pointer; line-height: inherit; transition: border-color .3s; }
@@ -1016,7 +1017,7 @@ html { scroll-padding-top: 4.5rem; }
   .hb-brand .logo-sub { font-size: .8125rem; }
   .toc--b a { font-size: 2.1rem; padding: .8rem 0 .6rem; gap: .4rem; }
   .toc-ill { width: 3.4rem; height: 2.7rem; }
-  .toc--b li a { padding-right: 0; }
+  .toc--b li a { padding-right: .6rem; }   /* стрелки и иллюстрации — не у самого края (Никита 19.11) */
   /* разрядка на шве — крупнее и вразнобой */
   .seam, .seam--blend { font-size: 2.6rem; padding-inline: .25rem; }
   .seam.is-split > span:nth-child(3n+1) { transform: translateY(-.14em) rotate(-7deg); }
@@ -1035,7 +1036,7 @@ html { scroll-padding-top: 4.5rem; }
   .fa-t { font-size: 1.75rem; }
   .fa-row.is-on .fa-t { transform: none; }
   .fa-more-in { padding-left: 0; }
-  .fa-thumb { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .fa-thumb { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
   .fa-more-in .params > span + span::before { margin: 0 .5rem; }
   /* диаметры: тарты друг за другом, справа параметры */
   .sizes { grid-template-columns: 1fr; row-gap: 2.5rem; }
@@ -1079,6 +1080,7 @@ html { scroll-padding-top: 4.5rem; }
   .ot-line, .ot-dot { display: none; }
   .ot-list { display: flex; gap: .75rem; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: calc(var(--gut) * -1); padding: 0 var(--gut) .5rem; scrollbar-width: none; }
   .ot-list::-webkit-scrollbar { display: none; }
+  .ot-list, .m-swipe, .fd-row { scroll-padding-inline: var(--gut); }   /* карточка встаёт с отступом, а не к краю экрана (Никита 19.11) */
   .ot-step { flex: 0 0 78%; scroll-snap-align: start; opacity: 1; padding: 1.5rem; border: 1px solid #0E0B0B; }
   .ot-step:last-child { padding-bottom: 1.5rem; }
   .ot-n { color: #651F1F; -webkit-text-stroke: 0; font-size: 3rem; }
@@ -1249,12 +1251,14 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   .hero-b .hb-fact, .hero-b .hb-fact .num { color: #FFFFFF; }
   .hero-b .hb-fact > span:last-child { color: rgba(255, 255, 255, .72); }
   .hero-b .hb-fact .fi { color: var(--c-logo); }
-  .toc--b a span { font-size: min(1.9rem, 7.3vw); }   /* «кондитерский кейтеринг» помещается и на 360 px */
+  .toc--b a span { font-size: min(1.9rem, 6.9vw); }   /* «кондитерский кейтеринг» помещается и на 360 px */
 }
 .pick--party .pick-media img, img[src$="tart-table.webp"] { object-position: 50% 8%; }   /* тарт, а не драпировка стола */
 img[src$="darling-bag.webp"] { object-position: 50% 25%; }   /* в кадре тарт, а не драпировка стола (Никита 19.11) */
 img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* наполеон внизу кадра виден целиком (Никита 19.11) */
 .hb-copy { display: contents; }   /* на десктопе обёртка не влияет на сетку */
+html.is-loading, html.is-loading body { background: #F4EEEE; }
+html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панелью браузера не видно кусок сайта (Никита 19.11) */
 /* Логотип на бордовом — персиковый, как на стакане (макет клиента 19.11: фон C0 M85 Y72 K71 → #651F1F, знак C0 M47 Y56 K9 → #E1946A) */
 :root { --c-logo: #E1946A; }
 .hb-brand, .hb-brand .hb-logo, .hb-brand .logo-sub, .brand, .brand .logo, .brand .logo-sub, .fx-logo, .fx-slot svg { color: var(--c-logo); }
@@ -1752,6 +1756,7 @@ img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* напол�
     }
     // якоря — плавно и с отступом под фиксированную шапку
     document.addEventListener('click', function (e) {
+      if (e.defaultPrevented) return;   // ссылку уже обработали (поп-ап оглавления) — к якорю не прокручиваем
       var a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
       var id = a.getAttribute('href'); if (id.length < 2) return;
       var el = id === '#top' ? 0 : document.querySelector(id); if (el === null) return;
@@ -1994,7 +1999,7 @@ img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* напол�
       var m = document.createElement('span'); m.setAttribute('aria-hidden', 'true'); m.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;left:0;top:0;pointer-events:none'; box.style.position = 'relative'; box.appendChild(m);   // зеркало внутри фразы — тот же шрифт, ширина и сжатие
       box.querySelectorAll('.ld-in').forEach(function (inp) {
         var min = inp.classList.contains('ld-phone') ? '+7 000 000' : '';
-        function fit() { m.textContent = inp.value || min || inp.placeholder; inp.style.width = Math.ceil(m.getBoundingClientRect().width + 8) + 'px'; }
+        function fit() { m.textContent = inp.value || min || inp.placeholder; inp.style.width = Math.min(Math.ceil(m.getBoundingClientRect().width + 8), box.clientWidth) + 'px'; m.textContent = ''; }   // не шире фразы: длинный ввод прокручивается внутри поля (Никита 19.11)
         inp.addEventListener('input', fit); fit(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
       });
     });
@@ -2124,27 +2129,38 @@ img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* напол�
     });
   })();
 
-  // Отзывы: бегущие ленты с прокруткой пальцем
+  // Отзывы: бегущие ленты, которые можно тянуть пальцем или мышью. Одна позиция x, сдвиг через transform: без нативного скролла, поэтому на iOS не мигает и не дёргается (Никита 19.11)
   (function () {
-    var rows = [].slice.call(document.querySelectorAll('.rv-mq')); if (!rows.length) return;
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    rows.forEach(function (mq) {
+    [].slice.call(document.querySelectorAll('.rv-mq')).forEach(function (mq) {
       var tr = mq.querySelector('.rv-tr'); if (!tr) return;
       mq.classList.add('is-js');
-      var rev = mq.classList.contains('rv-mq--rev'), dur = rev ? 80 : 70, half = 0, pos = 0, hold = false, hover = false, idle = 0, last = 0;
-      function measure() { half = tr.scrollWidth / 2; if (rev && !pos) pos = half; pos = ((pos % half) + half) % half; set(); }
-      function set() { mq.scrollLeft = pos; }
-      mq.addEventListener('scroll', function () { if (Math.abs(mq.scrollLeft - pos) < 1.5) return; pos = mq.scrollLeft; idle = performance.now(); if (half) { if (pos >= half) { pos -= half; set(); } else if (pos <= 0) { pos += half; set(); } } }, { passive: true });
-      mq.addEventListener('touchstart', function () { hold = true; }, { passive: true });
-      mq.addEventListener('touchend', function () { hold = false; idle = performance.now(); }, { passive: true });
+      var dir = mq.classList.contains('rv-mq--rev') ? -1 : 1, speed = 0, half = 0, x = 0, vel = 0, last = 0, idle = 0, hover = false, drag = null;
+      function measure() { half = tr.scrollWidth / 2; speed = half / (dir > 0 ? 70 : 80) / 1000; }
+      function wrap() { if (half) x = ((x % half) + half) % half; }
+      function paint() { tr.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)'; }
+      mq.addEventListener('pointerdown', function (e) { if (e.button > 0) return; drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, x0: x, on: false, lx: e.clientX, lt: performance.now() }; vel = 0; });
+      mq.addEventListener('pointermove', function (e) {
+        if (!drag || e.pointerId !== drag.id) return;
+        var dx = e.clientX - drag.sx, dy = e.clientY - drag.sy;
+        if (!drag.on) {
+          if (Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx)) { drag = null; return; }   // вертикальный жест — прокрутка страницы
+          if (Math.abs(dx) < 6) return;
+          drag.on = true; mq.classList.add('is-drag'); try { mq.setPointerCapture(e.pointerId); } catch (_) {}
+        }
+        var t = performance.now(); vel = -(e.clientX - drag.lx) / Math.max(1, t - drag.lt); drag.lx = e.clientX; drag.lt = t;
+        x = drag.x0 - dx; wrap(); paint();
+      });
+      function end(e) { if (!drag || (e && e.pointerId !== drag.id)) return; if (!drag.on) vel = 0; drag = null; mq.classList.remove('is-drag'); idle = performance.now(); }
+      mq.addEventListener('pointerup', end); mq.addEventListener('pointercancel', end); mq.addEventListener('lostpointercapture', end);
       mq.addEventListener('mouseenter', function () { hover = true; });
       mq.addEventListener('mouseleave', function () { hover = false; });
       function tick(t) {
-        var dt = last ? Math.min(64, t - last) : 16; last = t;
-        if (!reduce && half && !hold && !hover && t - idle > 1200) {
-          pos += (rev ? -1 : 1) * half / dur * dt / 1000;
-          if (pos >= half) pos -= half; else if (pos < 0) pos += half;
-          set();
+        var dt = last ? Math.min(50, t - last) : 16; last = t;
+        if (!(drag && drag.on) && half) {
+          if (Math.abs(vel) > 0.02) { x += vel * dt; vel *= Math.pow(0.94, dt / 16); idle = t; }   // инерция после свайпа
+          else if (!reduce && !hover && t - idle > 900) x += dir * speed * dt;
+          wrap(); paint();
         }
         requestAnimationFrame(tick);
       }
