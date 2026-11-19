@@ -1217,6 +1217,22 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 }
 @media (min-width: 1024px) and (max-width: 1300px) { .hdr-r .phone, .fx .phone { display: none; } }
 @media (min-width: 768px) and (max-width: 1199px) and (max-height: 900px) { .toc--b a { font-size: clamp(1.9rem, 5vh, 3.25rem); } .toc--b .toc-ill { width: 4.2rem; height: 6.2vh; } }   /* 1024×768: размеры оглавления как были — фото здесь и так высокое */
+/* Обложка на телефоне (Никита 19.11): фото на весь экран, заголовок, кнопки и факты поверх, низ затемнён под текст. Десктоп не меняется */
+@media (max-width: 767px) {
+  .hero-b .hb-main { position: relative; isolation: isolate; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding: 6rem var(--gut) 1.75rem; --bg: #0E0B0B; --ink: #FFFFFF; --mute: rgba(255, 255, 255, .78); --line: rgba(255, 255, 255, .28); background: #0E0B0B; color: #FFFFFF; }
+  .hero-b .hb-slot { position: absolute !important; inset: 0; z-index: -1; height: auto !important; aspect-ratio: auto; }
+  .hero-b .hb-slot::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background: linear-gradient(to bottom, rgba(14, 11, 11, .45) 0, rgba(14, 11, 11, 0) 18%, rgba(14, 11, 11, 0) 34%, rgba(14, 11, 11, .55) 55%, rgba(14, 11, 11, .86) 78%, rgba(14, 11, 11, .94) 100%); }
+  .hero-b .hb-head { margin-top: 0; }
+  .hero-b .hb-head .hb-h1 { color: #FFFFFF; text-shadow: 0 1px 18px rgba(0, 0, 0, .25); }
+  .hero-b .hb-desc { color: rgba(255, 255, 255, .86); }
+  .hero-b .hb-cta .btn--line { color: #FFFFFF; border-color: rgba(255, 255, 255, .85); }
+  .hero-b .hb-facts { margin-top: 1.5rem; }
+  .hero-b .hb-fact, .hero-b .hb-fact .num { color: #FFFFFF; }
+  .hero-b .hb-fact > span:last-child { color: rgba(255, 255, 255, .72); }
+  .hero-b .hb-fact .fi { color: var(--c-logo); }
+  .toc--b a span { font-size: min(1.9rem, 7.3vw); }   /* «кондитерский кейтеринг» помещается и на 360 px */
+}
 /* Логотип на бордовом — персиковый, как на стакане (макет клиента 19.11: фон C0 M85 Y72 K71 → #651F1F, знак C0 M47 Y56 K9 → #E1946A) */
 :root { --c-logo: #E1946A; }
 .hb-brand, .hb-brand .hb-logo, .hb-brand .logo-sub, .brand, .brand .logo, .brand .logo-sub, .fx-logo, .fx-slot svg { color: var(--c-logo); }
@@ -1290,7 +1306,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
       
       <div class="slot hb-slot">
         <div class="mosaic" role="img" aria-label="Десерты Nobo: малиновый тарт со свечами, малиновый торт, десерт-мишка, торт с меренгой, тарт для бренда, десерты-утки, наполеон, инжир с логотипом бренда, канеле">
-        <img class="fallback" src="assets/img/tart-candles.webp" alt="">
+        <picture><source media="(max-width: 767px)" srcset="assets/img/m/tart-candles.webp"><img class="fallback" src="assets/img/tart-candles.webp" alt=""></picture>
       </div>
       </div>
       <div class="hb-head">
@@ -1601,7 +1617,8 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   var mosaic = document.querySelector('.mosaic');
   (function () {
     if (!mosaic) return;
-    var srcs = ['tart-candles', 'car-raspberry', 'bear', 'car-meringue', 'car-darling', 'ducks-forks', 'car-napoleon', 'car-figs', 'car-canele'].map(function (n) { return 'assets/img/' + n + '.webp'; });
+    var MOB = window.matchMedia('(max-width: 767px)').matches;   // на телефоне — вертикальные кадры под обложку на весь экран
+    var srcs = ['tart-candles', 'car-raspberry', 'bear', 'car-meringue', 'car-darling', 'ducks-forks', 'car-napoleon', 'car-figs', 'car-canele'].map(function (n) { return (MOB ? 'assets/img/m/' : 'assets/img/') + n + '.webp'; });
     var HOLD = 6000, i = 0, cur = mosaic.querySelector('.fallback');
     if (!cur) return;
     cur.style.transition = 'none'; cur.className = 'mz is-on'; void cur.offsetWidth; cur.style.transition = '';
