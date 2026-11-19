@@ -1210,7 +1210,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   .hb-brand { gap: .4rem; }
   .hb-logo { width: auto; height: 13.5vh; max-width: 100%; }
   .hb-brand .logo-sub { font-size: .8125rem; }
-  .toc--b a { font-size: clamp(1.75rem, 4.5vh, 2.85rem); padding: .55rem 2rem .4rem 0; }   /* справа отступ — иконки не у края плоскости (Никита 19.11) */
+  .toc--b a { font-size: clamp(1.75rem, 4.5vh, 2.85rem); padding: .85rem 2rem .7rem 0; }   /* пункты свободнее (Никита 19.11) */   /* справа отступ — иконки не у края плоскости (Никита 19.11) */
   .toc--b .toc-ill { width: 6.3vh; height: 5vh; }   /* ниже пункты — выше фото обложки (клиент 19.11) */
   .toc--b sup { font-size: .75rem; }
   .hero-b .hb-head .hb-h1 { font-size: clamp(2.5rem, 6.1vh, 4.125rem); }
@@ -1267,7 +1267,7 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
 @media (max-width: 359px) { .fx .hdr-r { gap: .5rem; } .fx .hdr-r .btn { padding-inline: .7rem; font-size: .6875rem; letter-spacing: .06em; } .fx-slot { width: 4.6rem; } }   /* 320 px: бургер не вылезает за край */
 @media (min-width: 768px) and (max-width: 1199px) { .toc--b a span { font-size: min(1em, 2.9vw); } .toc--b .toc-ill { width: min(4.2rem, 5.2vw); } }   /* планшеты: «кондитерский кейтеринг» с иконкой помещается при любой высоте экрана */
 /* Ноутбуки (экран до 900 px по высоте): оглавление выше → фото ниже, под кнопками воздух; описание шире (Никита 19.11) */
-@media (min-width: 1024px) and (max-height: 900px) { .hb-plane { padding-bottom: 3.75rem; } }
+@media (min-width: 1024px) and (max-height: 900px) { .hb-plane { padding-bottom: 1.5rem; } }   /* поле под оглавлением меньше — пункты стали выше, фото не уменьшилось */
 @media (min-width: 1024px) { .hb-desc { grid-column: 3 / -1; padding-right: 0; } }
 @media (min-width: 768px) { .fa-photo { position: sticky; top: 6rem; height: min(38rem, 100vh - 8rem); height: min(38rem, 100svh - 8rem); } }   /* фото форматов прилипает под шапкой, пока листается список (Никита 19.11) */
 /* Логотип на бордовом — персиковый, как на стакане (макет клиента 19.11: фон C0 M85 Y72 K71 → #651F1F, знак C0 M47 Y56 K9 → #E1946A) */
