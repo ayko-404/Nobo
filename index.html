@@ -1144,6 +1144,12 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 .lb-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; height: min(78dvh, 44rem); }
 .lb-track::-webkit-scrollbar { display: none; }
 .lb-track img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: contain; scroll-snap-align: center; background: #0E0B0B; }
+.lb-track img { cursor: pointer; }
+.lb-nav { position: absolute; top: calc(min(78dvh, 44rem) / 2); z-index: 3; width: 3rem; height: 3rem; margin-top: -1.5rem; border: 0; border-radius: 50%; background: #FFFFFF; color: #0E0B0B; display: grid; place-items: center; font: 400 1.25rem/1 var(--f-t); cursor: pointer; transition: transform .2s var(--ease-out); }
+.lb-prev { left: 1rem; } .lb-next { right: 1rem; }
+@media (hover: hover) { .lb-nav:hover { transform: scale(1.08); } }
+.lb[data-n="1"] .lb-nav { display: none; }
+@media (max-width: 767px) { .lb-nav { width: 2.5rem; height: 2.5rem; margin-top: -1.25rem; font-size: 1rem; } .lb-prev { left: .6rem; } .lb-next { right: .6rem; } }
 .lb-bar { display: flex; justify-content: space-between; gap: 1rem; padding: .9rem 1.25rem; font-size: .8125rem; color: rgba(255,255,255,.7); }
 /* Мобилка — правки Никиты 18.11 (2) */
 @media (max-width: 767px) {
@@ -1233,7 +1239,8 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   .hero-b .hb-fact .fi { color: var(--c-logo); }
   .toc--b a span { font-size: min(1.9rem, 7.3vw); }   /* «кондитерский кейтеринг» помещается и на 360 px */
 }
-.pick--party .pick-media img { object-position: 50% 8%; }   /* в кадре тарт, а не драпировка стола (Никита 19.11) */
+.pick--party .pick-media img, img[src$="tart-table.webp"] { object-position: 50% 8%; }   /* тарт, а не драпировка стола */
+img[src$="darling-bag.webp"] { object-position: 50% 25%; }   /* в кадре тарт, а не драпировка стола (Никита 19.11) */
 img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* наполеон внизу кадра виден целиком (Никита 19.11) */
 /* Логотип на бордовом — персиковый, как на стакане (макет клиента 19.11: фон C0 M85 Y72 K71 → #651F1F, знак C0 M47 Y56 K9 → #E1946A) */
 :root { --c-logo: #E1946A; }
@@ -1472,7 +1479,7 @@ img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* напол�
           </article>
           <article class="fd fd--3" tabindex="0">
             <div class="fd-back"><span class="fd-tab">[03] коллаборация</span></div>
-            <div class="fd-pics"><img src="assets/img/darling-tart.webp" alt="Малиновый тарт с логотипом бренда" loading="lazy"><img src="assets/img/darling-dome.webp" alt="" loading="lazy"><img src="assets/img/darling-bag.webp" alt="" loading="lazy"></div>
+            <div class="fd-pics"><img src="assets/img/darling-bag.webp" alt="" loading="lazy"><img src="assets/img/darling-dome.webp" alt="" loading="lazy"><img src="assets/img/darling-tart.webp" alt="Малиновый тарт с логотипом бренда" loading="lazy"></div>
             <div class="fd-front"><p class="fd-meta">Коллаборация · брендированные десерты · 150 гостей</p><h3 class="d fd-h">Запуск коллекции бренда</h3><div class="fd-more"><p>Десерт в&nbsp;цветах новой коллекции: форму и&nbsp;вкус придумали вместе с&nbsp;командой бренда, подавали на&nbsp;презентации.</p></div></div>
           </article>
     </div></div>
@@ -1546,6 +1553,7 @@ img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* напол�
 <dialog class="lb" id="lb" aria-label="Фото кейса">
   <button class="qo-x lb-x" type="button" aria-label="Закрыть">×</button>
   <div class="lb-track" id="lb-track"></div>
+  <button class="lb-nav lb-prev" type="button" aria-label="Предыдущее фото">←</button><button class="lb-nav lb-next" type="button" aria-label="Следующее фото">→</button>
   <div class="lb-bar"><span id="lb-cap"></span><span id="lb-n"></span></div>
 </dialog>
 <!-- Поп-апы пунктов оглавления обложки (Никита 18.11): у каждого пункта свой — фото, описание, параметры, «рассчитать» → быстрый заказ с форматом. Цифры — 🧪 заглушки -->
@@ -2106,10 +2114,16 @@ img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* напол�
         tr.innerHTML = srcs.map(function (u) { return '<img src="' + u + '" alt="">'; }).join('');
         cap.textContent = fd.querySelector('.fd-h').textContent;
         if (window.noboLenis) window.noboLenis.stop();
-        lb.showModal(); tr.scrollLeft = 0; upd();
+        lb.dataset.n = srcs.length; lb.showModal(); tr.scrollLeft = 0; upd();
       });
     });
     tr.addEventListener('scroll', upd, { passive: true });
+    // листание: стрелки, клавиши ← →, клик по фото — следующее (Никита 19.11: на компьютере свайпа нет)
+    function go(d) { var n = tr.children.length; if (n < 2) return; var k = (Math.round(tr.scrollLeft / tr.clientWidth) + d + n) % n; tr.scrollTo({ left: k * tr.clientWidth, behavior: 'smooth' }); }
+    lb.querySelector('.lb-prev').addEventListener('click', function () { go(-1); });
+    lb.querySelector('.lb-next').addEventListener('click', function () { go(1); });
+    tr.addEventListener('click', function (e) { if (e.target.tagName === 'IMG') go(1); });
+    lb.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { e.preventDefault(); go(1); } else if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); } });
     lb.querySelector('.lb-x').addEventListener('click', function () { lb.close(); });
     lb.addEventListener('click', function (e) { if (e.target === lb) lb.close(); });
     lb.addEventListener('close', function () { if (window.noboLenis) window.noboLenis.start(); });
