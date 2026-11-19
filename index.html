@@ -1225,15 +1225,17 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 @media (min-width: 768px) and (max-width: 1199px) and (max-height: 900px) { .toc--b a { font-size: clamp(1.9rem, 5vh, 3.25rem); } .toc--b .toc-ill { width: 4.2rem; height: 6.2vh; } }   /* 1024×768: размеры оглавления как были — фото здесь и так высокое */
 /* Обложка на телефоне (Никита 19.11): фото на весь экран, заголовок, кнопки и факты поверх, низ затемнён под текст. Десктоп не меняется */
 @media (max-width: 767px) {
-  .hero-b .hb-main { position: relative; isolation: isolate; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding: 6rem var(--gut) 1.75rem; --bg: #0E0B0B; --ink: #FFFFFF; --mute: rgba(255, 255, 255, .78); --line: rgba(255, 255, 255, .28); background: #0E0B0B; color: #FFFFFF; }
-  .hero-b .hb-slot { position: absolute !important; inset: 0; z-index: -1; height: auto !important; aspect-ratio: auto; }
+  .hero-b .hb-main { position: relative; isolation: isolate; display: flex; flex-direction: column; padding: 0 var(--gut) 1.75rem; --bg: #0E0B0B; --ink: #FFFFFF; --mute: rgba(255, 255, 255, .78); --line: rgba(255, 255, 255, .28); background: #0E0B0B; color: #FFFFFF; }
+  .hero-b .hb-slot { position: absolute !important; top: 0; left: 0; right: 0; bottom: auto; z-index: -1; height: 100vh !important; height: 100svh !important; aspect-ratio: auto; }
+  /* заголовок и кнопки — прижаты к низу первого экрана, факты — ниже обложки (Никита 19.11) */
+  .hero-b .hb-copy { display: flex; flex-direction: column; justify-content: flex-end; min-height: 100vh; min-height: 100svh; padding: 6rem 0 1.75rem; box-sizing: border-box; }
   .hero-b .hb-slot::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
     background: linear-gradient(to bottom, rgba(14, 11, 11, .45) 0, rgba(14, 11, 11, 0) 18%, rgba(14, 11, 11, 0) 34%, rgba(14, 11, 11, .55) 55%, rgba(14, 11, 11, .86) 78%, rgba(14, 11, 11, .94) 100%); }
   .hero-b .hb-head { margin-top: 0; }
   .hero-b .hb-head .hb-h1 { color: #FFFFFF; text-shadow: 0 1px 18px rgba(0, 0, 0, .25); }
   .hero-b .hb-desc { color: rgba(255, 255, 255, .86); }
   .hero-b .hb-cta .btn--line { color: #FFFFFF; border-color: rgba(255, 255, 255, .85); }
-  .hero-b .hb-facts { margin-top: 1.5rem; }
+  .hero-b .hb-facts { margin-top: 0; }
   .hero-b .hb-fact, .hero-b .hb-fact .num { color: #FFFFFF; }
   .hero-b .hb-fact > span:last-child { color: rgba(255, 255, 255, .72); }
   .hero-b .hb-fact .fi { color: var(--c-logo); }
@@ -1242,6 +1244,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 .pick--party .pick-media img, img[src$="tart-table.webp"] { object-position: 50% 8%; }   /* тарт, а не драпировка стола */
 img[src$="darling-bag.webp"] { object-position: 50% 25%; }   /* в кадре тарт, а не драпировка стола (Никита 19.11) */
 img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* наполеон внизу кадра виден целиком (Никита 19.11) */
+.hb-copy { display: contents; }   /* на десктопе обёртка не влияет на сетку */
 /* Логотип на бордовом — персиковый, как на стакане (макет клиента 19.11: фон C0 M85 Y72 K71 → #651F1F, знак C0 M47 Y56 K9 → #E1946A) */
 :root { --c-logo: #E1946A; }
 .hb-brand, .hb-brand .hb-logo, .hb-brand .logo-sub, .brand, .brand .logo, .brand .logo-sub, .fx-logo, .fx-slot svg { color: var(--c-logo); }
@@ -1318,11 +1321,13 @@ img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* напол�
         <picture><source media="(max-width: 767px)" srcset="assets/img/m/tart-candles.webp"><img class="fallback" src="assets/img/tart-candles.webp" alt=""></picture>
       </div>
       </div>
+      <div class="hb-copy">
       <div class="hb-head">
         <h1 class="d h1 hb-h1"><span class="bl-probe" aria-hidden="true"></span>Десерт&nbsp;— главный<br>гость вашего события</h1>
         <p class="hb-desc">Кондитерская ресторана Nobo: десерты под бренд, тарты от&nbsp;40&nbsp;см и&nbsp;сборка тарта при гостях.</p>
       </div>
       <div class="row hb-cta"><a class="btn" href="#lead">Рассчитать десерт</a><a class="btn btn--line btn--tg" href="https://t.me/79968558004" target="_blank" rel="noopener">Написать в&nbsp;Telegram</a></div>
+      </div>
       <div class="hb-facts">
         <a class="hb-fact" href="https://yandex.ru/maps/org/nobo/128647939173/reviews/" target="_blank" rel="noopener"><span class="num">4,8<svg class="fi" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M12 2.8l2.75 5.9 6.45.75-4.8 4.45 1.3 6.4L12 17.1l-5.7 3.2 1.3-6.4-4.8-4.45 6.45-.75z"/></svg></span><span>на&nbsp;Яндекс Картах · 1051 оценка</span></a>
         <div class="hb-fact"><span class="num">21 из&nbsp;50<svg class="fi" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 11.2 17.6 4.4c1.4-.6 2.9.4 3.1 1.9l.3 4.9V19c0 .6-.4 1-1 1H4c-.6 0-1-.4-1-1z"/><path class="ns" d="M3.6 11.4h16.8M4.6 14.6h14.8M4.6 17.3h14.8"/><circle fill="currentColor" cx="17.9" cy="2.6" r="1.7"/></svg></span><span>последних отзывов&nbsp;— про наш наполеон</span></div>
