@@ -3,7 +3,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>Nobo — десерты для событий</title>
-<script>window.onWidthResize=function(f){var w=innerWidth;addEventListener('resize',function(){if(innerWidth!==w){w=innerWidth;f();}});};</script>
+<script>window.onWidthResize=function(f){var w=innerWidth;addEventListener('resize',function(){if(innerWidth!==w){w=innerWidth;f();}});};
+/* высота обложки на телефоне — фиксируется при загрузке и смене ширины, панель браузера её не дёргает (Никита 19.11) */
+(function(){function hh(){document.documentElement.style.setProperty('--hh',innerHeight+'px');}hh();onWidthResize(hh);})();</script>
 <script>window.NOBO_PRELOADER = true; if (window.NOBO_PRELOADER) document.documentElement.classList.add("is-loading")</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <!-- шрифты свои (Roboto Serif 300/400 в узком начертании, Roboto Mono 400–600; только латиница и кириллица) — без запросов к Google, ~4× легче (18.11) -->
@@ -792,6 +794,10 @@ html { scroll-padding-top: 4.5rem; }
 .rv-mq--rev .rv-tr { animation-direction: reverse; animation-duration: 80s; }
 .rv-mq:hover .rv-tr { animation-play-state: paused; }
 @keyframes rv-mq { to { transform: translateX(-50%); } }
+/* ленты листаются свайпом (Никита 19.11): JS двигает прокрутку сам, палец её перехватывает; без JS — прежняя CSS-анимация */
+.rv-mq.is-js { overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+.rv-mq.is-js::-webkit-scrollbar { display: none; }
+.rv-mq.is-js .rv-tr { animation: none; }
 @media (prefers-reduced-motion: reduce) { .rv-tr { animation: none; } }
 .rv-card { flex: none; width: 24rem; margin: 0; display: flex; flex-direction: column; gap: 1rem; padding: 1.5rem; background: #FFFFFF; border: 1px solid #0E0B0B; transition: background-color .3s, color .3s; }
 .rv-card blockquote { margin: 0; font-family: var(--f-d); font-stretch: var(--d-stretch); font-variation-settings: var(--d-fvs, normal); font-size: 1.5rem; line-height: 1.2; }
@@ -985,6 +991,10 @@ html { scroll-padding-top: 4.5rem; }
   .fx-menu nav { display: flex; flex-direction: column; }
   .fx-menu nav a { font: 300 2.5rem/1.15 var(--f-d); font-stretch: var(--d-stretch); font-variation-settings: var(--d-fvs, normal); color: #FFFFFF; text-decoration: none; padding: .35rem 0; border-bottom: 1px solid rgba(255,255,255,.2); }
   .fx-menu-tel { color: #FFFFFF; font-size: .9375rem; }
+  .fx-menu { border-bottom: 1px solid rgba(255, 255, 255, .45); }   /* линия внизу меню — отделяет от страницы (Никита 19.11) */
+  .fx-menu-c { display: flex; flex-direction: column; gap: .9rem; }
+  .fx-menu-addr { color: #FFFFFF; font-size: .9375rem; line-height: 1.45; text-decoration: none; display: flex; flex-direction: column; gap: .15rem; }
+  .fx-menu-addr span { color: rgba(255, 255, 255, .7); font-size: .8125rem; }
   /* обложка: фото ниже, заголовок и кнопки сразу; плоскость с оглавлением — после */
   .hero-b { display: flex; flex-direction: column; height: auto; }
   .hero-b > * { overflow: visible; }
@@ -1226,9 +1236,9 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 /* Обложка на телефоне (Никита 19.11): фото на весь экран, заголовок, кнопки и факты поверх, низ затемнён под текст. Десктоп не меняется */
 @media (max-width: 767px) {
   .hero-b .hb-main { position: relative; isolation: isolate; display: flex; flex-direction: column; padding: 0 var(--gut) 1.75rem; --bg: #0E0B0B; --ink: #FFFFFF; --mute: rgba(255, 255, 255, .78); --line: rgba(255, 255, 255, .28); background: #0E0B0B; color: #FFFFFF; }
-  .hero-b .hb-slot { position: absolute !important; top: 0; left: 0; right: 0; bottom: auto; z-index: -1; height: 100vh !important; height: 100svh !important; aspect-ratio: auto; }
+  .hero-b .hb-slot { position: absolute !important; top: 0; left: 0; right: 0; bottom: auto; z-index: -1; height: 100vh !important; height: var(--hh, 100svh) !important; aspect-ratio: auto; }
   /* заголовок и кнопки — прижаты к низу первого экрана, факты — ниже обложки (Никита 19.11) */
-  .hero-b .hb-copy { display: flex; flex-direction: column; justify-content: flex-end; min-height: 100vh; min-height: 100svh; padding: 6rem 0 1.75rem; box-sizing: border-box; }
+  .hero-b .hb-copy { display: flex; flex-direction: column; justify-content: flex-end; min-height: 100vh; min-height: var(--hh, 100svh); padding: 6rem 0 1.75rem; box-sizing: border-box; }
   .hero-b .hb-slot::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
     background: linear-gradient(to bottom, rgba(14, 11, 11, .45) 0, rgba(14, 11, 11, 0) 18%, rgba(14, 11, 11, 0) 34%, rgba(14, 11, 11, .55) 55%, rgba(14, 11, 11, .86) 78%, rgba(14, 11, 11, .94) 100%); }
   .hero-b .hb-head { margin-top: 0; }
@@ -1281,7 +1291,7 @@ img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* напол�
     </div>
     <div class="fx-menu" hidden>
       <nav aria-label="Разделы"><a href="#formats">форматы</a><a href="#cases">кейсы</a><a href="#order">как заказать</a><a href="#faq">вопросы</a></nav>
-      <a class="fx-menu-tel" href="tel:+79945081483">+7 (994) 508-14-83</a>
+      <div class="fx-menu-c"><a class="fx-menu-tel" href="tel:+79945081483">+7 (994) 508-14-83</a><a class="fx-menu-addr" href="https://yandex.ru/maps/org/nobo/128647939173/" target="_blank" rel="noopener">Москва, Новослободская ул., 24А, стр.&nbsp;3<span>м.&nbsp;Менделеевская · на карте ↗</span></a></div>
     </div>
   </div>
 </div>
@@ -1732,10 +1742,14 @@ img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* напол�
     var hero = document.querySelector('.hero-b');
     function cover() { if (!hero) return; var h = hero.offsetHeight || 1; hero.style.setProperty('--cover', Math.min(1, Math.max(0, window.scrollY / h)) * 0.65); }
     window.addEventListener('scroll', cover, { passive: true }); cover();
-    if (!window.Lenis || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var lenis = new Lenis({ lerp: 0.11, wheelMultiplier: 1, smoothWheel: true }); window.noboLenis = lenis;
-    function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
+    // на телефонах и планшетах Lenis не включаем: при появлении и скрытии панели браузера он пересчитывал страницу и дёргал прокрутку (Никита 19.11)
+    var touch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    var lenis = null;
+    if (window.Lenis && !touch && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      lenis = new Lenis({ lerp: 0.11, wheelMultiplier: 1, smoothWheel: true }); window.noboLenis = lenis;
+      var raf = function (t) { lenis.raf(t); requestAnimationFrame(raf); };
+      requestAnimationFrame(raf);
+    }
     // якоря — плавно и с отступом под фиксированную шапку
     document.addEventListener('click', function (e) {
       var a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
@@ -1743,7 +1757,9 @@ img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* напол�
       var el = id === '#top' ? 0 : document.querySelector(id); if (el === null) return;
       e.preventDefault();
       var bar = document.querySelector('.fx-in'), off = bar ? bar.offsetHeight : 0;
-      lenis.scrollTo(el, { offset: el === 0 ? 0 : -off, duration: 1.2 });
+      if (lenis) { lenis.scrollTo(el, { offset: el === 0 ? 0 : -off, duration: 1.2 }); return; }
+      var y = el === 0 ? 0 : el.getBoundingClientRect().top + window.scrollY - off;
+      window.scrollTo({ top: y, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     });
   })();
 
@@ -2105,6 +2121,37 @@ img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* напол�
       var ds = [].slice.call(dots.children);
       function upd() { var x = sw.scrollLeft, best = 0, bd = 1e9; items.forEach(function (c, k) { var d = Math.abs(c.offsetLeft - sw.offsetLeft - x - parseFloat(getComputedStyle(sw).paddingLeft)); if (d < bd) { bd = d; best = k; } }); ds.forEach(function (d, k) { d.classList.toggle('is-on', k === best); }); }
       sw.addEventListener('scroll', upd, { passive: true }); upd();
+    });
+  })();
+
+  // Отзывы: бегущие ленты с прокруткой пальцем
+  (function () {
+    var rows = [].slice.call(document.querySelectorAll('.rv-mq')); if (!rows.length) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    rows.forEach(function (mq) {
+      var tr = mq.querySelector('.rv-tr'); if (!tr) return;
+      mq.classList.add('is-js');
+      var rev = mq.classList.contains('rv-mq--rev'), dur = rev ? 80 : 70, half = 0, pos = 0, hold = false, hover = false, idle = 0, last = 0;
+      function measure() { half = tr.scrollWidth / 2; if (rev && !pos) pos = half; pos = ((pos % half) + half) % half; set(); }
+      function set() { mq.scrollLeft = pos; }
+      mq.addEventListener('scroll', function () { if (Math.abs(mq.scrollLeft - pos) < 1.5) return; pos = mq.scrollLeft; idle = performance.now(); if (half) { if (pos >= half) { pos -= half; set(); } else if (pos <= 0) { pos += half; set(); } } }, { passive: true });
+      mq.addEventListener('touchstart', function () { hold = true; }, { passive: true });
+      mq.addEventListener('touchend', function () { hold = false; idle = performance.now(); }, { passive: true });
+      mq.addEventListener('mouseenter', function () { hover = true; });
+      mq.addEventListener('mouseleave', function () { hover = false; });
+      function tick(t) {
+        var dt = last ? Math.min(64, t - last) : 16; last = t;
+        if (!reduce && half && !hold && !hover && t - idle > 1200) {
+          pos += (rev ? -1 : 1) * half / dur * dt / 1000;
+          if (pos >= half) pos -= half; else if (pos < 0) pos += half;
+          set();
+        }
+        requestAnimationFrame(tick);
+      }
+      measure(); window.onWidthResize(measure);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+      window.addEventListener('load', measure);
+      requestAnimationFrame(tick);
     });
   })();
 
