@@ -1233,6 +1233,8 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   .hero-b .hb-fact .fi { color: var(--c-logo); }
   .toc--b a span { font-size: min(1.9rem, 7.3vw); }   /* «кондитерский кейтеринг» помещается и на 360 px */
 }
+.pick--party .pick-media img { object-position: 50% 8%; }   /* в кадре тарт, а не драпировка стола (Никита 19.11) */
+img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* наполеон внизу кадра виден целиком (Никита 19.11) */
 /* Логотип на бордовом — персиковый, как на стакане (макет клиента 19.11: фон C0 M85 Y72 K71 → #651F1F, знак C0 M47 Y56 K9 → #E1946A) */
 :root { --c-logo: #E1946A; }
 .hb-brand, .hb-brand .hb-logo, .hb-brand .logo-sub, .brand, .brand .logo, .brand .logo-sub, .fx-logo, .fx-slot svg { color: var(--c-logo); }
