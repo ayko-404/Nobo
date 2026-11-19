@@ -478,7 +478,7 @@ html { scroll-padding-top: 4.5rem; }
    Без анимации ширины при наведении (решение Никиты 18.11: «выбранная карточка становится меньше» — странно по UX) */
 .picks { position: relative; display: grid; grid-template-columns: 40.5fr 59.5fr; align-items: end; }
 .pick { position: relative; overflow: hidden; cursor: pointer; display: flex; flex-direction: column; justify-content: flex-end; height: 40rem; min-width: 0; outline-offset: -4px; }
-.pick--party { height: 46rem; }   /* ступенька: выступает правая — выше на 6rem, низ общий (Никита 18.11) */
+.pick--brand { height: 46rem; }   /* ступенька: выступает левая «для бренда» — выше на 6rem, низ общий (Никита 19.11; до этого — правая) */
 .pick-media { overflow: hidden; }
 .pick-media img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease-out); }
 .pick--party .pick-media img { object-position: 50% 30%; }
@@ -501,7 +501,7 @@ html { scroll-padding-top: 4.5rem; }
 .v-a .pick-cta { --btn: #FFFFFF; --btn-ink: #651F1F; --glaze: #651F1F; }
 @media (max-width: 767px) {
   .picks { grid-template-columns: 1fr; }
-  .pick, .pick--party { height: 36rem; }
+  .pick, .pick--brand { height: 36rem; }
 }
 /* Быстрый заказ — поп-ап */
 .qo { width: min(46rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); padding: 0; border: 0; background: #FFFFFF; color: #0E0B0B; --ink: #0E0B0B; --mute: #6B5F60; --line: #D9CFD0; --bg: #FFFFFF; --btn: #651F1F; --btn-ink: #FFFFFF; }
@@ -1025,7 +1025,7 @@ html { scroll-padding-top: 4.5rem; }
   .seam.is-split > span:nth-child(3n) { transform: translateY(-.04em) rotate(-2deg); }
   .seam .sp { width: .25em; }
   /* для кого */
-  .pick, .pick--party { height: 30rem; }
+  .pick, .pick--brand { height: 30rem; }
   .pick-body { box-sizing: border-box; width: 100%; padding: 0 var(--gut) 2rem; }
   /* форматы */
   .fa-grid { grid-template-columns: 1fr; }
