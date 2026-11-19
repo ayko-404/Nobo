@@ -1259,6 +1259,11 @@ img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* напол�
 .hb-copy { display: contents; }   /* на десктопе обёртка не влияет на сетку */
 html.is-loading, html.is-loading body { background: #F4EEEE; }
 html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панелью браузера не видно кусок сайта (Никита 19.11) */
+/* Хедер над тёмными блоками — тёмный (Никита 19.11) */
+.fx-bar, .fx-menu { transition: transform .45s var(--ease-out), visibility 0s linear .45s, background-color .35s ease; }
+.fx.is-on .fx-bar { transition: transform .45s var(--ease-out), background-color .35s ease; }
+.fx.is-dark .fx-bar { --bg: #0E0B0B; background: #0E0B0B; }
+.fx.is-dark .fx-menu { background: #0E0B0B; }
 /* Логотип на бордовом — персиковый, как на стакане (макет клиента 19.11: фон C0 M85 Y72 K71 → #651F1F, знак C0 M47 Y56 K9 → #E1946A) */
 :root { --c-logo: #E1946A; }
 .hb-brand, .hb-brand .hb-logo, .hb-brand .logo-sub, .brand, .brand .logo, .brand .logo-sub, .fx-logo, .fx-slot svg { color: var(--c-logo); }
@@ -2174,6 +2179,22 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
       window.addEventListener('load', measure);
       requestAnimationFrame(tick);
     });
+  })();
+
+  // Хедер темнеет, когда под ним тёмный блок: шоу, «для кого», заявка, подвал, на телефоне — обложка (Никита 19.11)
+  (function () {
+    var fx = document.getElementById('fx'), bar = fx && fx.querySelector('.fx-bar'); if (!bar) return;
+    var mob = window.matchMedia('(max-width: 767px)');
+    function darks() { return [].slice.call(document.querySelectorAll('main .t-dark, main .picks, footer.t-dark' + (mob.matches ? ', .hero-b .hb-main' : ''))); }
+    var list = darks(), tk = false;
+    function upd() {
+      tk = false;
+      var y = bar.getBoundingClientRect().height / 2 + 1, dark = list.some(function (el) { var r = el.getBoundingClientRect(); return r.top <= y && r.bottom > y; });
+      fx.classList.toggle('is-dark', dark);
+    }
+    window.addEventListener('scroll', function () { if (!tk) { tk = true; requestAnimationFrame(upd); } }, { passive: true });
+    window.onWidthResize(function () { list = darks(); upd(); });
+    upd();
   })();
 
   // Кейсы: клик по фото в папке — просмотр всех фото кейса, листаются вбок
