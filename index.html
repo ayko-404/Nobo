@@ -1291,7 +1291,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     <div class="hb-main t-light">
       
       <div class="slot hb-slot">
-        <div class="mosaic" role="img" aria-label="Десерты Nobo: малиновый тарт со свечами, десерт-мишка, десерты-утки, малиновый тарт, наполеон, праздничный стол">
+        <div class="mosaic" role="img" aria-label="Десерты Nobo: малиновый тарт со свечами, малиновый торт, десерт-мишка, торт с меренгой, тарт для бренда, десерты-утки, наполеон, инжир с логотипом бренда, канеле">
         <img class="fallback" src="assets/img/tart-candles.webp" alt="">
       </div>
       </div>
@@ -1603,7 +1603,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   var mosaic = document.querySelector('.mosaic');
   (function () {
     if (!mosaic) return;
-    var srcs = ['tart-candles', 'bear', 'ducks-forks', 'ym-095', 'ym-364', 'ym-183'].map(function (n) { return 'assets/img/' + n + '.webp'; });
+    var srcs = ['tart-candles', 'car-raspberry', 'bear', 'car-meringue', 'car-darling', 'ducks-forks', 'car-napoleon', 'car-figs', 'car-canele'].map(function (n) { return 'assets/img/' + n + '.webp'; });
     var HOLD = 6000, i = 0, cur = mosaic.querySelector('.fallback');
     if (!cur) return;
     cur.style.transition = 'none'; cur.className = 'mz is-on'; void cur.offsetWidth; cur.style.transition = '';
