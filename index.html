@@ -1293,10 +1293,6 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
     .fd-prev:not(:disabled):hover svg { transform: translateX(-.3rem); }
     .fd-next:not(:disabled):hover svg { transform: translateX(.3rem); }
   }
-  .fd-count { font: 400 .8125rem/1 var(--f-t); letter-spacing: .04em; color: var(--mute); }
-  .fd-count b { font-weight: 400; color: var(--ink); }
-  .fd-bar { flex: 1 1 auto; height: 1px; background: var(--line); position: relative; overflow: hidden; }
-  .fd-bar span { position: absolute; inset: 0 auto 0 0; width: var(--fdw, 75%); left: var(--fdx, 0%); background: var(--ink); transition: left .5s var(--ease-out); }
 }
 @media (min-width: 768px) and (max-width: 1023px) { .fd-row > .fd { flex-basis: calc((100% - var(--gut)) / 2); } }
 /* папка с двумя фото: переднее стоит ровно */
@@ -1542,7 +1538,7 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
     <div class="vv" data-v="a"><div class="wrap fd-row">
           <article class="fd fd--1" tabindex="0">
             <div class="fd-back"><span class="fd-tab">[01] премия</span></div>
-            <div class="fd-pics"><img src="assets/img/forbes-ducks.webp" alt="Десерт-утка на столе церемонии Forbes Woman Mercury Awards" loading="lazy"><img src="assets/img/ducks-tray.webp" alt="" loading="lazy"><img src="assets/img/ducks-forks.webp" alt="" loading="lazy"></div>
+            <div class="fd-pics"><img src="assets/img/ducks-tray.webp" alt="" loading="lazy"><img src="assets/img/ducks-forks.webp" alt="" loading="lazy"><img src="assets/img/forbes-ducks.webp" alt="Десерт-утка на столе церемонии Forbes Woman Mercury Awards" loading="lazy"></div>
             <div class="fd-front"><p class="fd-meta">Премия · десерт в&nbsp;форме утки · 300 гостей</p><h3 class="d fd-h">Forbes Woman Mercury Awards</h3><div class="fd-more"><p>Чёрные глянцевые утки с&nbsp;красным клювом на&nbsp;белом фарфоре&nbsp;— подавали гостям церемонии на&nbsp;подносах.</p></div></div>
           </article>
           <article class="fd fd--2" tabindex="0">
@@ -1552,16 +1548,16 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
           </article>
           <article class="fd fd--3" tabindex="0">
             <div class="fd-back"><span class="fd-tab">[03] бренд</span></div>
-            <div class="fd-pics"><img src="assets/img/maag-tiramisu.webp" alt="" loading="lazy"><img src="assets/img/maag-team.webp" alt="Кондитеры nobo раскладывают тирамису из большого противня на запуске коллекции MAAG" loading="lazy"></div>
+            <div class="fd-pics"><img src="assets/img/maag-tiramisu.webp" alt="" loading="lazy"><img src="assets/img/maag-closeup.webp" alt="" loading="lazy"><img src="assets/img/maag-team.webp" alt="Кондитеры nobo раскладывают тирамису из большого противня на запуске коллекции MAAG" loading="lazy"></div>
             <div class="fd-front"><p class="fd-meta">Запуск коллекции · тирамису в&nbsp;противне</p><h3 class="d fd-h">Запуск коллекции MAAG</h3><div class="fd-more"><p>Тирамису в&nbsp;большом противне&nbsp;— кондитеры nobo раскладывали его гостям прямо на&nbsp;запуске.</p></div></div>
           </article>
           <article class="fd fd--4" tabindex="0">
             <div class="fd-back"><span class="fd-tab">[04] музей</span></div>
-            <div class="fd-pics"><img src="assets/img/pushkin-girl.webp" alt="" loading="lazy"><img src="assets/img/napoleon-pushkin.webp" alt="Большой наполеон на фуршете под колоннадой Пушкинского музея" loading="lazy"></div>
+            <div class="fd-pics"><img src="assets/img/pushkin-statue.webp" alt="" loading="lazy"><img src="assets/img/pushkin-girl.webp" alt="" loading="lazy"><img src="assets/img/napoleon-pushkin.webp" alt="Большой наполеон на фуршете под колоннадой Пушкинского музея" loading="lazy"></div>
             <div class="fd-front"><p class="fd-meta">Музей · большой наполеон на&nbsp;фуршет</p><h3 class="d fd-h">Пушкинский музей</h3><div class="fd-more"><p>Большой наполеон на&nbsp;фуршете под колоннадой музея: слоёные коржи горой на&nbsp;круглом блюде.</p></div></div>
           </article>
     </div></div>
-    <div class="wrap fd-nav"><div class="fd-ctl"><div class="fd-arr"><button class="fd-prev" type="button" aria-label="Предыдущие кейсы"><svg viewBox="0 0 28 12" aria-hidden="true"><path d="M27 6H1M6 1L1 6l5 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button><button class="fd-next" type="button" aria-label="Следующие кейсы"><svg viewBox="0 0 28 12" aria-hidden="true"><path d="M1 6h26M22 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button></div><span class="fd-count"><b>01</b> / 04</span><span class="fd-bar"><span></span></span></div></div>
+    <div class="wrap fd-nav"><div class="fd-ctl"><div class="fd-arr"><button class="fd-prev" type="button" aria-label="Предыдущие кейсы"><svg viewBox="0 0 28 12" aria-hidden="true"><path d="M27 6H1M6 1L1 6l5 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button><button class="fd-next" type="button" aria-label="Следующие кейсы"><svg viewBox="0 0 28 12" aria-hidden="true"><path d="M1 6h26M22 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button></div></div></div>
   </section>
 
   <!-- 06 Логотипы клиентов — без разрешений на сайт не выводим (content.md, блок 6) -->
@@ -2334,20 +2330,13 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
     }, { passive: true });
   });
 
-  // Кейсы на десктопе: стрелки листают папки по одной, счётчик и полоса — за прокруткой (Никита 20.11)
+  // Кейсы на десктопе: стрелки листают папки по одной; на краю ряда стрелка гаснет (Никита 20.11; счётчик и полосу убрали)
   (function () {
     var row = document.querySelector('.fd-row'), nav = document.querySelector('.fd-nav'); if (!row || !nav) return;
-    var prev = nav.querySelector('.fd-prev'), next = nav.querySelector('.fd-next'), cnt = nav.querySelector('.fd-count b'), tot = nav.querySelector('.fd-count'), bar = nav.querySelector('.fd-bar');
+    var prev = nav.querySelector('.fd-prev'), next = nav.querySelector('.fd-next');
     var cards = [].slice.call(row.querySelectorAll('.fd'));
     function step() { return cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : row.clientWidth; }
-    function upd() {
-      var st = step(), max = row.scrollWidth - row.clientWidth, i = Math.round(row.scrollLeft / st), vis = Math.max(1, Math.round((row.clientWidth - parseFloat(getComputedStyle(row).paddingLeft)) / st));
-      prev.disabled = row.scrollLeft <= 2; next.disabled = row.scrollLeft >= max - 2;
-      var a = i + 1, b = Math.min(cards.length, i + vis);
-      cnt.textContent = (a < 10 ? '0' : '') + a + (b > a ? '–' + (b < 10 ? '0' : '') + b : '');
-      tot.lastChild.nodeValue = ' / ' + (cards.length < 10 ? '0' : '') + cards.length;
-      bar.style.setProperty('--fdw', (vis / cards.length * 100) + '%'); bar.style.setProperty('--fdx', (i / cards.length * 100) + '%');
-    }
+    function upd() { var max = row.scrollWidth - row.clientWidth; prev.disabled = row.scrollLeft <= 2; next.disabled = row.scrollLeft >= max - 2; }
     prev.addEventListener('click', function () { row.scrollBy({ left: -step() }); });
     next.addEventListener('click', function () { row.scrollBy({ left: step() }); });
     row.addEventListener('scroll', upd, { passive: true });
