@@ -767,8 +767,9 @@ html { scroll-padding-top: 4.5rem; }
 .fd-tab { border-radius: 0; border: var(--ln); border-bottom: 0; bottom: calc(100% + 1px); left: -1px; }
 .fd-tab::after { display: none; }
 .fd-pics img { border-radius: 0; border: var(--ln); box-shadow: none; }
-.fd-pics img:nth-child(1) { transform: rotate(-2.5deg) translateY(9%); }
-.fd-pics img:nth-child(2) { transform: rotate(2deg) translateY(4.5%); }
+.fd-pics img:nth-child(1) { transform: translate(-7%, 6%) rotate(-5deg); }   /* задние фото выглядывают из-за главного заметнее (Никита 20.11) */
+.fd-pics img:nth-child(2) { transform: translate(7%, 3%) rotate(4.5deg); }
+.fd-pics img[src$="forbes-ducks.webp"] { object-position: 50% 90%; }   /* в папке видна утка на тарелке, а не цветы (Никита 20.11) */
 .fd-front { border-radius: 0; border: var(--ln); box-shadow: none; }
 @media (hover: hover) {
   .fd:hover .fd-pics img:nth-child(1), .fd:focus-visible .fd-pics img:nth-child(1) { transform: translate(-18%, -16%) rotate(-7deg); }
