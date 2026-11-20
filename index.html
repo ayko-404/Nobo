@@ -1273,8 +1273,7 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
 @media (min-width: 768px) { .fa-photo { position: sticky; top: 6rem; height: min(38rem, 100vh - 8rem); height: min(38rem, 100svh - 8rem); } }   /* фото форматов прилипает под шапкой, пока листается список (Никита 19.11) */
 /* Кейсы: четыре папки (Пушкинский музей и MAAG — клиент 20.11) */
 .fd--4 { --fb: #C77650; --ff: #E1946A; --fi: #0E0B0B; }
-@media (min-width: 1024px) { .fd-row { grid-template-columns: repeat(4, minmax(0, 1fr)); } .fd-h { font-size: 1.75rem; } .fd-front { padding: 1.25rem; } }
-@media (min-width: 768px) and (max-width: 1023px) { .fd-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 768px) { .fd--4 { display: none; } }   /* на десктопе три крупных кейса, Пушкинский — только на телефоне (Никита 20.11) */
 /* папка с двумя фото: переднее стоит ровно */
 .fd-pics img:nth-child(2):last-child { transform: none; }
 @media (hover: hover) { .fd:hover .fd-pics img:nth-child(2):last-child, .fd:focus-visible .fd-pics img:nth-child(2):last-child { transform: translate(14%, -18%) rotate(4deg); } }
@@ -1521,20 +1520,20 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
             <div class="fd-pics"><img src="assets/img/forbes-ducks.webp" alt="Десерт-утка на столе церемонии Forbes Woman Mercury Awards" loading="lazy"><img src="assets/img/ducks-tray.webp" alt="" loading="lazy"><img src="assets/img/ducks-forks.webp" alt="" loading="lazy"></div>
             <div class="fd-front"><p class="fd-meta">Премия · десерт в&nbsp;форме утки · 300 гостей</p><h3 class="d fd-h">Forbes Woman Mercury Awards</h3><div class="fd-more"><p>Чёрные глянцевые утки с&nbsp;красным клювом на&nbsp;белом фарфоре&nbsp;— подавали гостям церемонии на&nbsp;подносах.</p></div></div>
           </article>
-          <article class="fd fd--4" tabindex="0">
-            <div class="fd-back"><span class="fd-tab">[02] музей</span></div>
-            <div class="fd-pics"><img src="assets/img/pushkin-girl.webp" alt="" loading="lazy"><img src="assets/img/napoleon-columns.webp" alt="Большой наполеон на фуршете под колоннадой Пушкинского музея" loading="lazy"></div>
-            <div class="fd-front"><p class="fd-meta">Музей · большой наполеон на&nbsp;фуршет</p><h3 class="d fd-h">Пушкинский музей</h3><div class="fd-more"><p>Большой наполеон на&nbsp;фуршете под колоннадой музея: слоёные коржи горой на&nbsp;круглом блюде.</p></div></div>
-          </article>
           <article class="fd fd--2" tabindex="0">
-            <div class="fd-back"><span class="fd-tab">[03] свадьба</span></div>
+            <div class="fd-back"><span class="fd-tab">[02] свадьба</span></div>
             <div class="fd-pics"><img src="assets/img/tart-candles.webp" alt="Ягодный тарт на вечернем празднике" loading="lazy"><img src="assets/img/ym-095.webp" alt="" loading="lazy"><img src="assets/img/tart-table.webp" alt="" loading="lazy"></div>
             <div class="fd-front"><p class="fd-meta">Свадьба · торт и&nbsp;кондитерский кейтеринг · 80 гостей</p><h3 class="d fd-h">Свадьба, сентябрь 2026</h3><div class="fd-more"><p>Свадебный торт и&nbsp;кондитерский кейтеринг на&nbsp;фуршет. Из&nbsp;отзыва пары: «Подача торта превосходная!»</p></div></div>
           </article>
           <article class="fd fd--3" tabindex="0">
-            <div class="fd-back"><span class="fd-tab">[04] бренд</span></div>
+            <div class="fd-back"><span class="fd-tab">[03] бренд</span></div>
             <div class="fd-pics"><img src="assets/img/maag-tiramisu.webp" alt="" loading="lazy"><img src="assets/img/maag-team.webp" alt="Кондитеры nobo раскладывают тирамису из большого противня на запуске коллекции MAAG" loading="lazy"></div>
             <div class="fd-front"><p class="fd-meta">Запуск коллекции · тирамису в&nbsp;противне</p><h3 class="d fd-h">Запуск коллекции MAAG</h3><div class="fd-more"><p>Тирамису в&nbsp;большом противне&nbsp;— кондитеры nobo раскладывали его гостям прямо на&nbsp;запуске.</p></div></div>
+          </article>
+          <article class="fd fd--4" tabindex="0">
+            <div class="fd-back"><span class="fd-tab">[04] музей</span></div>
+            <div class="fd-pics"><img src="assets/img/pushkin-girl.webp" alt="" loading="lazy"><img src="assets/img/napoleon-columns.webp" alt="Большой наполеон на фуршете под колоннадой Пушкинского музея" loading="lazy"></div>
+            <div class="fd-front"><p class="fd-meta">Музей · большой наполеон на&nbsp;фуршет</p><h3 class="d fd-h">Пушкинский музей</h3><div class="fd-more"><p>Большой наполеон на&nbsp;фуршете под колоннадой музея: слоёные коржи горой на&nbsp;круглом блюде.</p></div></div>
           </article>
     </div></div>
   </section>
