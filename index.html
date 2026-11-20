@@ -1280,7 +1280,9 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
   .fd-row { display: flex; gap: var(--gut); overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; overscroll-behavior-x: contain;
     padding-top: 5rem; margin-top: -4rem; padding-bottom: 1rem; scroll-padding-inline: max(var(--gut), env(safe-area-inset-left, 0px)); }   /* сверху запас: фото веером выезжают из папки и не обрезаются */
   .fd-row::-webkit-scrollbar { display: none; }
-  .fd-row > .fd { flex: 0 0 calc((100% - var(--gut) * 2) / 3); scroll-snap-align: start; }   /* промежуток = поле: следующая папка начинается ровно за краем экрана, без полоски */
+  .fd-row > .fd { flex: 0 0 calc((100% - var(--gut) * 2) / 3); scroll-snap-align: start; }
+  .fd-front { height: 42%; }   /* створка ниже, окно с фото выше (Никита 20.11; было 50 %) */
+  .fd-pics { bottom: 27%; }   /* промежуток = поле: следующая папка начинается ровно за краем экрана, без полоски */
   .fd-nav { display: grid; grid-template-columns: calc(40.5% + var(--gut) * 0.81 - var(--pl-gap)) minmax(0, 1fr); column-gap: var(--pl-gap); align-items: center; margin-top: 2rem; }
   .fd-ctl { grid-column: 2; display: flex; align-items: center; gap: 1.5rem; }
   .fd-arr { display: flex; }
