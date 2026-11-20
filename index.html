@@ -1271,6 +1271,24 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
 @media (min-width: 1024px) and (max-height: 900px) { .hb-plane { padding-bottom: 1.5rem; } }   /* поле под оглавлением меньше — пункты стали выше, фото не уменьшилось */
 @media (min-width: 1024px) { .hb-desc { grid-column: 3 / -1; padding-right: 0; } }
 @media (min-width: 768px) { .fa-photo { position: sticky; top: 6rem; height: min(38rem, 100vh - 8rem); height: min(38rem, 100svh - 8rem); } }   /* фото форматов прилипает под шапкой, пока листается список (Никита 19.11) */
+/* Кейсы: четыре папки (Пушкинский музей и MAAG — клиент 20.11) */
+.fd--4 { --fb: #C77650; --ff: #E1946A; --fi: #0E0B0B; }
+@media (min-width: 1024px) { .fd-row { grid-template-columns: repeat(4, minmax(0, 1fr)); } .fd-h { font-size: 1.75rem; } .fd-front { padding: 1.25rem; } }
+@media (min-width: 768px) and (max-width: 1023px) { .fd-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* папка с двумя фото: переднее стоит ровно */
+.fd-pics img:nth-child(2):last-child { transform: none; }
+@media (hover: hover) { .fd:hover .fd-pics img:nth-child(2):last-child, .fd:focus-visible .fd-pics img:nth-child(2):last-child { transform: translate(14%, -18%) rotate(4deg); } }
+/* Большие форматы на телефоне: мини-слайдер наполеон · тирамису · профитроли (клиент 20.11) */
+.fa-thumbs { display: none; position: relative; }
+@media (max-width: 767px) {
+  .fa-thumbs { display: block; }
+  .fa-ts { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .fa-ts::-webkit-scrollbar { display: none; }
+  .fa-ts img { flex: 0 0 100%; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; scroll-snap-align: start; scroll-snap-stop: always; }
+  .fa-dots { position: absolute; left: 0; right: 0; bottom: .75rem; display: flex; justify-content: center; gap: .4rem; pointer-events: none; }
+  .fa-dots i { width: .45rem; height: .45rem; border-radius: 50%; background: rgba(255, 255, 255, .5); box-shadow: 0 0 0 1px rgba(14, 11, 11, .15); transition: background-color .3s; }
+  .fa-dots i.is-on { background: #FFFFFF; }
+}
 /* Логотип на бордовом — персиковый, как на стакане (макет клиента 19.11: фон C0 M85 Y72 K71 → #651F1F, знак C0 M47 Y56 K9 → #E1946A) */
 :root { --c-logo: #E1946A; }
 .hb-brand, .hb-brand .hb-logo, .hb-brand .logo-sub, .brand, .brand .logo, .brand .logo-sub, .fx-logo, .fx-slot svg { color: var(--c-logo); }
@@ -1412,7 +1430,7 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
           <li class="fa-row" data-for="brand party" data-i="2">
             <button class="fa-btn" type="button" aria-expanded="false"><span class="fa-n">[03]</span><span class="d fa-t">Большие форматы</span><span class="fa-tag">для бренда и&nbsp;праздника</span><span class="fa-ar" aria-hidden="true">→</span></button>
             <div class="fa-more"><div class="fa-more-in">
-              <img class="fa-thumb" src="assets/img/napoleon-columns.webp" alt="" loading="lazy">
+              <div class="fa-thumbs"><div class="fa-ts"><img src="assets/img/napoleon-columns.webp" alt="Большой наполеон под колоннадой" loading="lazy" draggable="false"><img src="assets/img/tiramisu-wedding.webp" alt="Свадебный тирамису в противне с надписью Just Married" loading="lazy" draggable="false"><img src="assets/img/profiteroles-table.webp" alt="Гора профитролей на праздничном столе" loading="lazy" draggable="false"></div><div class="fa-dots" aria-hidden="true"><i class="is-on"></i><i></i><i></i></div></div>
               <p>Наполеон, тирамису в&nbsp;противне, гора из&nbsp;профитролей.</p><div class="params"><span>от&nbsp;9&nbsp;000&nbsp;₽</span><span>от&nbsp;40&nbsp;порций</span></div><button class="btn fo-btn" type="button" data-order="большие форматы" data-for="brand party">Рассчитать</button>
             </div></div>
           </li>
@@ -1503,15 +1521,20 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
             <div class="fd-pics"><img src="assets/img/forbes-ducks.webp" alt="Десерт-утка на столе церемонии Forbes Woman Mercury Awards" loading="lazy"><img src="assets/img/ducks-tray.webp" alt="" loading="lazy"><img src="assets/img/ducks-forks.webp" alt="" loading="lazy"></div>
             <div class="fd-front"><p class="fd-meta">Премия · десерт в&nbsp;форме утки · 300 гостей</p><h3 class="d fd-h">Forbes Woman Mercury Awards</h3><div class="fd-more"><p>Чёрные глянцевые утки с&nbsp;красным клювом на&nbsp;белом фарфоре&nbsp;— подавали гостям церемонии на&nbsp;подносах.</p></div></div>
           </article>
+          <article class="fd fd--4" tabindex="0">
+            <div class="fd-back"><span class="fd-tab">[02] музей</span></div>
+            <div class="fd-pics"><img src="assets/img/pushkin-girl.webp" alt="" loading="lazy"><img src="assets/img/napoleon-columns.webp" alt="Большой наполеон на фуршете под колоннадой Пушкинского музея" loading="lazy"></div>
+            <div class="fd-front"><p class="fd-meta">Музей · большой наполеон на&nbsp;фуршет</p><h3 class="d fd-h">Пушкинский музей</h3><div class="fd-more"><p>Большой наполеон на&nbsp;фуршете под колоннадой музея: слоёные коржи горой на&nbsp;круглом блюде.</p></div></div>
+          </article>
           <article class="fd fd--2" tabindex="0">
-            <div class="fd-back"><span class="fd-tab">[02] свадьба</span></div>
+            <div class="fd-back"><span class="fd-tab">[03] свадьба</span></div>
             <div class="fd-pics"><img src="assets/img/tart-candles.webp" alt="Ягодный тарт на вечернем празднике" loading="lazy"><img src="assets/img/ym-095.webp" alt="" loading="lazy"><img src="assets/img/tart-table.webp" alt="" loading="lazy"></div>
             <div class="fd-front"><p class="fd-meta">Свадьба · торт и&nbsp;кондитерский кейтеринг · 80 гостей</p><h3 class="d fd-h">Свадьба, сентябрь 2026</h3><div class="fd-more"><p>Свадебный торт и&nbsp;кондитерский кейтеринг на&nbsp;фуршет. Из&nbsp;отзыва пары: «Подача торта превосходная!»</p></div></div>
           </article>
           <article class="fd fd--3" tabindex="0">
-            <div class="fd-back"><span class="fd-tab">[03] коллаборация</span></div>
-            <div class="fd-pics"><img src="assets/img/darling-bag.webp" alt="" loading="lazy"><img src="assets/img/darling-dome.webp" alt="" loading="lazy"><img src="assets/img/darling-tart.webp" alt="Малиновый тарт с логотипом бренда" loading="lazy"></div>
-            <div class="fd-front"><p class="fd-meta">Коллаборация · брендированные десерты · 150 гостей</p><h3 class="d fd-h">Запуск коллекции бренда</h3><div class="fd-more"><p>Десерт в&nbsp;цветах новой коллекции: форму и&nbsp;вкус придумали вместе с&nbsp;командой бренда, подавали на&nbsp;презентации.</p></div></div>
+            <div class="fd-back"><span class="fd-tab">[04] бренд</span></div>
+            <div class="fd-pics"><img src="assets/img/maag-tiramisu.webp" alt="" loading="lazy"><img src="assets/img/maag-team.webp" alt="Кондитеры nobo раскладывают тирамису из большого противня на запуске коллекции MAAG" loading="lazy"></div>
+            <div class="fd-front"><p class="fd-meta">Запуск коллекции · тирамису в&nbsp;противне</p><h3 class="d fd-h">Запуск коллекции MAAG</h3><div class="fd-more"><p>Тирамису в&nbsp;большом противне&nbsp;— кондитеры nobo раскладывали его гостям прямо на&nbsp;запуске.</p></div></div>
           </article>
     </div></div>
   </section>
@@ -2276,4 +2299,13 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
     });
   });
 })();
+
+  // Мини-слайдер больших форматов на телефоне: точки за прокруткой (клиент 20.11)
+  document.querySelectorAll('.fa-thumbs').forEach(function (b) {
+    var ts = b.querySelector('.fa-ts'), dots = b.querySelectorAll('.fa-dots i');
+    ts.addEventListener('scroll', function () {
+      var n = Math.round(ts.scrollLeft / Math.max(1, ts.clientWidth));
+      dots.forEach(function (d, i) { d.classList.toggle('is-on', i === n); });
+    }, { passive: true });
+  });
 </script>
