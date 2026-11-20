@@ -1255,7 +1255,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 }
 .pick--party .pick-media img, img[src$="tart-table.webp"] { object-position: 50% 8%; }   /* тарт, а не драпировка стола */
 img[src$="darling-bag.webp"] { object-position: 50% 25%; }   /* в кадре тарт, а не драпировка стола (Никита 19.11) */
-img[src$="napoleon-columns.webp"] { object-position: 50% 92%; }   /* наполеон внизу кадра виден целиком (Никита 19.11) */
+img[src$="napoleon-pushkin.webp"] { object-position: 50% 92%; }   /* наполеон внизу кадра виден целиком (Никита 19.11) */
 .hb-copy { display: contents; }   /* на десктопе обёртка не влияет на сетку */
 html.is-loading, html.is-loading body { background: #F4EEEE; }
 html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панелью браузера не видно кусок сайта (Никита 19.11) */
@@ -1273,7 +1273,32 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
 @media (min-width: 768px) { .fa-photo { position: sticky; top: 6rem; height: min(38rem, 100vh - 8rem); height: min(38rem, 100svh - 8rem); } }   /* фото форматов прилипает под шапкой, пока листается список (Никита 19.11) */
 /* Кейсы: четыре папки (Пушкинский музей и MAAG — клиент 20.11) */
 .fd--4 { --fb: #C77650; --ff: #E1946A; --fi: #0E0B0B; }
-@media (min-width: 768px) { .fd--4 { display: none; } }   /* на десктопе три крупных кейса, Пушкинский — только на телефоне (Никита 20.11) */
+/* Десктоп: кейсы — слайдер, три папки на экране, стрелки под ними от силовой линии (Никита 20.11) */
+.fd-nav { display: none; }
+@media (min-width: 768px) {
+  .fd-row { display: flex; gap: var(--gut); overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; overscroll-behavior-x: contain;
+    padding-top: 5rem; margin-top: -4rem; padding-bottom: 1rem; scroll-padding-inline: max(var(--gut), env(safe-area-inset-left, 0px)); }   /* сверху запас: фото веером выезжают из папки и не обрезаются */
+  .fd-row::-webkit-scrollbar { display: none; }
+  .fd-row > .fd { flex: 0 0 calc((100% - var(--gut) * 2) / 3); scroll-snap-align: start; }   /* промежуток = поле: следующая папка начинается ровно за краем экрана, без полоски */
+  .fd-nav { display: grid; grid-template-columns: calc(40.5% + var(--gut) * 0.81 - var(--pl-gap)) minmax(0, 1fr); column-gap: var(--pl-gap); align-items: center; margin-top: 2rem; }
+  .fd-ctl { grid-column: 2; display: flex; align-items: center; gap: 1.5rem; }
+  .fd-arr { display: flex; }
+  .fd-arr button { width: 4.5rem; height: 3.25rem; display: grid; place-items: center; padding: 0; border: 1px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer; transition: background-color .3s var(--ease-out), color .3s var(--ease-out), opacity .3s; }
+  .fd-arr button + button { border-left: 0; }
+  .fd-arr svg { width: 1.75rem; height: .75rem; overflow: visible; transition: transform .35s var(--ease-out); }
+  .fd-arr button:disabled { opacity: .25; cursor: default; }
+  @media (hover: hover) {
+    .fd-arr button:not(:disabled):hover { background: #651F1F; border-color: #651F1F; color: #FFFFFF; }
+    .fd-arr button:not(:disabled):hover + button { border-left: 0; }
+    .fd-prev:not(:disabled):hover svg { transform: translateX(-.3rem); }
+    .fd-next:not(:disabled):hover svg { transform: translateX(.3rem); }
+  }
+  .fd-count { font: 400 .8125rem/1 var(--f-t); letter-spacing: .04em; color: var(--mute); }
+  .fd-count b { font-weight: 400; color: var(--ink); }
+  .fd-bar { flex: 1 1 auto; height: 1px; background: var(--line); position: relative; overflow: hidden; }
+  .fd-bar span { position: absolute; inset: 0 auto 0 0; width: var(--fdw, 75%); left: var(--fdx, 0%); background: var(--ink); transition: left .5s var(--ease-out); }
+}
+@media (min-width: 768px) and (max-width: 1023px) { .fd-row > .fd { flex-basis: calc((100% - var(--gut)) / 2); } }
 /* папка с двумя фото: переднее стоит ровно */
 .fd-pics img:nth-child(2):last-child { transform: none; }
 @media (hover: hover) { .fd:hover .fd-pics img:nth-child(2):last-child, .fd:focus-visible .fd-pics img:nth-child(2):last-child { transform: translate(14%, -18%) rotate(4deg); } }
@@ -1408,7 +1433,7 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
 
     <div class="fv fv-a" data-fv="a">
       <div class="fa-grid">
-        <div class="fa-photo"><img class="is-on" src="assets/img/ducks-forks.webp" alt="Брендированные десерты в форме чёрных уток на тарелках" loading="lazy" data-i="0"><img class="" src="assets/img/tart-hall.webp" alt="Малиновый тарт в зале ресторана" loading="lazy" data-i="1"><img class="" src="assets/img/napoleon-columns.webp" alt="Большой наполеон на фуршете у колоннады" loading="lazy" data-i="2"><img class="" src="assets/img/xmas-tree.webp" alt="Торт-ёлка в подарочной коробке nobo" loading="lazy" data-i="3"><img class="" src="assets/img/flowers-nobo.webp" alt="Мини-десерты в форме цветов на подложках nobo" loading="lazy" data-i="4"></div>
+        <div class="fa-photo"><img class="is-on" src="assets/img/ducks-forks.webp" alt="Брендированные десерты в форме чёрных уток на тарелках" loading="lazy" data-i="0"><img class="" src="assets/img/tart-hall.webp" alt="Малиновый тарт в зале ресторана" loading="lazy" data-i="1"><img class="" src="assets/img/napoleon-pushkin.webp" alt="Большой наполеон на фуршете у колоннады" loading="lazy" data-i="2"><img class="" src="assets/img/xmas-tree.webp" alt="Торт-ёлка в подарочной коробке nobo" loading="lazy" data-i="3"><img class="" src="assets/img/flowers-nobo.webp" alt="Мини-десерты в форме цветов на подложках nobo" loading="lazy" data-i="4"></div>
         <div class="fa-side">
           <div class="fa-head"><h2 class="d h2">Что можно заказать</h2><div class="tabs" role="group" aria-label="Фильтр форматов"><button class="tab" type="button" data-f="all" aria-pressed="true">Все</button><button class="tab" type="button" data-f="brand" aria-pressed="false">Для бренда</button><button class="tab" type="button" data-f="party" aria-pressed="false">Для праздника</button></div></div>
           <ol class="fa-list">
@@ -1429,7 +1454,7 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
           <li class="fa-row" data-for="brand party" data-i="2">
             <button class="fa-btn" type="button" aria-expanded="false"><span class="fa-n">[03]</span><span class="d fa-t">Большие форматы</span><span class="fa-tag">для бренда и&nbsp;праздника</span><span class="fa-ar" aria-hidden="true">→</span></button>
             <div class="fa-more"><div class="fa-more-in">
-              <div class="fa-thumbs"><div class="fa-ts"><img src="assets/img/napoleon-columns.webp" alt="Большой наполеон под колоннадой" loading="lazy" draggable="false"><img src="assets/img/tiramisu-wedding.webp" alt="Свадебный тирамису в противне с надписью Just Married" loading="lazy" draggable="false"><img src="assets/img/profiteroles-table.webp" alt="Гора профитролей на праздничном столе" loading="lazy" draggable="false"></div><div class="fa-dots" aria-hidden="true"><i class="is-on"></i><i></i><i></i></div></div>
+              <div class="fa-thumbs"><div class="fa-ts"><img src="assets/img/napoleon-pushkin.webp" alt="Большой наполеон под колоннадой" loading="lazy" draggable="false"><img src="assets/img/tiramisu-wedding.webp" alt="Свадебный тирамису в противне с надписью Just Married" loading="lazy" draggable="false"><img src="assets/img/profiteroles-table.webp" alt="Гора профитролей на праздничном столе" loading="lazy" draggable="false"></div><div class="fa-dots" aria-hidden="true"><i class="is-on"></i><i></i><i></i></div></div>
               <p>Наполеон, тирамису в&nbsp;противне, гора из&nbsp;профитролей.</p><div class="params"><span>от&nbsp;9&nbsp;000&nbsp;₽</span><span>от&nbsp;40&nbsp;порций</span></div><button class="btn fo-btn" type="button" data-order="большие форматы" data-for="brand party">Рассчитать</button>
             </div></div>
           </li>
@@ -1532,10 +1557,11 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
           </article>
           <article class="fd fd--4" tabindex="0">
             <div class="fd-back"><span class="fd-tab">[04] музей</span></div>
-            <div class="fd-pics"><img src="assets/img/pushkin-girl.webp" alt="" loading="lazy"><img src="assets/img/napoleon-columns.webp" alt="Большой наполеон на фуршете под колоннадой Пушкинского музея" loading="lazy"></div>
+            <div class="fd-pics"><img src="assets/img/pushkin-girl.webp" alt="" loading="lazy"><img src="assets/img/napoleon-pushkin.webp" alt="Большой наполеон на фуршете под колоннадой Пушкинского музея" loading="lazy"></div>
             <div class="fd-front"><p class="fd-meta">Музей · большой наполеон на&nbsp;фуршет</p><h3 class="d fd-h">Пушкинский музей</h3><div class="fd-more"><p>Большой наполеон на&nbsp;фуршете под колоннадой музея: слоёные коржи горой на&nbsp;круглом блюде.</p></div></div>
           </article>
     </div></div>
+    <div class="wrap fd-nav"><div class="fd-ctl"><div class="fd-arr"><button class="fd-prev" type="button" aria-label="Предыдущие кейсы"><svg viewBox="0 0 28 12" aria-hidden="true"><path d="M27 6H1M6 1L1 6l5 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button><button class="fd-next" type="button" aria-label="Следующие кейсы"><svg viewBox="0 0 28 12" aria-hidden="true"><path d="M1 6h26M22 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button></div><span class="fd-count"><b>01</b> / 04</span><span class="fd-bar"><span></span></span></div></div>
   </section>
 
   <!-- 06 Логотипы клиентов — без разрешений на сайт не выводим (content.md, блок 6) -->
@@ -2307,4 +2333,25 @@ html.is-loading body > *:not(.pl) { visibility: hidden; }   /* под панел
       dots.forEach(function (d, i) { d.classList.toggle('is-on', i === n); });
     }, { passive: true });
   });
+
+  // Кейсы на десктопе: стрелки листают папки по одной, счётчик и полоса — за прокруткой (Никита 20.11)
+  (function () {
+    var row = document.querySelector('.fd-row'), nav = document.querySelector('.fd-nav'); if (!row || !nav) return;
+    var prev = nav.querySelector('.fd-prev'), next = nav.querySelector('.fd-next'), cnt = nav.querySelector('.fd-count b'), tot = nav.querySelector('.fd-count'), bar = nav.querySelector('.fd-bar');
+    var cards = [].slice.call(row.querySelectorAll('.fd'));
+    function step() { return cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : row.clientWidth; }
+    function upd() {
+      var st = step(), max = row.scrollWidth - row.clientWidth, i = Math.round(row.scrollLeft / st), vis = Math.max(1, Math.round((row.clientWidth - parseFloat(getComputedStyle(row).paddingLeft)) / st));
+      prev.disabled = row.scrollLeft <= 2; next.disabled = row.scrollLeft >= max - 2;
+      var a = i + 1, b = Math.min(cards.length, i + vis);
+      cnt.textContent = (a < 10 ? '0' : '') + a + (b > a ? '–' + (b < 10 ? '0' : '') + b : '');
+      tot.lastChild.nodeValue = ' / ' + (cards.length < 10 ? '0' : '') + cards.length;
+      bar.style.setProperty('--fdw', (vis / cards.length * 100) + '%'); bar.style.setProperty('--fdx', (i / cards.length * 100) + '%');
+    }
+    prev.addEventListener('click', function () { row.scrollBy({ left: -step() }); });
+    next.addEventListener('click', function () { row.scrollBy({ left: step() }); });
+    row.addEventListener('scroll', upd, { passive: true });
+    if (window.onWidthResize) window.onWidthResize(upd); else window.addEventListener('resize', upd);
+    upd();
+  })();
 </script>
